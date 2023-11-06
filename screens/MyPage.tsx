@@ -12,7 +12,7 @@ import { themeColor } from "./Home";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-const Diet = () => {
+const MyPage = () => {
   //구현 예정
   return (
     <View>
@@ -30,4 +30,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Diet;
+export default MyPage;

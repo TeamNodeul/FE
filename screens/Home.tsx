@@ -97,7 +97,7 @@ const Home = () => {
           <Text></Text>
         </ScrollView>
       </View>
-      <View style={styles.menuContainer}>
+      {/* <View style={styles.menuContainer}>
         <TouchableOpacity>
           <Ionicons name="person-circle-outline" size={32} color="black" />
         </TouchableOpacity>
@@ -107,7 +107,7 @@ const Home = () => {
         <TouchableOpacity>
           <Feather name="more-horizontal" size={32} color="black" />
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 };
