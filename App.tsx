@@ -11,8 +11,14 @@ import BeforeCount from "./screens/BeforeCount";
 import NFCScreen from "./screens/NFCScreen";
 import ManualMeasure from "./screens/ManualMeasure";
 import Group from "./screens/Group";
-// import Routine from "./screens/Routine";
-// import Diet from "./screens/Diet";
+import MyPage from "./screens/MyPage";
+import Routine from "./screens/Routine";
+import Diet from "./screens/Diet";
+
+import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -43,14 +49,57 @@ const App = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
+        initialRouteName="홈"
         screenOptions={{
+          headerShown: false,
           tabBarShowLabel: true, // 탭 레이블 숨기기 (선택사항)
         }}
       >
-        <Tab.Screen name="Home" component={HomeStack} />
-        <Tab.Screen name="Group" component={Group} />
-        {/* <Tab.Screen name="Routine" component={Routine} /> */}
-        {/* <Tab.Screen name="Diet" component={Diet} /> */}
+        <Tab.Screen
+          name="식단"
+          component={Diet}
+          options={{
+            tabBarIcon: () => (
+              <MaterialIcons name="local-dining" size={28} color="black" />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="루틴"
+          component={Routine}
+          options={{
+            tabBarIcon: () => (
+              <MaterialCommunityIcons name="dumbbell" size={28} color="black" />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="홈"
+          component={HomeStack}
+          options={{
+            tabBarIcon: () => (
+              <MaterialIcons name="home" size={28} color="black" />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="그룹"
+          component={Group}
+          options={{
+            tabBarIcon: () => (
+              <MaterialIcons name="group" size={28} color="black" />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="마이페이지"
+          component={MyPage}
+          options={{
+            tabBarIcon: () => (
+              <Ionicons name="person-circle" size={28} color="black" />
+            ),
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
