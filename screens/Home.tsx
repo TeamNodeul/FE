@@ -22,6 +22,7 @@ import { Ionicons } from "@expo/vector-icons";
 export type RootStackParam = {
   Home: undefined;
   BeforeCount: undefined;
+  Group: undefined;
 };
 
 const windowWidth = Dimensions.get("window").width;

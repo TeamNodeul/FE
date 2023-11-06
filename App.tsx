@@ -18,6 +18,8 @@ import Diet from "./screens/Diet";
 
 import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -48,6 +50,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
+        initialRouteName="홈"
         screenOptions={{
           tabBarShowLabel: true, // 탭 레이블 숨기기 (선택사항)
           headerShown: false,
@@ -94,7 +97,7 @@ const App = () => {
           component={MyPage}
           options={{
             tabBarIcon: () => (
-              <MaterialIcons name="group" size={28} color="black" />
+              <Ionicons name="person-circle" size={28} color="black" />
             ),
           }}
         />
