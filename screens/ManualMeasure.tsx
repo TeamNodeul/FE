@@ -70,6 +70,7 @@ const ManualMeasure = () => {
         text: "확인",
       },
     ]);
+    return true;
   };
 
   useEffect(() => {
@@ -87,11 +88,12 @@ const ManualMeasure = () => {
   }, [isRunning, time]);
 
   useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", () => {
-      handleExerciseDone();
-      return true;
-    });
-  });
+    BackHandler.addEventListener("hardwareBackPress", handleExerciseDone);
+
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", handleExerciseDone);
+    };
+  }, []);
 
   //==========================================================================================  return
   return (

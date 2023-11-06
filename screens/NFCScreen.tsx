@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Dimensions,
   Image,
+  BackHandler,
 } from "react-native";
 import * as Font from "expo-font";
 import { useNavigation } from "@react-navigation/native";
@@ -28,6 +29,12 @@ NfcManager.start();
 const NFCScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>(); //navigation
 
+  const handleBackPress = () => {
+    navigation.pop();
+
+    return true;
+  };
+
   //NFC 파트
   const [count, setCount] = useState(1);
   async function readNdef() {
@@ -43,6 +50,13 @@ const NFCScreen = () => {
     }
   }
   // 구현중
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
+
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
