@@ -5,7 +5,6 @@ import BleManager from "react-native-ble-manager";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useNavigation } from "@react-navigation/native";
 
 import Home from "./screens/Home";
 import BeforeCount from "./screens/BeforeCount";
@@ -52,10 +51,19 @@ const App = () => {
       <Tab.Navigator
         initialRouteName="홈"
         screenOptions={{
-          tabBarShowLabel: true, // 탭 레이블 숨기기 (선택사항)
           headerShown: false,
+          tabBarShowLabel: true, // 탭 레이블 숨기기 (선택사항)
         }}
       >
+        <Tab.Screen
+          name="홈"
+          component={HomeStack}
+          options={{
+            tabBarIcon: () => (
+              <MaterialIcons name="home" size={28} color="black" />
+            ),
+          }}
+        />
         <Tab.Screen
           name="식단"
           component={Diet}
@@ -71,15 +79,6 @@ const App = () => {
           options={{
             tabBarIcon: () => (
               <MaterialCommunityIcons name="dumbbell" size={28} color="black" />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="홈"
-          component={HomeStack}
-          options={{
-            tabBarIcon: () => (
-              <MaterialIcons name="home" size={28} color="black" />
             ),
           }}
         />

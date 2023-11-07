@@ -24,7 +24,7 @@ export type RootStackParam = {
   NFCScreen: undefined;
 };
 
-NfcManager.start();
+//NfcManager.start();
 
 const NFCScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>(); //navigation
