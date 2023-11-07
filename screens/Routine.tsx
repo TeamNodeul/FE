@@ -16,7 +16,10 @@ const Routine = () => {
   //구현 예정
   return (
     <View>
-      <Text>ang</Text>
+      <Text> 루틴을 여기에다가 넣을거에요</Text>
+      <Text> 루틴을 여기에다가 넣을거에요</Text>
+      <Text> 루틴을 여기에다가 넣을거에요</Text>
+      <Text> 루틴을 여기에다가 넣을거에요</Text>
     </View>
   );
 };

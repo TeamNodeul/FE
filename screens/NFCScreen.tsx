@@ -24,14 +24,9 @@ export type RootStackParam = {
   NFCScreen: undefined;
 };
 
+//NfcManager.start();
 
 const NFCScreen = () => {
-  useEffect(() => {
-    // NFC 관리자 초기화
-    NfcManager.start();
-    // 컴포넌트 언마운트 시 NFC 관리자 정리
-  }, []);
-
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>(); //navigation
 
   const handleBackPress = () => {
