@@ -56,6 +56,15 @@ const App = () => {
         }}
       >
         <Tab.Screen
+          name="홈"
+          component={HomeStack}
+          options={{
+            tabBarIcon: () => (
+              <MaterialIcons name="home" size={28} color="black" />
+            ),
+          }}
+        />
+        <Tab.Screen
           name="식단"
           component={Diet}
           options={{
@@ -70,15 +79,6 @@ const App = () => {
           options={{
             tabBarIcon: () => (
               <MaterialCommunityIcons name="dumbbell" size={28} color="black" />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="홈"
-          component={HomeStack}
-          options={{
-            tabBarIcon: () => (
-              <MaterialIcons name="home" size={28} color="black" />
             ),
           }}
         />
