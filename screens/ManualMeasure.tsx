@@ -37,7 +37,7 @@ const ManualMeasure = () => {
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
 
-  const formatTime = (totalSeconds) => {
+  const formatTime = (totalSeconds: number) => {
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
@@ -75,7 +75,7 @@ const ManualMeasure = () => {
 
   useEffect(() => {
     //스탑워치 부분
-    let interval;
+    let interval: any;
     if (isRunning) {
       interval = setInterval(() => {
         setTime(time + 1);
