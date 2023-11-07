@@ -66,7 +66,6 @@ const MyPage = () => {
           <Text style={[styles.profileText, { fontWeight: "bold" }]}>
             {userName} 님
           </Text>
-          <View style={styles.modalCenteredView}></View>
           <Modal
             animationType="fade"
             transparent={true}
