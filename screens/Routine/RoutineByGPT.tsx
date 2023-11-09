@@ -8,15 +8,15 @@ import {
   Touchable,
   Dimensions,
 } from "react-native";
-import { themeColor } from "./Home";
+import { themeColor } from "../Home/Home";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-const Diet = () => {
+const RoutineByGPT = () => {
   //구현 예정
   return (
-    <View>
-      <Text>ang</Text>
+    <View style={styles.container}>
+      <Text>GPT추천 화면</Text>
     </View>
   );
 };
@@ -30,4 +30,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Diet;
+export default RoutineByGPT;

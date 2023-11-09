@@ -12,7 +12,7 @@ import {
   Alert,
   TextInput,
 } from "react-native";
-import { themeColor } from "./Home";
+import { themeColor } from "../Home/Home";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 

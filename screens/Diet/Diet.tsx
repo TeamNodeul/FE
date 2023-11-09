@@ -8,11 +8,11 @@ import {
   Touchable,
   Dimensions,
 } from "react-native";
-import { themeColor } from "./Home";
+import { themeColor } from "../Home/Home";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-const Group = () => {
+const Diet = () => {
   //구현 예정
   return (
     <View>
@@ -30,4 +30,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Group;
+export default Diet;

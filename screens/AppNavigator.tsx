@@ -1,10 +1,10 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Home from "./Home";
-import BeforeCount from "./BeforeCount";
-import NFCScreen from "./NFCScreen";
-import ManualMeasure from "./ManualMeasure";
+import Home from "./Home/Home";
+import BeforeCount from "./Home/BeforeCount";
+import NFCScreen from "../screens/Home/NFCScreen";
+import ManualMeasure from "./Home/ManualMeasure";
 
 const Stack = createNativeStackNavigator();
 

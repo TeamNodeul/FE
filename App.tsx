@@ -6,13 +6,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import Home from "./screens/Home";
-import BeforeCount from "./screens/BeforeCount";
+import Home from "./screens/Home/Home";
+import BeforeCount from "./screens/Home/BeforeCount";
 import NFCScreen from "./screens/NFCScreen";
-import ManualMeasure from "./screens/ManualMeasure";
+import ManualMeasure from "./screens/Home/ManualMeasure";
 import Group from "./screens/Group";
 import MyPage from "./screens/MyPage";
-import Routine from "./screens/Routine";
+import Routine from "./screens/Routine/Routine";
+import RoutineByGPT from "./screens/Routine/RoutineByGPT";
 import Diet from "./screens/Diet";
 
 import { MaterialIcons } from "@expo/vector-icons";
@@ -45,6 +46,17 @@ function HomeStack() {
   );
 }
 
+function RoutineStack() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Routine"
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name="Routine" component={Routine} />
+      <Stack.Screen name="RoutineByGPT" component={RoutineByGPT} />
+    </Stack.Navigator>
+  );
+}
 const App = () => {
   return (
     <NavigationContainer>
@@ -75,7 +87,7 @@ const App = () => {
         />
         <Tab.Screen
           name="루틴"
-          component={Routine}
+          component={RoutineStack}
           options={{
             tabBarIcon: () => (
               <MaterialCommunityIcons name="dumbbell" size={28} color="black" />
