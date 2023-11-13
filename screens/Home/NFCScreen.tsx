@@ -81,7 +81,7 @@ const NFCScreen = () => {
       </View>
       <View style={styles.image}>
         <Image
-          source={require("../assets/image/NFC.png")}
+          source={require("../../assets/image/NFC.png")}
           style={styles.imageSize}
         />
       </View>

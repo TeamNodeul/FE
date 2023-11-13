@@ -8,13 +8,13 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Home from "./screens/Home/Home";
 import BeforeCount from "./screens/Home/BeforeCount";
-import NFCScreen from "./screens/NFCScreen";
+import NFCScreen from "./screens/Home/NFCScreen";
 import ManualMeasure from "./screens/Home/ManualMeasure";
-import Group from "./screens/Group";
-import MyPage from "./screens/MyPage";
+import Group from "./screens/Group/Group";
+import MyPage from "./screens/MyPage/MyPage";
 import Routine from "./screens/Routine/Routine";
 import RoutineByGPT from "./screens/Routine/RoutineByGPT";
-import Diet from "./screens/Diet";
+import Diet from "./screens/Diet/Diet";
 
 import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
