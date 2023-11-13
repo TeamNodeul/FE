@@ -15,6 +15,7 @@ import MyPage from "./screens/MyPage/MyPage";
 import Routine from "./screens/Routine/Routine";
 import RoutineByGPT from "./screens/Routine/RoutineByGPT";
 import Diet from "./screens/Diet/Diet";
+import GroupSetting from "./screens/Group/GroupSetting";
 
 import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -31,6 +32,18 @@ type HomeStackParamLIst = {
 type SettingsStackParamList = {
   Settings: undefined;
 };
+
+function GroupStack() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Group"
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name="Group" component={Group} />
+      <Stack.Screen name="GroupSetting" component={GroupSetting} />
+    </Stack.Navigator>
+  );
+}
 
 function HomeStack() {
   return (
@@ -96,7 +109,7 @@ const App = () => {
         />
         <Tab.Screen
           name="그룹"
-          component={Group}
+          component={GroupStack}
           options={{
             tabBarIcon: () => (
               <MaterialIcons name="group" size={28} color="black" />
