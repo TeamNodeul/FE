@@ -8,7 +8,13 @@ import {
   Touchable,
   Dimensions,
   ScrollView,
+  Animated,
 } from "react-native";
+
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 import { themeColor } from "../Home/Home";
 import { useNavigation } from "@react-navigation/native";
@@ -30,8 +36,8 @@ export const data = [
     part: "하체",
     date: "2023년9월13일",
     exercises: [
-      { id: 1, name: "스쿼트", sets: 4, reps: 10 },
-      { id: 2, name: "데드리프트", sets: 3, reps: 12 },
+      { id: 1, name: "스쿼트", sets: 4, reps: 10, weight: 80 },
+      { id: 2, name: "데드리프트", sets: 3, reps: 12, weight: 100 },
       // 다른 운동 추가
     ],
   },
@@ -41,8 +47,8 @@ export const data = [
     part: "하체 가슴 등",
     date: "2023년10월13일",
     exercises: [
-      { id: 1, name: "스쿼트", sets: 4, reps: 10 },
-      { id: 3, name: "벤치프레스", sets: 3, reps: 12 },
+      { id: 1, name: "스쿼트", sets: 4, reps: 10, weight: 90 },
+      { id: 3, name: "벤치프레스", sets: 3, reps: 12, weight: 70 },
       // 다른 운동 추가
     ],
   },
@@ -52,9 +58,9 @@ export const data = [
     part: "하체 가슴 등 어깨",
     date: "2023년11월13일",
     exercises: [
-      { id: 1, name: "스쿼트", sets: 4, reps: 10 },
-      { id: 2, name: "데드리프트", sets: 3, reps: 12 },
-      { id: 4, name: "숄더프레스", sets: 3, reps: 12 },
+      { id: 1, name: "스쿼트", sets: 4, reps: 10, weight: 85 },
+      { id: 2, name: "데드리프트", sets: 3, reps: 12, weight: 110 },
+      { id: 4, name: "숄더프레스", sets: 3, reps: 12, weight: 50 },
       // 다른 운동 추가
     ],
   },
@@ -64,8 +70,8 @@ export const data = [
     part: "하체",
     date: "2023년12월13일",
     exercises: [
-      { id: 1, name: "스쿼트", sets: 4, reps: 10 },
-      { id: 2, name: "데드리프트", sets: 3, reps: 12 },
+      { id: 1, name: "스쿼트", sets: 4, reps: 10, weight: 75 },
+      { id: 2, name: "데드리프트", sets: 3, reps: 12, weight: 95 },
       // 다른 운동 추가
     ],
   },
@@ -75,39 +81,77 @@ export const data = [
     part: "하체",
     date: "2023년11월13일",
     exercises: [
-      { id: 1, name: "스쿼트", sets: 4, reps: 10 },
-      { id: 3, name: "벤치프레스", sets: 3, reps: 12 },
-      { id: 4, name: "숄더프레스", sets: 3, reps: 12 },
+      { id: 1, name: "스쿼트", sets: 4, reps: 10, weight: 85 },
+      { id: 3, name: "벤치프레스", sets: 3, reps: 12, weight: 75 },
+      { id: 4, name: "숄더프레스", sets: 3, reps: 12, weight: 55 },
       // 다른 운동 추가
     ],
   },
 ];
 
+
+
+
+
+
+
 const Routine = () => {
   /* 내가만든운동 루틴 리스트 */
+  const [animation] = useState(new Animated.Value(0));
+
+
+  // const showExerciseInfo = () => {
+  //   // 여기에서 선택한 운동 정보에 대한 처리를 수행하면 됩니다.
+  //   // 현재는 간단하게 콘솔에 로그를 출력하는 예시 코드를 작성합니다.
+  //   // console.log(`운동 ${exerciseId}의 세트 수: ${getSetsForExercise(exerciseId)}`);
+  
+  //   // 버튼을 누를 때마다 애니메이션 효과를 줍니다.
+  //   Animated.timing(animation, {
+  //     toValue: 1, // 1로 설정하면 화면이 올라옵니다.
+  //     duration: 500, // 애니메이션 소요 시간 (밀리초)
+  //     useNativeDriver: false, // 네이티브 드라이버 사용 여부
+  //   }).start();
+  // };
+
+  
 
 
 
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   
-  
+  const ShowRoutineList = () => {
+    return (
+      <View style={{
+        flex: 9,
+        justifyContent: "center",
+        alignItems: "center",
+      }}>
+        {
+          data.map((item, index) => (
+            <TouchableOpacity style={styles.box} key={index} 
+          onPress={()=>{
+            // showExerciseInfo();
+            navigation.navigate("AboutRoutine", {routineId : item.id});
+          }}>
+              <View>
+                <Text style={styles.name}>{item.name}</Text>
+                <Text style={styles.part}>{item.part}</Text>
+                <Text style={styles.date}>{item.date}</Text>
+              </View>
+
+            </TouchableOpacity>
+        ))
+        }
+      </View>
+    )
+  }
+
+
   const RoutineList = () => {
     return (
       <ScrollView style={styles.container}>
-        {data.map((item, index) => (
-          <TouchableOpacity style={styles.box} key={index} 
-          onPress={()=>{
-            navigation.navigate("AboutRoutine", {routineId : item.id});
-          }}>
-            <View>
-            <Text style={styles.name}>{item.name}</Text>
-            <Text style={styles.part}>{item.part}</Text>
-            <Text style={styles.date}>{item.date}</Text>
-          </View>
+        <ShowRoutineList/>
 
-          </TouchableOpacity>
-          
-        ))}
       </ScrollView>
     );
   };
@@ -193,19 +237,38 @@ const styles = StyleSheet.create({
   },
 
   box: {
-    backgroundColor: "#e0e0e0",
+    backgroundColor: "#dee2e6",
     padding: 16,
-    marginBottom: 10,
+    marginBottom: hp(2),
+    borderRadius: 20,
+    width: wp(90),
   },
+  // name: {
+  //   fontSize: 20,
+  //   fontWeight: "bold",
+  // },
+  // part: {
+  //   fontSize: 16,
+  // },
+  // date: {
+  //   fontSize: 16,
+  // },
+
+
   name: {
-    fontSize: 20,
+    fontSize: wp(5),
     fontWeight: "bold",
+    marginBottom: wp(1),
+    color: "#343a40",
   },
   part: {
-    fontSize: 16,
+    fontSize: wp(3.5),
+    color: "#495057",
   },
   date: {
-    fontSize: 16,
+    fontSize: wp(3.5),
+    //marginLeft: wp(5),
+    color: "#495057",
   },
 });
 
