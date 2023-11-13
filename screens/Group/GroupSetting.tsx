@@ -9,56 +9,135 @@ import {
   Dimensions,
   TextInput,
 } from "react-native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 import { Picker } from "@react-native-picker/picker";
 import { themeColor } from "../Home/Home";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
+export type RootStackParam = {
+  Group: undefined;
+  GroupSetting: undefined;
+};
+
 const GroupSetting = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   const [category, setCategory] = useState("카테고리");
+  const [number, setNumber] = useState("number");
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", paddingHorizontal: 16 }}>
-      <Text style={{ fontSize: 24, fontWeight: "bold", textAlign: "center" }}>
-        그룹 만들기
-      </Text>
-      <View style={{ marginTop: 12 }}>
-        <TextInput
-          style={{ borderColor: "gray", borderWidth: 1, padding: 8 }}
-          placeholder="그룹 이름"
-        />
+    <View style={{ flex: 1, paddingHorizontal: 16 }}>
+      <View style={{ flex: 0.7 }}></View>
+      <View style={{ flex: 0.5 }}>
+        <TouchableOpacity>
+          <MaterialCommunityIcons
+            name="arrow-left"
+            size={30}
+            color="black"
+            onPress={() => navigation.pop()}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: 40,
+              height: 40,
+            }}
+          />
+        </TouchableOpacity>
       </View>
-      <View style={{ marginTop: 12 }}>
-        <TextInput
-          style={{ borderColor: "gray", borderWidth: 1, padding: 8 }}
-          placeholder="어떤 그룹인지 설명해주세요. (가입 규칙 또는 응원 문구)"
-        />
-      </View>
-      <View style={{ marginTop: 12 }}>
-        {/* Assuming you are using a picker library for the dropdown */}
-        {/* Replace this with the appropriate component */}
-        <Picker
-          selectedValue={category}
-          onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
+      <View style={{ flex: 11 }}>
+        <Text
+          style={{ fontSize: wp(6), fontWeight: "bold", textAlign: "center" }}
         >
-          <Picker.Item label="category" value="" />
-          <Picker.Item label="Cardiology" value="cardiology" />
-          <Picker.Item label="Neurology" value="neurology" />
-          <Picker.Item label="Pediatrics" value="pediatrics" />
-          <Picker.Item label="Psychiatry" value="psychiatry" />
-        </Picker>
-      </View>
-      <View style={{ marginTop: 12 }}>
-        <TouchableOpacity
+          그룹 만들기
+        </Text>
+        <View style={{ marginTop: hp(2) }}>
+          <TextInput
+            style={{
+              borderColor: "gray",
+              borderWidth: 1,
+              padding: 8,
+              borderRadius: wp(3),
+            }}
+            placeholder="그룹 이름"
+          />
+        </View>
+        <View style={{ marginTop: hp(2) }}>
+          <TextInput
+            style={{
+              borderColor: "gray",
+              borderWidth: 1,
+              padding: 8,
+              borderRadius: wp(3),
+            }}
+            placeholder="어떤 그룹인지 설명해주세요. (가입 규칙 또는 응원 문구)"
+          />
+        </View>
+        <View
           style={{
-            backgroundColor: themeColor,
-            padding: 12,
-            borderRadius: 8,
-            alignItems: "center",
+            marginTop: hp(5),
+            borderWidth: wp(0.2),
+            borderColor: "gray",
+            borderRadius: wp(3),
+            overflow: "hidden",
           }}
         >
-          <Text style={{ color: "white" }}>Create Group</Text>
-        </TouchableOpacity>
+          {/* Assuming you are using a picker library for the dropdown */}
+          {/* Replace this with the appropriate component */}
+          <Picker
+            selectedValue={category}
+            onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
+          >
+            <Picker.Item label="카테고리" value="" />
+            <Picker.Item label="헬스" value="health" />
+            <Picker.Item label="스포츠" value="sports" />
+            <Picker.Item label="런닝" value="running" />
+            <Picker.Item label="근성장" value="muscleGrowth" />
+          </Picker>
+        </View>
+        <View
+          style={{
+            marginTop: hp(2),
+            borderWidth: wp(0.2),
+            borderColor: "gray",
+            borderRadius: wp(3),
+            overflow: "hidden",
+          }}
+        >
+          {/* Assuming you are using a picker library for the dropdown */}
+          {/* Replace this with the appropriate component */}
+          <Picker
+            selectedValue={number}
+            onValueChange={(itemValue, itemIndex) => setNumber(itemValue)}
+          >
+            <Picker.Item label="모집인원 선택" value="" />
+            <Picker.Item label="2명" value="two" />
+            <Picker.Item label="3명" value="three" />
+            <Picker.Item label="4명" value="four" />
+            <Picker.Item label="5명" value="five" />
+            <Picker.Item label="6명" value="six" />
+            <Picker.Item label="7명" value="seven" />
+            <Picker.Item label="8명" value="eight" />
+            <Picker.Item label="9명" value="nine" />
+            <Picker.Item label="10명" value="ten" />
+          </Picker>
+        </View>
+        <View style={{ marginTop: hp(5) }}>
+          <TouchableOpacity
+            style={{
+              backgroundColor: themeColor,
+              padding: 12,
+              borderRadius: 8,
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ color: "white" }}>완료</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
