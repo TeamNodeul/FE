@@ -13,6 +13,7 @@ import ManualMeasure from "./screens/Home/ManualMeasure";
 import Group from "./screens/Group/Group";
 import MyPage from "./screens/MyPage/MyPage";
 import Routine from "./screens/Routine/Routine";
+import AboutRoutine from "./screens/Routine/RoutineInfo";
 import RoutineByGPT from "./screens/Routine/RoutineByGPT";
 import Diet from "./screens/Diet/Diet";
 
@@ -54,6 +55,7 @@ function RoutineStack() {
     >
       <Stack.Screen name="Routine" component={Routine} />
       <Stack.Screen name="RoutineByGPT" component={RoutineByGPT} />
+      <Stack.Screen name="AboutRoutine" component={AboutRoutine} />
     </Stack.Navigator>
   );
 }
