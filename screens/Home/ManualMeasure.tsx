@@ -150,7 +150,6 @@ const ManualMeasure = () => {
         </View>
         <View style={{ flex: 7 }}></View>
       </View>
-      <View style={styles.line}></View>
       <View style={styles.menuContainer}></View>
     </View>
   );
