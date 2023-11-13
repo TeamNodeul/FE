@@ -8,61 +8,170 @@ import {
   Touchable,
   Dimensions,
   ScrollView,
+  Animated,
 } from "react-native";
+
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 import { themeColor } from "../Home/Home";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import AboutRoutine from "./RoutineInfo";
 
 export type RootStackParam = {
   Routine: undefined;
   RoutineByGPT: undefined;
+  AboutRoutine: {routineId : number};
   //makeRoutine: undefined;
 };
 
-const data = [
-  { name: "사용자 1", exerciseRecord: "운동 기록 1", bodySpec: "신체 스펙 1" },
-  { name: "사용자 2", exerciseRecord: "운동 기록 2", bodySpec: "신체 스펙 2" },
-  { name: "사용자 3", exerciseRecord: "운동 기록 3", bodySpec: "신체 스펙 3" },
-  { name: "사용자 3", exerciseRecord: "운동 기록 3", bodySpec: "신체 스펙 3" },
-  { name: "사용자 3", exerciseRecord: "운동 기록 3", bodySpec: "신체 스펙 3" },
-  { name: "사용자 3", exerciseRecord: "운동 기록 3", bodySpec: "신체 스펙 3" },
-  { name: "사용자 3", exerciseRecord: "운동 기록 3", bodySpec: "신체 스펙 3" },
-  { name: "사용자 3", exerciseRecord: "운동 기록 3", bodySpec: "신체 스펙 3" },
-  { name: "사용자 3", exerciseRecord: "운동 기록 3", bodySpec: "신체 스펙 3" },
-  { name: "사용자 3", exerciseRecord: "운동 기록 3", bodySpec: "신체 스펙 3" },
+
+export const data = [
+  {
+    id: 1,
+    name: "하체왕 되는 루틴",
+    part: "하체",
+    date: "2023년9월13일",
+    exercises: [
+      { id: 1, name: "스쿼트", sets: 4, reps: 10, weight: 80 },
+      { id: 2, name: "데드리프트", sets: 3, reps: 12, weight: 100 },
+      // 다른 운동 추가
+    ],
+  },
+  {
+    id: 10,
+    name: "3분할운동",
+    part: "하체 가슴 등",
+    date: "2023년10월13일",
+    exercises: [
+      { id: 1, name: "스쿼트", sets: 4, reps: 10, weight: 90 },
+      { id: 3, name: "벤치프레스", sets: 3, reps: 12, weight: 70 },
+      // 다른 운동 추가
+    ],
+  },
+  {
+    id: 20,
+    name: "2분할",
+    part: "하체 가슴 등 어깨",
+    date: "2023년11월13일",
+    exercises: [
+      { id: 1, name: "스쿼트", sets: 4, reps: 10, weight: 85 },
+      { id: 2, name: "데드리프트", sets: 3, reps: 12, weight: 110 },
+      { id: 4, name: "숄더프레스", sets: 3, reps: 12, weight: 50 },
+      // 다른 운동 추가
+    ],
+  },
+  {
+    id: 40,
+    name: "내가 만든 루틴4",
+    part: "하체",
+    date: "2023년12월13일",
+    exercises: [
+      { id: 1, name: "스쿼트", sets: 4, reps: 10, weight: 75 },
+      { id: 2, name: "데드리프트", sets: 3, reps: 12, weight: 95 },
+      // 다른 운동 추가
+    ],
+  },
+  {
+    id: 100,
+    name: "내가 만든 루틴5",
+    part: "하체",
+    date: "2023년11월13일",
+    exercises: [
+      { id: 1, name: "스쿼트", sets: 4, reps: 10, weight: 85 },
+      { id: 3, name: "벤치프레스", sets: 3, reps: 12, weight: 75 },
+      { id: 4, name: "숄더프레스", sets: 3, reps: 12, weight: 55 },
+      // 다른 운동 추가
+    ],
+  },
 ];
 
-const MyComponent = () => {
-  return (
-    <ScrollView style={styles.container}>
-      {data.map((item, index) => (
-        <View style={styles.box} key={index}>
-          <Text style={styles.name}>{item.name}</Text>
-          <Text style={styles.record}>{item.exerciseRecord}</Text>
-          <Text style={styles.spec}>{item.bodySpec}</Text>
-        </View>
-      ))}
-    </ScrollView>
-  );
-};
 
-const GPTButton = () => {
-  /* navigation은 같은 함수내에 존재해야함*/
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
-  return (
-    <TouchableOpacity
-      style={styles.buttonContainer}
-      onPress={() => {
-        navigation.navigate("RoutineByGPT");
-      }}
-    >
-      <Text style={styles.buttonText}>GPT루틴 추천</Text>
-    </TouchableOpacity>
-  );
-};
+
+
+
+
 
 const Routine = () => {
+  /* 내가만든운동 루틴 리스트 */
+  const [animation] = useState(new Animated.Value(0));
+
+
+  // const showExerciseInfo = () => {
+  //   // 여기에서 선택한 운동 정보에 대한 처리를 수행하면 됩니다.
+  //   // 현재는 간단하게 콘솔에 로그를 출력하는 예시 코드를 작성합니다.
+  //   // console.log(`운동 ${exerciseId}의 세트 수: ${getSetsForExercise(exerciseId)}`);
+  
+  //   // 버튼을 누를 때마다 애니메이션 효과를 줍니다.
+  //   Animated.timing(animation, {
+  //     toValue: 1, // 1로 설정하면 화면이 올라옵니다.
+  //     duration: 500, // 애니메이션 소요 시간 (밀리초)
+  //     useNativeDriver: false, // 네이티브 드라이버 사용 여부
+  //   }).start();
+  // };
+
+  
+
+
+
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
+  
+  const ShowRoutineList = () => {
+    return (
+      <View style={{
+        flex: 9,
+        justifyContent: "center",
+        alignItems: "center",
+      }}>
+        {
+          data.map((item, index) => (
+            <TouchableOpacity style={styles.box} key={index} 
+          onPress={()=>{
+            // showExerciseInfo();
+            navigation.navigate("AboutRoutine", {routineId : item.id});
+          }}>
+              <View>
+                <Text style={styles.name}>{item.name}</Text>
+                <Text style={styles.part}>{item.part}</Text>
+                <Text style={styles.date}>{item.date}</Text>
+              </View>
+
+            </TouchableOpacity>
+        ))
+        }
+      </View>
+    )
+  }
+
+
+  const RoutineList = () => {
+    return (
+      <ScrollView style={styles.container}>
+        <ShowRoutineList/>
+
+      </ScrollView>
+    );
+  };
+  
+  const GPTButton = () => {
+    /* navigation은 같은 함수내에 존재해야함*/
+    return (
+      <TouchableOpacity
+        style={styles.buttonContainer}
+        onPress={() => {
+          navigation.navigate("RoutineByGPT");
+        }}
+      >
+        <Text style={styles.buttonText}>GPT루틴 추천</Text>
+      </TouchableOpacity>
+    );
+  };
+
+
+
   return (
     <View style={styles.container}>
       <View style={{ flex: 2, backgroundColor: "skyblue" }}>
@@ -72,7 +181,7 @@ const Routine = () => {
       </View>
       <View style={styles.separator}></View>
       <View style={{ flex: 9 }}>
-        <MyComponent />
+        <RoutineList/>
         {/* <View style={styles.container}>
           <GPTButton/>
         </View> */}
@@ -128,19 +237,38 @@ const styles = StyleSheet.create({
   },
 
   box: {
-    backgroundColor: "#e0e0e0",
+    backgroundColor: "#dee2e6",
     padding: 16,
-    marginBottom: 10,
+    marginBottom: hp(2),
+    borderRadius: 20,
+    width: wp(90),
   },
+  // name: {
+  //   fontSize: 20,
+  //   fontWeight: "bold",
+  // },
+  // part: {
+  //   fontSize: 16,
+  // },
+  // date: {
+  //   fontSize: 16,
+  // },
+
+
   name: {
-    fontSize: 20,
+    fontSize: wp(5),
     fontWeight: "bold",
+    marginBottom: wp(1),
+    color: "#343a40",
   },
-  record: {
-    fontSize: 16,
+  part: {
+    fontSize: wp(3.5),
+    color: "#495057",
   },
-  spec: {
-    fontSize: 16,
+  date: {
+    fontSize: wp(3.5),
+    //marginLeft: wp(5),
+    color: "#495057",
   },
 });
 
