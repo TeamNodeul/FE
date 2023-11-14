@@ -24,10 +24,9 @@ import AboutRoutine from "./RoutineInfo";
 export type RootStackParam = {
   Routine: undefined;
   RoutineByGPT: undefined;
-  AboutRoutine: {routineId : number};
+  AboutRoutine: { routineId: number };
   //makeRoutine: undefined;
 };
-
 
 export const data = [
   {
@@ -89,22 +88,15 @@ export const data = [
   },
 ];
 
-
-
-
-
-
-
 const Routine = () => {
   /* 내가만든운동 루틴 리스트 */
   const [animation] = useState(new Animated.Value(0));
-
 
   // const showExerciseInfo = () => {
   //   // 여기에서 선택한 운동 정보에 대한 처리를 수행하면 됩니다.
   //   // 현재는 간단하게 콘솔에 로그를 출력하는 예시 코드를 작성합니다.
   //   // console.log(`운동 ${exerciseId}의 세트 수: ${getSetsForExercise(exerciseId)}`);
-  
+
   //   // 버튼을 누를 때마다 애니메이션 효과를 줍니다.
   //   Animated.timing(animation, {
   //     toValue: 1, // 1로 설정하면 화면이 올라옵니다.
@@ -113,49 +105,47 @@ const Routine = () => {
   //   }).start();
   // };
 
-  
-
-
-
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
-  
+
   const ShowRoutineList = () => {
     return (
-      <View style={{
-        flex: 9,
-        justifyContent: "center",
-        alignItems: "center",
-      }}>
-        {
-          data.map((item, index) => (
-            <TouchableOpacity style={styles.box} key={index} 
-          onPress={()=>{
-            // showExerciseInfo();
-            navigation.navigate("AboutRoutine", {routineId : item.id});
-          }}>
-              <View>
-                <Text style={styles.name}>{item.name}</Text>
+      <View
+        style={{
+          flex: 9,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {data.map((item, index) => (
+          <TouchableOpacity
+            style={styles.box}
+            key={index}
+            onPress={() => {
+              // showExerciseInfo();
+              navigation.navigate("AboutRoutine", { routineId: item.id });
+            }}
+          >
+            <View>
+              <Text style={styles.name}>{item.name}</Text>
+              <View style={{ flexDirection: "row" }}>
                 <Text style={styles.part}>{item.part}</Text>
                 <Text style={styles.date}>{item.date}</Text>
               </View>
-
-            </TouchableOpacity>
-        ))
-        }
+            </View>
+          </TouchableOpacity>
+        ))}
       </View>
-    )
-  }
-
+    );
+  };
 
   const RoutineList = () => {
     return (
       <ScrollView style={styles.container}>
-        <ShowRoutineList/>
-
+        <ShowRoutineList />
       </ScrollView>
     );
   };
-  
+
   const GPTButton = () => {
     /* navigation은 같은 함수내에 존재해야함*/
     return (
@@ -170,8 +160,6 @@ const Routine = () => {
     );
   };
 
-
-
   return (
     <View style={styles.container}>
       <View style={{ flex: 2, backgroundColor: "skyblue" }}>
@@ -181,7 +169,7 @@ const Routine = () => {
       </View>
       <View style={styles.separator}></View>
       <View style={{ flex: 9 }}>
-        <RoutineList/>
+        <RoutineList />
         {/* <View style={styles.container}>
           <GPTButton/>
         </View> */}
@@ -254,9 +242,8 @@ const styles = StyleSheet.create({
   //   fontSize: 16,
   // },
 
-
   name: {
-    fontSize: wp(5),
+    fontSize: wp(4),
     fontWeight: "bold",
     marginBottom: wp(1),
     color: "#343a40",
@@ -267,7 +254,7 @@ const styles = StyleSheet.create({
   },
   date: {
     fontSize: wp(3.5),
-    //marginLeft: wp(5),
+    marginLeft: wp(10),
     color: "#495057",
   },
 });

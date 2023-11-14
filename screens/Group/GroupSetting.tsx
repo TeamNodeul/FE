@@ -8,6 +8,7 @@ import {
   Touchable,
   Dimensions,
   TextInput,
+  Alert,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -26,8 +27,23 @@ export type RootStackParam = {
 
 const GroupSetting = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
-  const [category, setCategory] = useState("카테고리");
+  const [category, setCategory] = useState("카테고리"); //카테고리, 인원수
   const [number, setNumber] = useState("number");
+
+  const [inputName, setInputName] = useState(""); //그룹 이름, 그룹 설명
+  const [inputDescription, setInputDescription] = useState("");
+
+  const handleNameInputChange = (text: string) => {
+    setInputName(text);
+  };
+
+  const handleDescriptionInputChange = (text: string) => {
+    setInputDescription(text);
+  };
+
+  const handleDoneButtonPress = () => {
+    //그룹 이름과 설명 입력 후 완료 버튼 눌렀을 때
+  };
 
   return (
     <View style={{ flex: 1, paddingHorizontal: 16 }}>
@@ -64,6 +80,8 @@ const GroupSetting = () => {
               borderRadius: wp(3),
             }}
             placeholder="그룹 이름"
+            onChangeText={handleNameInputChange}
+            value={inputName}
           />
         </View>
         <View style={{ marginTop: hp(2) }}>
@@ -75,6 +93,8 @@ const GroupSetting = () => {
               borderRadius: wp(3),
             }}
             placeholder="어떤 그룹인지 설명해주세요. (가입 규칙 또는 응원 문구)"
+            onChangeText={handleDescriptionInputChange}
+            value={inputDescription}
           />
         </View>
         <View
@@ -134,6 +154,7 @@ const GroupSetting = () => {
               borderRadius: 8,
               alignItems: "center",
             }}
+            onPressOut={handleDoneButtonPress}
           >
             <Text style={{ color: "white" }}>완료</Text>
           </TouchableOpacity>
