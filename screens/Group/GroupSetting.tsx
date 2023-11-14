@@ -43,6 +43,8 @@ const GroupSetting = () => {
 
   const handleDoneButtonPress = () => {
     //그룹 이름과 설명 입력 후 완료 버튼 눌렀을 때
+    // 받아오기 성공, 서버로 넘겨주는것 구현만 하면 됨
+    alert(inputName + " " + inputDescription + " " + category + " " + number);
   };
 
   return (
