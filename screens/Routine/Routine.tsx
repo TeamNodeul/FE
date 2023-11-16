@@ -19,7 +19,9 @@ import {
 import { themeColor } from "../Home/Home";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import RoutineByGPT from "./RoutineByGPT";
 import AboutRoutine from "./AboutRoutine";
+
 
 export type RootStackParam = {
   Routine: undefined;
@@ -27,6 +29,21 @@ export type RootStackParam = {
   AboutRoutine: { routineId: number };
   //makeRoutine: undefined;
 };
+// import { createNativeStackNavigator } from "@react-navigation/native-stack";
+// const Stack = createNativeStackNavigator();
+
+// export const RoutineStack = ()=>{
+//   return (
+//     <Stack.Navigator
+//       initialRouteName="Routine"
+//       screenOptions={{ headerShown: false }}
+//     >
+//       <Stack.Screen name="Routine" component={Routine} />
+//       <Stack.Screen name="RoutineByGPT" component={RoutineByGPT} />
+//       <Stack.Screen name="AboutRoutine" component={AboutRoutine} />
+//     </Stack.Navigator>
+//   );
+// }
 
 export const data = [
   {
