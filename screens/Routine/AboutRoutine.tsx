@@ -45,7 +45,9 @@ const AboutRoutine = ({route } : any) => {
           <Text></Text>
         {
           routineInfo.exercises.map((item, index) => (
-            <View style={styles.box}>
+            //map쓸려면 고유키를 설정해줘야 경고 안뜸
+            <View style={styles.box} key={index}>  
+            
                 <Text style={styles.name}>{item.name}</Text>
               <Text>{item.reps}회 / {item.sets}세트 / {item.weight}kg</Text>
               <Text>총 무게 : {item.reps * item.sets * item.weight}kg</Text>
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
   },
 
   box: {
-    backgroundColor: "skyblue",
+    backgroundColor: "#d0ebff",
     padding: 16,
     marginBottom: hp(2),
     borderRadius: 20,

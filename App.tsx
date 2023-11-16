@@ -13,7 +13,7 @@ import ManualMeasure from "./screens/Home/ManualMeasure";
 import Group from "./screens/Group/Group";
 import MyPage from "./screens/MyPage/MyPage";
 import Routine from "./screens/Routine/Routine";
-import AboutRoutine from "./screens/Routine/RoutineInfo";
+import AboutRoutine from "./screens/Routine/AboutRoutine";
 import RoutineByGPT from "./screens/Routine/RoutineByGPT";
 import Diet from "./screens/Diet/Diet";
 import GroupSetting from "./screens/Group/GroupSetting";
