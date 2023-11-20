@@ -22,7 +22,6 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import RoutineByGPT from "./RoutineByGPT";
 import AboutRoutine from "./AboutRoutine";
 
-
 export type RootStackParam = {
   Routine: undefined;
   RoutineByGPT: undefined;
@@ -132,7 +131,6 @@ export const data = [
   },
 ];
 
-
 const Routine = () => {
   /* 내가만든운동 루틴 리스트 */
   const [animation] = useState(new Animated.Value(0));
@@ -205,7 +203,6 @@ const Routine = () => {
     );
   };
 
-  
   return (
     <View style={styles.container}>
       <View style={{ flex: 2, backgroundColor: "#a5d8ff" }}>
@@ -216,7 +213,6 @@ const Routine = () => {
       <View style={styles.separator}></View>
       <View style={{ flex: 9 }}>
         <RoutineList />
-
       </View>
     </View>
   );
