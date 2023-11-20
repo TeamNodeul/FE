@@ -17,11 +17,12 @@ import {
 import { themeColor } from "../Home/Home";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import {data} from "./Routine"
+// import {data} from "./Routine"
+import RoutineData from "../DB/DB_Routine";
 
 const AboutRoutine = ({route } : any) => {
   const {routineId} = route.params;
-  const routineInfo = data.find(item => item.id === routineId);
+  const routineInfo = RoutineData.find(item => item.id === routineId);
   if(!routineInfo){
     return(
       <View>
@@ -29,6 +30,7 @@ const AboutRoutine = ({route } : any) => {
       </View>
     )
 
+    
   }
   //구현 예정
   return (

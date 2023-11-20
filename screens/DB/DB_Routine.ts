@@ -1,6 +1,7 @@
 export const data = [
     {
       id: 1,
+      user_id: 1,
       name: "하체왕 되는 루틴",
       part: "하체",
       date: "2023년9월13일",
@@ -13,6 +14,7 @@ export const data = [
     },
     {
       id: 10,
+      user_id: 1,
       name: "3분할운동",
       part: "하체 가슴 등",
       date: "2023년10월13일",
@@ -25,6 +27,7 @@ export const data = [
     },
     {
       id: 20,
+      user_id: 1,
       name: "2분할",
       part: "하체 가슴 등 어깨",
       date: "2023년11월13일",
@@ -37,6 +40,7 @@ export const data = [
     },
     {
       id: 40,
+      user_id: 1,
       name: "내가 만든 루틴4",
       part: "하체",
       date: "2023년12월13일",
@@ -49,6 +53,7 @@ export const data = [
     },
     {
       id: 100,
+      user_id: 2,
       name: "내가 만든 루틴5",
       part: "하체",
       date: "2023년11월13일",
@@ -61,6 +66,7 @@ export const data = [
     },
     {
       id: 110,
+      user_id: 2,
       name: "새로운 루틴1",
       part: "상체",
       date: "2023년12월20일",
@@ -73,6 +79,7 @@ export const data = [
     },
     {
       id: 200,
+      user_id: 3,
       name: "새로운 루틴2",
       part: "상체",
       date: "2023년12월25일",

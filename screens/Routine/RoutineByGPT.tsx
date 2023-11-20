@@ -16,7 +16,7 @@ const RoutineByGPT = () => {
   //구현 예정
   return (
     <View style={styles.container}>
-      <Text>GPT추천 화면</Text>
+      <Text>GPT추천 화면</Text>0
     </View>
   );
 };
