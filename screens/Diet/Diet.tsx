@@ -16,13 +16,35 @@ import {
 import { themeColor } from "../Home/Home";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { AntDesign } from "@expo/vector-icons";
+
+export type RootStackParam = {
+  Diet: undefined;
+  DietByGPT: undefined;
+};
 
 const Diet = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
+
   return (
     <View style={styles.container}>
       <View style={{ marginTop: hp(3) }}></View>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Text style={styles.title}>주간 식단 계획</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.title}>주간 식단 계획</Text>
+          <TouchableOpacity
+            onPressOut={() => {
+              navigation.navigate("DietByGPT");
+            }}
+          >
+            <AntDesign
+              name="edit"
+              size={wp(6)}
+              color={themeColor}
+              style={{ marginTop: hp(0.5), marginLeft: wp(20) }}
+            />
+          </TouchableOpacity>
+        </View>
         <Text style={styles.dayText}>11/20~11/26</Text>
         <View style={styles.dayContainer}>
           {renderDay("월요일", [
@@ -115,6 +137,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: hp(0.3),
+    marginLeft: wp(29),
     color: "#374151",
   },
   dayText: {
