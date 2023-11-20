@@ -133,7 +133,6 @@ const Routine = () => {
     );
   };
 
-  
   return (
     <View style={styles.container}>
       <View style={{ flex: 2, backgroundColor: "#a5d8ff" }}>
@@ -144,7 +143,6 @@ const Routine = () => {
       <View style={styles.separator}></View>
       <View style={{ flex: 9 }}>
         <RoutineList />
-
       </View>
     </View>
   );
