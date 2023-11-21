@@ -12,10 +12,8 @@ import NFCScreen from "./screens/Home/NFCScreen";
 import ManualMeasure from "./screens/Home/ManualMeasure";
 import Group from "./screens/Group/Group";
 import MyPage from "./screens/MyPage/MyPage";
-// import Routine from "./screens/Routine/Routine";
-// import AboutRoutine from "./screens/Routine/AboutRoutine";
-// import RoutineByGPT from "./screens/Routine/RoutineByGPT";
-// import { RoutineStack } from "./screens/Routine/Routine";
+
+/* 루틴관련 화면들은 RoutineStack에서 관리 */
 import RoutineStack from "./screens/Routine/RoutineStack";
 
 import Diet from "./screens/Diet/Diet";

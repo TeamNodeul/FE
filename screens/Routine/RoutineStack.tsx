@@ -2,6 +2,7 @@ import React from "react";
 import Routine from "./Routine";
 import RoutineByGPT from "./RoutineByGPT";
 import AboutRoutine from "./AboutRoutine";
+import MakeRoutine from "./MakeRoutine";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 const Stack = createNativeStackNavigator();
@@ -12,9 +13,10 @@ export const RoutineStack = ()=>{
         initialRouteName="Routine"
         screenOptions={{ headerShown: false }}
         >
-        <Stack.Screen name="Routine" component={Routine} />
-        <Stack.Screen name="RoutineByGPT" component={RoutineByGPT} />
-        <Stack.Screen name="AboutRoutine" component={AboutRoutine} />
+            <Stack.Screen name="Routine" component={Routine} />
+            <Stack.Screen name="RoutineByGPT" component={RoutineByGPT} />
+            <Stack.Screen name="AboutRoutine" component={AboutRoutine} />
+            <Stack.Screen name="MakeRoutine" component={MakeRoutine} />
         </Stack.Navigator>
     );
 }
