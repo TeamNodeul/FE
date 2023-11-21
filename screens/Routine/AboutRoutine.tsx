@@ -17,43 +17,43 @@ import {
 import { themeColor } from "../Home/Home";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import {data} from "./Routine"
+import { data } from "./Routine";
 
-const AboutRoutine = ({route } : any) => {
-  const {routineId} = route.params;
-  const routineInfo = data.find(item => item.id === routineId);
-  if(!routineInfo){
-    return(
+const AboutRoutine = ({ route }: any) => {
+  const { routineId } = route.params;
+  const routineInfo = data.find((item) => item.id === routineId);
+  if (!routineInfo) {
+    return (
       <View>
         <Text>해당 루틴을 찾을 수 없음</Text>
       </View>
-    )
-
+    );
   }
   //구현 예정
   return (
     <View style={styles.container}>
-      <View style={{
-        //flex: 9,
-        justifyContent: "center",
-        alignItems: "flex-start",
-      }}>
+      <View
+        style={{
+          //flex: 9,
+          justifyContent: "center",
+          alignItems: "flex-start",
+        }}
+      >
         <Text>현재 선택한 루틴 : {routineId}번 루틴 정보</Text>
-          <Text>루틴이름 : {routineInfo.name}</Text>
-          <Text>운동부위 : {routineInfo.part}</Text>
-          <Text>날짜 : {routineInfo.date}</Text>
-          <Text></Text>
-        {
-          routineInfo.exercises.map((item, index) => (
-            //map쓸려면 고유키를 설정해줘야 경고 안뜸
-            <View style={styles.box} key={index}>  
-            
-                <Text style={styles.name}>{item.name}</Text>
-              <Text>{item.reps}회 / {item.sets}세트 / {item.weight}kg</Text>
-              <Text>총 무게 : {item.reps * item.sets * item.weight}kg</Text>
-            </View>
-        ))
-        }
+        <Text>루틴이름 : {routineInfo.name}</Text>
+        <Text>운동부위 : {routineInfo.part}</Text>
+        <Text>날짜 : {routineInfo.date}</Text>
+        <Text></Text>
+        {routineInfo.exercises.map((item, index) => (
+          //map쓸려면 고유키를 설정해줘야 경고 안뜸
+          <View style={styles.box} key={index}>
+            <Text style={styles.name}>{item.name}</Text>
+            <Text>
+              {item.reps}회 / {item.sets}세트 / {item.weight}kg
+            </Text>
+            <Text>총 무게 : {item.reps * item.sets * item.weight}kg</Text>
+          </View>
+        ))}
       </View>
     </View>
   );
