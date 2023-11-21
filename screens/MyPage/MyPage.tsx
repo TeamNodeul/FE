@@ -21,41 +21,35 @@ import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // export let userName = "";
 // export let userEmail = "";
 
 //현재 로그인 된 유저 id 저장
-import {userID} from "../DB/userID"; 
+import { userID } from "../DB/userID";
 
-import UserData from "../DB/DB_User"
-
-
-
+import UserData from "../DB/DB_User";
 
 const MyPage = () => {
   // 현재 로그인된 유저 객체를 가져옴
-  const user = UserData.find((user)=>user.id===userID);
+  const user = UserData.find((user) => user.id === userID);
   const [userName, setUserName] = useState(user!.name);
   const [userEmail, setUserEmail] = useState(user!.email);
-  
-  useEffect(()=>{ // 핫 리로드를 위해, userID가 바뀌었으면 마이페이지 정보도 갱신해줌
+
+  useEffect(() => {
+    // 핫 리로드를 위해, userID가 바뀌었으면 마이페이지 정보도 갱신해줌
     setUserName(user!.name);
     setUserEmail(user!.email);
-
   }, [userID]);
 
-
-
   // const Login = ()=>{
-  
+
   //   const handleLogin = async ()=>{
   //     const user = UserData.find((user)=>user.id === userID);
-  
+
   //     if(user){
   //       const token:number = user.id;
-        
+
   //       try{
   //         await AsyncStorage.setItem('token', token.toString());
   //         // navigation
@@ -63,14 +57,14 @@ const MyPage = () => {
   //         // userId = user.id;
   //         setUserName(user.name);
   //         setUserEmail(user.email);
-          
+
   //       } catch(error){
   //         console.error('Error saving token:', error);
   //       }
   //     }
   //     // User.find()
   //   }
-  
+
   //   return (
   // <View style={[styles.container, {flexDirection: 'row',width:100}]}>
   //   <TextInput
@@ -82,15 +76,11 @@ const MyPage = () => {
   //     keyboardType="numeric"
   //   />
   //   <Button title="Login" onPress={handleLogin}/>
-  
+
   // </View>
-  
+
   //   )
   // }
-
-
-
-
 
   const [modalVisible, setModalVisible] = useState(false);
   const [inputText, setInputText] = useState("");
@@ -179,7 +169,7 @@ const MyPage = () => {
           <Text>{userEmail}</Text>
         </View>
       </View>
-        {/* <Login/> */}
+      {/* <Login/> */}
       <View style={styles.line}></View>
       <View style={styles.dataContainer}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -283,17 +273,14 @@ const styles = StyleSheet.create({
     marginTop: "3%",
   },
 
-
   input: {
     height: 40,
-    width: '80%',
-    borderColor: 'gray',
+    width: "80%",
+    borderColor: "gray",
     borderWidth: 1,
     marginBottom: 16,
     paddingLeft: 8,
-  }
-
-
+  },
 });
 
 export default MyPage;

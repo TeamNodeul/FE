@@ -39,8 +39,10 @@ const AboutGroup = ({ route }: any) => {
           alignItems: "flex-start",
         }}
       >
-        <Text>그룹이름 : {groupId.name}</Text>
-        {}
+        <Text>현재 선택한 그룹 : {groupId}번 그룹</Text>
+        <Text>그룹 이름 : {groupInfo.name}</Text>
+        <Text>그룹 인원수 : {groupInfo.headCount}명</Text>
+        <Text>그룹 리더 : {groupInfo.leader}</Text>
       </View>
     </View>
   );

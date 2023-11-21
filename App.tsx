@@ -14,7 +14,7 @@ import Group from "./screens/Group/Group";
 import MyPage from "./screens/MyPage/MyPage";
 
 /* 루틴관련 화면들은 RoutineStack에서 관리 */
-import RoutineStack from "./screens/Routine/RoutineStack"
+import RoutineStack from "./screens/Routine/RoutineStack";
 
 import Diet from "./screens/Diet/Diet";
 import GroupSetting from "./screens/Group/GroupSetting";
@@ -23,7 +23,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-
+import AboutGroup from "./screens/Group/AboutGroup";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -44,6 +44,7 @@ function GroupStack() {
     >
       <Stack.Screen name="Group" component={Group} />
       <Stack.Screen name="GroupSetting" component={GroupSetting} />
+      <Stack.Screen name="AboutGroup" component={AboutGroup} />
     </Stack.Navigator>
   );
 }

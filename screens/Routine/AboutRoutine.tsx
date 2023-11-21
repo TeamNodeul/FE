@@ -21,43 +21,41 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 // import {data} from "./Routine"
 import RoutineData from "../DB/DB_Routine";
 
-const AboutRoutine = ({route } : any) => {
-  const {routineId} = route.params;
-  const routineInfo = RoutineData.find(item => item.id === routineId);
-  
-  if(!routineInfo){
-    return(
+const AboutRoutine = ({ route }: any) => {
+  const { routineId } = route.params;
+  const routineInfo = RoutineData.find((item) => item.id === routineId);
+
+  if (!routineInfo) {
+    return (
       <View>
         <Text>해당 루틴을 찾을 수 없음</Text>
       </View>
-    )
-  }
-  
-  const ExerciseList = ()=>{
-    return (
-      <ScrollView style={{
-        flex: 8,
-        // justifyContent: "flex-start",
-        // alignItems: "flex-start",
-      }}>
-
-        {
-          routineInfo.exercises.map((item, index) => (
-            //map쓸려면 고유키를 설정해줘야 경고 안뜸
-            <View style={styles.box} key={index}>  
-            
-                <Text style={styles.name}>{item.name}</Text>
-              <Text>{item.reps}회 / {item.sets}세트 / {item.weight}kg</Text>
-              <Text>총 무게 : {item.reps * item.sets * item.weight}kg</Text>
-            </View>
-        ))
-        }
-      </ScrollView>
-
     );
   }
-  
-  
+
+  const ExerciseList = () => {
+    return (
+      <ScrollView
+        style={{
+          flex: 8,
+          // justifyContent: "flex-start",
+          // alignItems: "flex-start",
+        }}
+      >
+        {routineInfo.exercises.map((item, index) => (
+          //map쓸려면 고유키를 설정해줘야 경고 안뜸
+          <View style={styles.box} key={index}>
+            <Text style={styles.name}>{item.name}</Text>
+            <Text>
+              {item.reps}회 / {item.sets}세트 / {item.weight}kg
+            </Text>
+            <Text>총 무게 : {item.reps * item.sets * item.weight}kg</Text>
+          </View>
+        ))}
+      </ScrollView>
+    );
+  };
+
   return (
     // <View style={styles.container}>
 
@@ -69,9 +67,12 @@ const AboutRoutine = ({route } : any) => {
         <Text>운동부위 : {routineInfo.part}</Text>
         <Text>날짜 : {routineInfo.date}</Text>
       </View>
-      <View style={{flex:7}}><ExerciseList/></View>
+      <View style={{ flex: 7 }}>
+        <ExerciseList />
+      </View>
 
-      <TouchableOpacity style={styles.startButton}
+      <TouchableOpacity
+        style={styles.startButton}
         // style={styles.makeButton}
         onPress={() => {
           // 여기에 '+' 버튼을 눌렀을 때의 동작 추가
@@ -79,7 +80,6 @@ const AboutRoutine = ({route } : any) => {
         }}
       >
         <Text style={styles.startButtonText}>운동 시작하기</Text>
-      
       </TouchableOpacity>
     </View>
   );
@@ -125,13 +125,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 15,
   },
-  startButtonText:{
+  startButtonText: {
     // alignContent:"center",
     // alignItems:"center",
     fontSize: wp(5),
     fontWeight: "bold",
     marginBottom: wp(1),
-    color:"white",
+    color: "white",
     // color: "#343a40",
   },
 });
