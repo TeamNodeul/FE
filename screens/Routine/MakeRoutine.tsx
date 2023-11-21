@@ -12,11 +12,11 @@ import { themeColor } from "../Home/Home";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-const RoutineByGPT = () => {
+const MakeRoutine = () => {
   //구현 예정
   return (
     <View style={styles.container}>
-      <Text>GPT추천 화면</Text>
+      <Text>루틴 제작 화면</Text>
     </View>
   );
 };
@@ -30,4 +30,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RoutineByGPT;
+export default MakeRoutine;

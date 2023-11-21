@@ -27,59 +27,23 @@ export type RootStackParam = {
   Routine: undefined;
   RoutineByGPT: undefined;
   AboutRoutine: { routineId: number };
-  //makeRoutine: undefined;
+  MakeRoutine: undefined;
 };
-// import { createNativeStackNavigator } from "@react-navigation/native-stack";
-// const Stack = createNativeStackNavigator();
 
-// export const RoutineStack = ()=>{
-//   return (
-//     <Stack.Navigator
-//       initialRouteName="Routine"
-//       screenOptions={{ headerShown: false }}
-//     >
-//       <Stack.Screen name="Routine" component={Routine} />
-//       <Stack.Screen name="RoutineByGPT" component={RoutineByGPT} />
-//       <Stack.Screen name="AboutRoutine" component={AboutRoutine} />
-//     </Stack.Navigator>
-//   );
-// }
 
 import RoutineData from "../DB/DB_Routine";
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import {userID} from "../DB/userID";
 
 const Routine = () => {
-  // let userId = 0;
-  // const [userId, setUserId] = useState(1);
-  // const [MyRoutineList, setMyRoutineList] = useState(RoutineData.filter(item => item.id === userId));
+
   const MyRoutineList = RoutineData.filter(item => item.user_id === userID);
 
-  // useEffect(()=>{
-
-
-
-  // }, [MyRoutineList])
-  // const getToken = async() =>{
-  //   const token = await AsyncStorage.getItem('token');
-  //   if (token ===null){
-  //     return 0;
-  //   }
-
-  //   return parseInt(token);
-  // }
-  /* 내가만든운동 루틴 리스트 */
-
-  // useEffect(()=>{
-    
-
-
-  // }, [MyRoutineList])
 
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
 
   const ShowRoutineList = () => {
-    // let token = 1;
+
     return (
       <View
         style={{
@@ -133,21 +97,37 @@ const Routine = () => {
     );
   };
 
+  const MakeRoutineButton = () => {
+    return (
+      <TouchableOpacity
+        style={styles.makeButton}
+        onPress={() => {
+          navigation.navigate("MakeRoutine");
+        }}
+      >
+        <AntDesign name="plus" size={50} color="black" />
+      </TouchableOpacity>
+    );
+  };
+
+
   return (
     <View style={styles.container}>
-      <View style={{ flex: 2, backgroundColor: "#a5d8ff" }}>
+      <View style={{ flex: 2, backgroundColor: themeColor }}>
         <View style={styles.gptButton}>
           <GPTButton />
+          
         </View>
       </View>
-      <View style={styles.separator}></View>
-      <View style={{ flex: 9 }}>
+      {/* <View style={styles.separator}></View> */}
+      <View style={{ flex: 8 }}>
         <RoutineList />
+        <MakeRoutineButton/>
       </View>
     </View>
   );
 };
-const windowWidth = Dimensions.get("window").width;
+// const windowWidth = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
   container: {
@@ -228,6 +208,17 @@ const styles = StyleSheet.create({
     marginLeft: wp(10),
     color: "#495057",
   },
+
+  makeButton: {
+    position: "absolute",
+    bottom: 10,
+    right: 10,
+    backgroundColor: "white",
+    borderRadius: 50,
+    padding: 10,
+    elevation: 5,
+  },
+
 });
 
 export default Routine;
