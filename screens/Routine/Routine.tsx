@@ -88,7 +88,7 @@ const Routine = () => {
     /* navigation은 같은 함수내에 존재해야함*/
     return (
       <TouchableOpacity
-        style={styles.gptButtonContainer}
+        style={styles.gptButtonContainer || {width:"90%"}}
         onPress={() => {
           navigation.navigate("RoutineByGPT");
         }}
@@ -115,7 +115,7 @@ const Routine = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 2, width:"90%", alignSelf:"center"}}>
+      <View style={{ flex: 2, width:"100%", alignContent:"center"}}>
           <Text style={styles.title}>내가 만든 루틴 리스트</Text>
           <View style={styles.separator}></View>
           <GPTButton/>
@@ -145,9 +145,11 @@ const styles = StyleSheet.create({
     backgroundColor: "skyblue",
     // borderColor: "blue",
     // borderWidth: 1,
+    width:"90%",
     borderRadius: 15,
     padding: 18,
     alignItems: "center",
+    alignSelf: "center",
   },
   gptButton: {
     alignItems: "center",
