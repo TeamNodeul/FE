@@ -22,6 +22,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import RoutineByGPT from "./RoutineByGPT";
 import AboutRoutine from "./AboutRoutine";
 import { AntDesign } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export type RootStackParam = {
   Routine: undefined;
@@ -64,7 +65,7 @@ const Routine = () => {
           >
             <View>
               <Text style={styles.name}>{item.name}</Text>
-              <View style={{ flexDirection: "row" }}>
+              <View style={{ flexDirection: "row", justifyContent:"space-between" }}>
                 <Text style={styles.part}>{item.part}</Text>
                 <Text style={styles.date}>{item.date}</Text>
               </View>
@@ -87,12 +88,12 @@ const Routine = () => {
     /* navigation은 같은 함수내에 존재해야함*/
     return (
       <TouchableOpacity
-        style={styles.buttonContainer}
+        style={styles.gptButtonContainer}
         onPress={() => {
           navigation.navigate("RoutineByGPT");
         }}
       >
-        <Text style={styles.buttonText}>GPT루틴 추천</Text>
+        <Text style={styles.buttonText}>GPT에게 루틴 추천받기</Text>
       </TouchableOpacity>
     );
   };
@@ -105,19 +106,19 @@ const Routine = () => {
           navigation.navigate("MakeRoutine");
         }}
       >
-        <AntDesign name="plus" size={50} color="black" />
+        <AntDesign name="pluscircle" size={90} color={"skyblue"} />
       </TouchableOpacity>
     );
   };
 
 
+
   return (
     <View style={styles.container}>
-      <View style={{ flex: 2, backgroundColor: themeColor }}>
-        <View style={styles.gptButton}>
-          <GPTButton />
-          
-        </View>
+      <View style={{ flex: 2, width:"90%", alignSelf:"center"}}>
+          <Text style={styles.title}>내가 만든 루틴 리스트</Text>
+          <View style={styles.separator}></View>
+          <GPTButton/>
       </View>
       {/* <View style={styles.separator}></View> */}
       <View style={{ flex: 8 }}>
@@ -129,30 +130,26 @@ const Routine = () => {
 };
 // const windowWidth = Dimensions.get("window").width;
 
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f8f9fa",
   },
-  gptButton: {
-    flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "flex-end",
-    backgroundColor: "f8f9fa",
-    marginTop: 30,
-    marginRight: 20,
-  },
-  buttonContainer: {
-    width: wp(35),
-    //marginTop: wp(0),
-    backgroundColor: "white",
-    borderColor: themeColor,
-    borderWidth: 1.5,
-    borderRadius: 20,
-    padding: 15,
+
+  gptButtonContainer: {
+    // width: wp(35),
+    marginTop: "2%",
+    marginBottom: "3%",
+    backgroundColor: "skyblue",
+    // borderColor: "blue",
+    // borderWidth: 1,
+    borderRadius: 15,
+    padding: 18,
     alignItems: "center",
   },
-  button: {
+  gptButton: {
     alignItems: "center",
     justifyContent: "center",
     //backgroundColor: themeColor,
@@ -165,34 +162,24 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     alignItems: "center",
+    color:"white",
   },
   separator: {
     width: "100%", // 화면 너비의 100%
-    height: 1, // 가로선의 높이
-    backgroundColor: "black", // 가로선의 색상 (예: 회색)
+    height: 0.5, // 가로선의 높이
+    backgroundColor: "gray", // 가로선의 색상 (예: 회색)
     // marginTop: 0, // 가로선 위 여백
     //marginBottom: 20, // 가로선 아래 여백
   },
 
   box: {
     backgroundColor: "#dee2e6",
-    padding: 16,
+    padding: 22,
     marginBottom: hp(1),
     borderRadius: 20,
     width: wp(90),
     marginTop: hp(1),
   },
-  // name: {
-  //   fontSize: 20,
-  //   fontWeight: "bold",
-  // },
-  // part: {
-  //   fontSize: 16,
-  // },
-  // date: {
-  //   fontSize: 16,
-  // },
-
   name: {
     fontSize: wp(4),
     fontWeight: "bold",
@@ -205,20 +192,41 @@ const styles = StyleSheet.create({
   },
   date: {
     fontSize: wp(3.5),
-    marginLeft: wp(10),
+    // marginLeft: wp(10),
     color: "#495057",
   },
 
   makeButton: {
     position: "absolute",
-    bottom: 10,
-    right: 10,
+    bottom: "5%",
+    right: "5%",
     backgroundColor: "white",
-    borderRadius: 50,
-    padding: 10,
-    elevation: 5,
+    borderRadius: 100,
+    // padding: 1,
+    // elevation: 5,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: hp(5),
+    marginBottom: hp(0.3),
+    // marginLeft: wp(29),
+    color: "#374151",
   },
 
+  header: {
+    flex: 0.5,
+    width: "100%",
+    padding: 20,
+  },
+  leftIcon: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: 40,
+    height: 40,
+  },
 });
 
 export default Routine;

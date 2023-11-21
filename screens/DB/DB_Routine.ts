@@ -120,58 +120,6 @@ export const data = [
         { id: 4, name: "레그 컬", sets: 3, reps: 15, weight: 40 },
       ],
     },
-    {
-      id: 1,
-      user_id: 1,
-      name: "하체왕 되는 루틴",
-      part: "하체",
-      date: "2023년9월13일",
-      exercises: [
-        { id: 1, name: "스쿼트", sets: 4, reps: 10, weight: 80 },
-        { id: 2, name: "데드리프트", sets: 3, reps: 12, weight: 100 },
-        { id: 3, name: "레그 프레스", sets: 3, reps: 12, weight: 120 },
-        { id: 4, name: "레그 컬", sets: 3, reps: 15, weight: 40 },
-      ],
-    },
-    {
-      id: 1,
-      user_id: 1,
-      name: "하체왕 되는 루틴",
-      part: "하체",
-      date: "2023년9월13일",
-      exercises: [
-        { id: 1, name: "스쿼트", sets: 4, reps: 10, weight: 80 },
-        { id: 2, name: "데드리프트", sets: 3, reps: 12, weight: 100 },
-        { id: 3, name: "레그 프레스", sets: 3, reps: 12, weight: 120 },
-        { id: 4, name: "레그 컬", sets: 3, reps: 15, weight: 40 },
-      ],
-    },
-    {
-      id: 1,
-      user_id: 1,
-      name: "하체왕 되는 루틴",
-      part: "하체",
-      date: "2023년9월13일",
-      exercises: [
-        { id: 1, name: "스쿼트", sets: 4, reps: 10, weight: 80 },
-        { id: 2, name: "데드리프트", sets: 3, reps: 12, weight: 100 },
-        { id: 3, name: "레그 프레스", sets: 3, reps: 12, weight: 120 },
-        { id: 4, name: "레그 컬", sets: 3, reps: 15, weight: 40 },
-      ],
-    },
-    {
-      id: 1,
-      user_id: 1,
-      name: "하체왕 되는 루틴",
-      part: "하체",
-      date: "2023년9월13일",
-      exercises: [
-        { id: 1, name: "스쿼트", sets: 4, reps: 10, weight: 80 },
-        { id: 2, name: "데드리프트", sets: 3, reps: 12, weight: 100 },
-        { id: 3, name: "레그 프레스", sets: 3, reps: 12, weight: 120 },
-        { id: 4, name: "레그 컬", sets: 3, reps: 15, weight: 40 },
-      ],
-    },
   ];
 
 

@@ -63,7 +63,7 @@ const AboutRoutine = ({route } : any) => {
 
     // </View>
     <View style={styles.container}>
-      <View style={{flex : 2, }}>
+      <View style={{flex : 2, justifyContent:"flex-end", marginBottom:wp(5) }}>
         <Text>현재 선택한 루틴 : {routineId}번 루틴 정보</Text>
         <Text>루틴이름 : {routineInfo.name}</Text>
         <Text>운동부위 : {routineInfo.part}</Text>
@@ -85,8 +85,8 @@ const AboutRoutine = ({route } : any) => {
   );
 };
 const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
-const buttonWidth = windowWidth * 0.5;
+// const windowHeight = Dimensions.get("window").height;
+// const buttonWidth = windowWidth * 0.5;
 
 const styles = StyleSheet.create({
   container: {
@@ -115,13 +115,13 @@ const styles = StyleSheet.create({
     // flex: 1,
     // alignContent:"center",
     alignItems:"center",
-    width: windowWidth * 0.9,
+    width: "90%",
     marginTop: 10,
     marginBottom: 10,
     backgroundColor: "skyblue",
-    borderColor: "blue",
+    // borderColor: "blue",
     // color: "red",
-    borderWidth: 1.5,
+    // borderWidth: 1.5,
     borderRadius: 5,
     padding: 15,
   },
