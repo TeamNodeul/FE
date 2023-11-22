@@ -62,9 +62,20 @@ const ManualMeasure = () => {
     startStop();
   };
 
+  const handleBackPress = () => {
+    if (navigation?.canGoBack()) {
+      Alert.alert("운동 종료", formatTime(time) + " 기록되었습니다.", [
+        {
+          text: "확인",
+        },
+      ]);
+      navigation.goBack();
+      return true;
+    }
+    return false;
+  };
   const handleExerciseDone = () => {
-    navigation.popToTop();
-
+    navigation.pop();
     Alert.alert("운동 종료", formatTime(time) + " 기록되었습니다.", [
       {
         text: "확인",
@@ -88,10 +99,10 @@ const ManualMeasure = () => {
   }, [isRunning, time]);
 
   useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", handleExerciseDone);
+    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
 
     return () => {
-      BackHandler.removeEventListener("hardwareBackPress", handleExerciseDone);
+      BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
     };
   }, []);
 
