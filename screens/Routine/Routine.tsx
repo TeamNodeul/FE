@@ -35,7 +35,6 @@ export type RootStackParam = {
 import RoutineData from "../../DB/DB_Routine";
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import {userID} from "../../DB/userID";
-
 const Routine = () => {
 
   const MyRoutineList = RoutineData.filter(item => item.user_id === userID);
