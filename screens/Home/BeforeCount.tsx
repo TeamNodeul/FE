@@ -10,6 +10,7 @@ import {
   Alert,
   ScrollView,
   TextInput,
+  Pressable,
 } from "react-native";
 
 import { SwipeListView } from "react-native-swipe-list-view";
@@ -17,11 +18,13 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { themeColor } from "./Home";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 
 export type RootStackParam = {
@@ -34,21 +37,36 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const buttonWidth = windowWidth * 0.9;
 
-const DATA = [{ timestamp: Date.now(), text: "Sample Text" }];
+const DATA = [
+  { timestamp: Date.now(), text: "Sample Text" },
+  { timestamp: Date.now() + 1, text: "Sample Text 2" },
+];
 
 const BeforeCount = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
 
   const [text, setText] = React.useState("");
+  const [data, setData] = React.useState(DATA);
+
+  const handleDelete = (timestamp) => {
+    const res = data.filter((item) => item.timestamp !== timestamp);
+    setData([...res]);
+  };
+
+  const handleAdd = () => {
+    const res = { timestamp: Date.now(), text: text };
+    setData([...data, res]);
+  };
 
   const renderItem = ({ item, index }) => {
     return (
       <View
         style={{
-          width: wp(80),
-          height: wp(80) / 4,
+          width: wp(90),
+          height: wp(90) / 4,
           backgroundColor: "#FFF",
-          marginHorizontal: wp(10),
+          marginHorizontal: wp(5),
+          marginBottom: hp(2),
           borderRadius: 10,
           flexDirection: "row",
           alignItems: "center",
@@ -64,10 +82,9 @@ const BeforeCount = () => {
             opacity: 0.4,
           }}
         />
-        <Text>{item.text}</Text>
+        <Text style={{ width: wp(57) }}>{item.text}</Text>
         <View
           style={{
-            marginLeft: wp(30),
             width: hp(2),
             height: hp(2),
             backgroundColor: themeColor,
@@ -85,12 +102,16 @@ const BeforeCount = () => {
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
-          paddingHorizontal: wp(10),
+          paddingHorizontal: wp(5),
           paddingVertical: hp(2),
         }}
       >
-        <Text style={{ fontSize: hp(3) }}>✒️</Text>
-        <Text style={{ fontSize: hp(3) }}>🗑️</Text>
+        <Pressable onPress={null}>
+          <Text style={{ fontSize: hp(3) }}>✒️</Text>
+        </Pressable>
+        <Pressable onPress={() => handleDelete(item.timestamp)}>
+          <Text style={{ fontSize: hp(3) }}>🗑️</Text>
+        </Pressable>
       </View>
     );
   };
@@ -138,26 +159,41 @@ const BeforeCount = () => {
       </View>
       <View style={styles.infoContainer}>
         <SwipeListView
-          data={DATA}
+          data={data}
           renderItem={renderItem}
           renderHiddenItem={renderHiddenItem}
           leftOpenValue={wp(10)}
           rightOpenValue={-wp(10)}
         />
-        <View>
+        <View style={{ width: wp(100), height: hp(10), flexDirection: "row" }}>
           <TextInput
             placeholder="please write the text."
             value={text}
             placeholderTextColor="#aaa"
+            onChangeText={(item) => setText(item)}
             style={{
               width: wp(60),
-              marginLeft: wp(10),
+              marginLeft: wp(13),
               backgroundColor: "#FFF",
               height: hp(5),
               paddingLeft: wp(3),
               borderRadius: 10,
             }}
           />
+          <Pressable
+            style={{
+              width: hp(5),
+              height: hp(5),
+              marginLeft: wp(3),
+              backgroundColor: "#fff",
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: 100,
+            }}
+            onPress={handleAdd}
+          >
+            <Text>➕</Text>
+          </Pressable>
         </View>
       </View>
       <View style={styles.buttonContainer}>
@@ -198,7 +234,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   infoContainer: {
-    width: "80%",
+    width: "100%",
     flex: 8,
   },
   buttonStyle: {
