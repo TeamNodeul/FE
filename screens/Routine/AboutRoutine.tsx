@@ -19,7 +19,7 @@ import { themeColor } from "../Home/Home";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 // import {data} from "./Routine"
-import RoutineData from "../DB/DB_Routine";
+import RoutineData from "../../DB/DB_Routine";
 
 const AboutRoutine = ({ route }: any) => {
   const { routineId } = route.params;

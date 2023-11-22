@@ -95,7 +95,7 @@ export const data = [
       ],
     },
     {
-      id: 1,
+      id: 201,
       user_id: 1,
       name: "하체왕 되는 루틴",
       part: "하체",
@@ -108,7 +108,7 @@ export const data = [
       ],
     },
     {
-      id: 1,
+      id: 202,
       user_id: 1,
       name: "하체왕 되는 루틴",
       part: "하체",

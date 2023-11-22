@@ -26,9 +26,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // export let userEmail = "";
 
 //현재 로그인 된 유저 id 저장
-import { userID } from "../DB/userID";
+import { userID } from "../../DB/userID";
 
-import UserData from "../DB/DB_User";
+import UserData from "../../DB/DB_User";
 
 const MyPage = () => {
   // 현재 로그인된 유저 객체를 가져옴

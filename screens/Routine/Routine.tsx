@@ -32,9 +32,9 @@ export type RootStackParam = {
 };
 
 
-import RoutineData from "../DB/DB_Routine";
+import RoutineData from "../../DB/DB_Routine";
 // import AsyncStorage from '@react-native-async-storage/async-storage';
-import {userID} from "../DB/userID";
+import {userID} from "../../DB/userID";
 
 const Routine = () => {
 
@@ -57,7 +57,7 @@ const Routine = () => {
 
           <TouchableOpacity
             style={styles.box}
-            key={index}
+            key={item.id}
             onPress={() => {
               // showExerciseInfo();
               navigation.navigate("AboutRoutine", { routineId: item.id });
@@ -88,7 +88,7 @@ const Routine = () => {
     /* navigation은 같은 함수내에 존재해야함*/
     return (
       <TouchableOpacity
-        style={styles.gptButtonContainer || {width:"90%"}}
+        style={styles.gptButtonContainer}
         onPress={() => {
           navigation.navigate("RoutineByGPT");
         }}
@@ -115,13 +115,12 @@ const Routine = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 2, width:"100%", alignContent:"center"}}>
-          <Text style={styles.title}>내가 만든 루틴 리스트</Text>
-          <View style={styles.separator}></View>
-          <GPTButton/>
+      <View style={{ flex: 1, width:"100%", alignContent:"center"}}>
+        <Text style={styles.title}>내가 만든 루틴 리스트</Text>
+        <View style={styles.separator}></View>
+        <GPTButton/>
       </View>
-      {/* <View style={styles.separator}></View> */}
-      <View style={{ flex: 8 }}>
+      <View style={{ flex: 3 }}>
         <RoutineList />
         <MakeRoutineButton/>
       </View>
@@ -129,6 +128,7 @@ const Routine = () => {
   );
 };
 // const windowWidth = Dimensions.get("window").width;
+
 
 
 
@@ -140,26 +140,26 @@ const styles = StyleSheet.create({
 
   gptButtonContainer: {
     // width: wp(35),
-    marginTop: "2%",
-    marginBottom: "3%",
+    marginTop: "4%",
+    // marginBottom: "3%",
     backgroundColor: "skyblue",
     // borderColor: "blue",
     // borderWidth: 1,
     width:"90%",
-    borderRadius: 15,
-    padding: 18,
+    borderRadius: 10,
+    padding: 20,
     alignItems: "center",
     alignSelf: "center",
   },
-  gptButton: {
-    alignItems: "center",
-    justifyContent: "center",
-    //backgroundColor: themeColor,
-    //width: 200,
-    //height: 50,
-    marginRight: 20, // 우측 상단에 여백 추가
-    marginTop: 50,
-  },
+  // gptButton: {
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   //backgroundColor: themeColor,
+  //   //width: 200,
+  //   //height: 50,
+  //   marginRight: 20, // 우측 상단에 여백 추가
+  //   marginTop: 50,
+  // },
   buttonText: {
     fontSize: 16,
     fontWeight: "bold",
@@ -168,8 +168,9 @@ const styles = StyleSheet.create({
   },
   separator: {
     width: "100%", // 화면 너비의 100%
-    height: 0.5, // 가로선의 높이
-    backgroundColor: "gray", // 가로선의 색상 (예: 회색)
+    height: 1, // 가로선의 높이
+    backgroundColor: "#dee2e6", // 가로선의 색상 (예: 회색)
+    justifyContent: "center",
     // marginTop: 0, // 가로선 위 여백
     //marginBottom: 20, // 가로선 아래 여백
   },
@@ -177,10 +178,10 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: "#dee2e6",
     padding: 22,
-    marginBottom: hp(1),
+    marginBottom: hp(2),
     borderRadius: 20,
     width: wp(90),
-    marginTop: hp(1),
+    // marginTop: hp(1),
   },
   name: {
     fontSize: wp(4),
@@ -211,7 +212,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
-    marginTop: hp(5),
+    marginTop: hp(7),
     marginBottom: hp(0.3),
     // marginLeft: wp(29),
     color: "#374151",
