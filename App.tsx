@@ -6,24 +6,29 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
+/* Home 관련 페이지 */
 import Home from "./screens/Home/Home";
 import BeforeCount from "./screens/Home/BeforeCount";
 import NFCScreen from "./screens/Home/NFCScreen";
 import ManualMeasure from "./screens/Home/ManualMeasure";
-import Group from "./screens/Group/Group";
 import MyPage from "./screens/MyPage/MyPage";
+
+/* Group 관련 페이지 */
+import Group from "./screens/Group/Group";
+import AboutGroup from "./screens/Group/AboutGroup";
 
 /* 루틴관련 화면들은 RoutineStack에서 관리 */
 import RoutineStack from "./screens/Routine/RoutineStack";
 
-import Diet from "./screens/Diet/Diet";
+/* 식단 관련 화면 스택 */
+import DietStack from "./screens/Diet/DietStack";
 import GroupSetting from "./screens/Group/GroupSetting";
 
+/* 아이콘 import */
 import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import AboutGroup from "./screens/Group/AboutGroup";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -96,7 +101,7 @@ const App = () => {
         />
         <Tab.Screen
           name="식단"
-          component={Diet}
+          component={DietStack}
           options={{
             tabBarIcon: () => (
               <MaterialIcons name="local-dining" size={28} color="black" />
