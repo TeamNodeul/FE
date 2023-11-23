@@ -54,8 +54,19 @@ const BeforeCount = () => {
   };
 
   const handleAdd = () => {
-    const res = { timestamp: Date.now(), text: text };
-    setData([...data, res]);
+    if (text === "") {
+      alert("텍스트를 입력하세요!");
+    } else {
+      const res = { timestamp: Date.now(), text: text };
+      setData([...data, res]);
+      setText("");
+    }
+  };
+
+  const handleModify = () => {
+    if (text === "") {
+      alert("수정할 텍스트를 박스 안에 입력ㅎ");
+    }
   };
 
   const renderItem = ({ item, index }) => {
@@ -106,7 +117,7 @@ const BeforeCount = () => {
           paddingVertical: hp(2),
         }}
       >
-        <Pressable onPress={null}>
+        <Pressable onPress={() => handleModify()}>
           <Text style={{ fontSize: hp(3) }}>✒️</Text>
         </Pressable>
         <Pressable onPress={() => handleDelete(item.timestamp)}>

@@ -8,6 +8,7 @@ import {
   Touchable,
   Dimensions,
   ScrollView,
+  Alert,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -24,6 +25,20 @@ export type RootStackParam = {
 };
 
 const Diet = () => {
+  const handleCreateButtonPress = () => {
+    Alert.alert("식단 추천", "GPT 식단 추천을 받으시겠습니까?", [
+      {
+        text: "취소",
+        style: "cancel",
+      },
+      {
+        text: "확인",
+        onPress: () => {
+          navigation.navigate("DietByGPT");
+        },
+      },
+    ]);
+  };
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
 
   return (
@@ -32,11 +47,7 @@ const Diet = () => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.title}>주간 식단 계획</Text>
-          <TouchableOpacity
-            onPressOut={() => {
-              navigation.navigate("DietByGPT");
-            }}
-          >
+          <TouchableOpacity onPressOut={handleCreateButtonPress}>
             <AntDesign
               name="edit"
               size={wp(6)}

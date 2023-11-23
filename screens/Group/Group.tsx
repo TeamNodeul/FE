@@ -20,6 +20,8 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import AboutGroup from "./AboutGroup";
+import DB_Group from "../../DB/DB_Group";
+//import { groupData as data } from "../../DB/DB_Group";
 
 export type RootStackParam = {
   Group: undefined;
@@ -31,18 +33,18 @@ export const data = [
   {
     id: 0,
     name: "운동을 하고 싶어서 만든 방",
-    headCount: "12/20명",
+    headCount: "12/20",
     leader: "강현민",
   },
-  { id: 1, name: "불나방", headCount: "10/20명", leader: "오소리" },
-  { id: 2, name: "불나방", headCount: "10/20명", leader: "오소리" },
-  { id: 3, name: "불나방", headCount: "10/20명", leader: "오소리" },
-  { id: 4, name: "불나방", headCount: "10/20명", leader: "오소리" },
-  { id: 5, name: "불나방", headCount: "10/20명", leader: "오소리" },
-  { id: 6, name: "불나방", headCount: "10/20명", leader: "오소리" },
-  { id: 7, name: "불나방", headCount: "10/20명", leader: "오소리" },
-  { id: 8, name: "불나방", headCount: "10/20명", leader: "오소리" },
-  { id: 9, name: "불나방", headCount: "10/20명", leader: "오소리" },
+  { id: 1, name: "불나방", headCount: "10/20", leader: "오소리" },
+  { id: 2, name: "T1", headCount: "7/20", leader: "페이커" },
+  { id: 3, name: "Gen.G", headCount: "5/20", leader: "오소리" },
+  { id: 4, name: "LNG", headCount: "19/20", leader: "오소리" },
+  { id: 5, name: "JDG", headCount: "11/20", leader: "Ruler" },
+  { id: 6, name: "WBG", headCount: "12/20", leader: "TheShy" },
+  { id: 7, name: "Kt Rolster", headCount: "14/20", leader: "오소리" },
+  { id: 8, name: "Cloud9", headCount: "17/20", leader: "오소리" },
+  { id: 9, name: "DRX", headCount: "5/20", leader: "중꺾마" },
 ];
 
 const GroupComponent = () => {
@@ -60,7 +62,7 @@ const GroupComponent = () => {
           <View style={styles.box} key={index}>
             <Text style={styles.name}>{item.name}</Text>
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.count}>{item.headCount}</Text>
+              <Text style={styles.count}>{item.headCount}명</Text>
               <Text style={styles.leader}>그룹장: {item.leader}</Text>
             </View>
           </View>
