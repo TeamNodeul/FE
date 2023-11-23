@@ -1,63 +1,100 @@
-import React, {useState} from "react";
-import {
-  View,
-  Text,
-  Button,
-  TouchableOpacity,
-  StyleSheet,
-  Touchable,
-  Dimensions,
-  TextInput,
-} from "react-native";
-import { themeColor } from "../Home/Home";
+import React, { useState } from "react";
+import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Colors } from "react-native/Libraries/NewAppScreen";
-
-import {userID} from "../../DB/userID";
-import {data} from "../../DB/DB_Routine";
-
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-
-
-
-export type RootStackParam = {
-  Routine: undefined;
-  MakeRoutine: undefined;
-  AboutRoutine: undefined;
-  //
-};
 
 const MakeRoutine = () => {
-  const [ExerciseList, setExerciseList] = useState<string[]>([]);
-  const addExercise = (exercise : string)=>{
-    setExerciseList((prev => [...prev, exercise]));
-  }
-  
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
-  //구현 예정
+  const navigation = useNavigation();
+  const [routineName, setRoutineName] = useState("");
+  const [exercises, setExercises] = useState([{ name: "", sets: "", reps: "" }]);
+
+  const handleAddExercise = () => {
+    setExercises([...exercises, { name: "", sets: "", reps: "" }]);
+  };
+
+  const handleRemoveExercise = (indexToRemove:number) => {
+    const updatedExercises = exercises.filter((_, index) => index !== indexToRemove);
+    setExercises(updatedExercises);
+  };
+
+  const handleCreateRoutine = () => {
+    // 여기서 데이터베이스에 데이터를 전송하는 로직을 추가해야 합니다.
+    // 현재는 콘솔에 출력하는 예시 코드만 작성했습니다.
+    console.log("Routine Name:", routineName);
+    console.log("Exercises:", exercises);
+  };
+
   return (
     <View style={styles.container}>
-      <View style={{flex:1}}></View>
-      <View style={{flex:9, alignItems:"center"}}>
-        <Text> 루틴 제작 페이지</Text>
-        
-          <TextInput
-            style={styles.inputBox}
-            placeholder="루틴이름"
-          />
-          <TextInput
-            style={styles.inputBox}
-            placeholder="부위(part)"
-          />
-        <View style={styles.separator}></View>
-          <Text>zzz</Text>
-      </View>
+      <Text style={styles.label}>루틴 이름</Text>
+      <TextInput
+        style={styles.input}
+        value={routineName}
+        onChangeText={(text) => setRoutineName(text)}
+        placeholder="루틴 이름을 입력하세요"
+      />
 
+      <Text style={styles.label}>운동 종목</Text>
+      <ScrollView>
+        {exercises.map((exercise, index) => (
+          <View key={index} style={styles.exerciseContainer}>
+            <View style={styles.exerciseHeader}>
+              <Text style={styles.exerciseLabel}>운동 종목 이름</Text>
+              <TouchableOpacity onPress={() => handleRemoveExercise(index)}>
+                <Text style={styles.removeButtonText}>삭제</Text>
+              </TouchableOpacity>
+            </View>
+
+            <TextInput
+              style={styles.input}
+              value={exercise.name}
+              onChangeText={(text) => {
+                const updatedExercises = [...exercises];
+                updatedExercises[index].name = text;
+                setExercises(updatedExercises);
+              }}
+              placeholder="운동 종목 이름을 입력하세요"
+            />
+
+            <View style={styles.setsRepsContainer}>
+              <View style={styles.setsContainer}>
+                <Text style={styles.setsRepsLabel}>세트 수</Text>
+                <TextInput
+                  style={styles.input}
+                  value={exercise.sets}
+                  onChangeText={(text) => {
+                    const updatedExercises = [...exercises];
+                    updatedExercises[index].sets = text;
+                    setExercises(updatedExercises);
+                  }}
+                  placeholder="세트 수를 입력하세요"
+                />
+              </View>
+
+              <View style={styles.repsContainer}>
+                <Text style={styles.setsRepsLabel}>운동 횟수</Text>
+                <TextInput
+                  style={styles.input}
+                  value={exercise.reps}
+                  onChangeText={(text) => {
+                    const updatedExercises = [...exercises];
+                    updatedExercises[index].reps = text;
+                    setExercises(updatedExercises);
+                  }}
+                  placeholder="운동 횟수를 입력하세요"
+                />
+              </View>
+            </View>
+          </View>
+        ))}
+      <TouchableOpacity style={styles.addButton} onPress={handleAddExercise}>
+        <Text style={styles.addButtonText}>운동 종목 추가</Text>
+      </TouchableOpacity>
+      </ScrollView>
+
+
+      <TouchableOpacity style={styles.createButton} onPress={handleCreateRoutine}>
+        <Text style={styles.createButtonText}>루틴 생성</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -65,38 +102,79 @@ const MakeRoutine = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "f8f9fa",
-    // paddingHorizontal: 16,
+    padding: 16,
   },
-  inputBox: {
+  label: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginTop: 12,
+  },
+  input: {
+    height: 40,
     borderColor: "gray",
     borderWidth: 1,
-    width: wp(90),
-    padding: 15,
-    borderRadius: 5,
-    marginVertical:5,
+    marginBottom: 12,
+    padding: 8,
   },
-
-  title: {
-    fontSize: 24,
+  exerciseContainer: {
+    marginBottom: 20,
+  },
+  exerciseHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  exerciseLabel: {
+    fontSize: 16,
     fontWeight: "bold",
-    textAlign: "center",
-    marginTop: hp(7),
-    marginBottom: hp(0.3),
-    // marginLeft: wp(29),
-    color: "#374151",
+    marginTop: 12,
   },
-  separator: {
-    width: "100%", // 화면 너비의 100%
-    height: 1, // 가로선의 높이
-    backgroundColor: "red", // 가로선의 색상 (예: 회색)
-    justifyContent: "center",
-    // marginTop: 0, // 가로선 위 여백
-    //marginBottom: 20, // 가로선 아래 여백
+  setsRepsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
-
+  setsContainer: {
+    flex: 1,
+    marginRight: 5,
+  },
+  repsContainer: {
+    flex: 1,
+    marginLeft: 5,
+  },
+  setsRepsLabel: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginTop: 12,
+  },
+  removeButtonText: {
+    color: "red",
+    fontSize: 16,
+    fontWeight: "bold",
+    marginTop: 12,
+  },
+  addButton: {
+    backgroundColor: "green",
+    padding: 10,
+    borderRadius: 8,
+    marginTop: 20,
+    alignItems: "center",
+  },
+  addButtonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  createButton: {
+    backgroundColor: "blue",
+    padding: 12,
+    borderRadius: 8,
+    marginTop: 20,
+    alignItems: "center",
+  },
+  createButtonText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
 });
 
 export default MakeRoutine;
