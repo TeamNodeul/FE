@@ -30,6 +30,11 @@ import { userID } from "../../DB/userID";
 
 import UserData from "../../DB/DB_User";
 
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+
 const MyPage = () => {
   // 현재 로그인된 유저 객체를 가져옴
   const user = UserData.find((user) => user.id === userID);
@@ -103,21 +108,63 @@ const MyPage = () => {
     closeModal();
   };
 
-  //구현 예정
+  const NameModifier = () => {
+    return (
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.modalView}>
+          <Text>변경할 프로필 이름을 입력하세요: </Text>
+          <TextInput
+            placeholder="변경할 이름 입력"
+            onChangeText={setInputText}
+            style={{
+              backgroundColor: "lightgrey",
+              borderRadius: 10,
+              paddingHorizontal: 10,
+              marginVertical: "3%",
+            }}
+          />
+          <View style={styles.modalButtonStyle}>
+            <View style={{ marginHorizontal: "5%" }}>
+              <Button title="저장" onPress={saveText} />
+            </View>
+            <View style={{ marginHorizontal: "5%" }}>
+              <Button title="닫기" onPress={closeModal} />
+            </View>
+          </View>
+        </View>
+      </Modal>
+    );
+  };
+
+  const DataContainer = () => {
+    return (
+      <View style={styles.dataContainer}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Text style={styles.dataTypeText}>신체 데이터</Text>
+          <View style={styles.physicalData}>
+            <ScrollView>
+              <Text></Text>
+            </ScrollView>
+          </View>
+          <Text style={styles.dataTypeText}>운동 리포트</Text>
+          <View style={styles.reportData}></View>
+        </ScrollView>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.profileContainer}>
         <View style={{ flex: 1 }}></View>
-        <View style={{ flex: 1 }}>
-          <TouchableOpacity onPress={openModal}>
-            <Feather
-              style={styles.rightIcon}
-              name="settings"
-              size={28}
-              color={themeColor}
-            />
-          </TouchableOpacity>
-        </View>
+        <View style={{ flex: 1 }}></View>
         <View style={[{ flex: 2 }, styles.profileTextContainer]}>
           <FontAwesome name="user-circle" size={54} color="black" />
         </View>
@@ -125,36 +172,7 @@ const MyPage = () => {
           <Text style={[styles.profileText, { fontWeight: "bold" }]}>
             {userName} 님
           </Text>
-          <Modal
-            animationType="fade"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-              setModalVisible(!modalVisible);
-            }}
-          >
-            <View style={styles.modalView}>
-              <Text>변경할 프로필 이름을 입력하세요: </Text>
-              <TextInput
-                placeholder="변경할 이름 입력"
-                onChangeText={setInputText}
-                style={{
-                  backgroundColor: "lightgrey",
-                  borderRadius: 10,
-                  paddingHorizontal: 10,
-                  marginVertical: "3%",
-                }}
-              />
-              <View style={styles.modalButtonStyle}>
-                <View style={{ marginHorizontal: "5%" }}>
-                  <Button title="저장" onPress={saveText} />
-                </View>
-                <View style={{ marginHorizontal: "5%" }}>
-                  <Button title="닫기" onPress={closeModal} />
-                </View>
-              </View>
-            </View>
-          </Modal>
+          <NameModifier />
           <TouchableOpacity>
             <AntDesign
               style={{ marginLeft: 5 }}
@@ -171,47 +189,7 @@ const MyPage = () => {
       </View>
       {/* <Login/> */}
       <View style={styles.line}></View>
-      <View style={styles.dataContainer}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <Text>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorem
-            eligendi perspiciatis animi. Nemo, eveniet. Illo delectus amet
-            repellendus iste, dolor itaque quae, odio labore quaerat perferendis
-            numquam possimus optio adipisci! Minus sapiente tempore earum
-            tempora optio dignissimos soluta cumque, deserunt numquam in alias
-            consequatur commodi minima, nemo debitis architecto placeat eveniet
-            vel dolores veniam. Similique aliquam accusantium earum explicabo
-            at. Voluptatum natus consequatur minus ad, repudiandae, saepe sed ex
-            voluptate molestias quisquam incidunt aspernatur pariatur cum et non
-            tempora, ut adipisci! Consectetur quibusdam perferendis eos!
-            Asperiores dolore libero repudiandae est! Dolor exercitationem
-            incidunt unde fuga esse, dolores nobis dolorem ex facilis inventore
-            neque aperiam cumque reprehenderit ab repellat accusamus! Quia
-            dolorum cum molestiae animi ipsa nesciunt. Nihil alias natus optio.
-            Voluptatibus, officiis? Quo, itaque nam. Facilis modi tempore dolore
-            ea. Eos consequuntur provident totam, inventore eius eligendi
-            asperiores consectetur quos adipisci quasi rem minus nesciunt
-            delectus qui quaerat dicta molestias! Dolorem consequuntur aut vitae
-            quam quisquam minima eaque eum fugit modi eius ipsam ad magnam
-            praesentium quidem doloremque non illo a, molestiae fugiat similique
-            alias. Nemo esse iure repudiandae maiores? Ipsam minima rerum error,
-            sequi facilis provident a ratione, magnam quas repudiandae
-            temporibus possimus eveniet iste maxime alias laborum. Ipsum
-            laboriosam earum velit sequi rerum consequatur beatae modi iusto
-            impedit? Aliquid eveniet nam nostrum dolorem aut, eius similique.
-            Perspiciatis, asperiores voluptatibus dolor earum voluptate, magni
-            voluptates possimus atque maxime, molestiae perferendis nobis soluta
-            ipsum at explicabo excepturi neque laborum. Illo! Aspernatur
-            necessitatibus, dignissimos vero quae blanditiis voluptate, a
-            maiores esse omnis fuga saepe enim, consectetur cum voluptatum qui
-            nemo labore eveniet nobis beatae neque facilis nisi. Laborum
-            doloribus odit voluptates? Similique unde sunt repellendus numquam
-            tempore esse nesciunt dolorem, reprehenderit maxime aliquid minima
-            omnis officia ratione distinctio odio ea. Officiis dignissimos quia
-            nesciunt? Tempora velit explicabo iusto repudiandae quo ea!
-          </Text>
-        </ScrollView>
-      </View>
+      <DataContainer />
     </View>
   );
 };
@@ -280,6 +258,29 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 16,
     paddingLeft: 8,
+  },
+  physicalData: {
+    paddingHorizontal: wp(2.5),
+    paddingVertical: hp(1),
+    width: wp(90),
+    height: hp(30),
+    marginTop: hp(1),
+    marginBottom: hp(5),
+    borderColor: themeColor,
+    borderWidth: wp(0.5),
+    borderRadius: 20,
+  },
+  reportData: {
+    width: wp(90),
+    height: hp(30),
+    marginVertical: hp(1),
+    borderColor: themeColor,
+    borderWidth: wp(0.5),
+    borderRadius: 20,
+  },
+  dataTypeText: {
+    fontSize: wp(5),
+    color: "#495057",
   },
 });
 
