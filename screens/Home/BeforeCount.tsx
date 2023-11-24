@@ -65,7 +65,7 @@ const BeforeCount = () => {
 
   const handleModify = () => {
     if (text === "") {
-      alert("수정할 텍스트를 박스 안에 입력ㅎ");
+      alert("수정할 텍스트를 박스 안에 입력하세요");
     }
   };
 

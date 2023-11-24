@@ -1,3 +1,5 @@
+let number = 10;
+
 export const groupData = [
   {
     id: 0,
@@ -15,6 +17,9 @@ export const groupData = [
   { id: 8, name: "Cloud9", headCount: "17/20", leader: "C9" },
   { id: 9, name: "DRX", headCount: "5/20", leader: "Deft" },
 ];
+
 //getter, setter 구현 필요
 
-export default groupData;
+export const DB_Group = () => {};
+
+export default DB_Group;

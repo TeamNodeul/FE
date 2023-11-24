@@ -19,6 +19,7 @@ import { themeColor } from "../Home/Home";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { getter, setter } from "../../DB/DB_Group";
 
 import DB_Group, { groupData } from "../../DB/DB_Group";
 import { userID } from "../../DB/userID";
@@ -52,7 +53,6 @@ const GroupSetting = () => {
     // 받아오기 성공, 서버로 넘겨주는것 구현만 하면 됨
     //alert(inputName + " " + inputDescription + " " + category + " " + number);
     const user = UserData.find((user) => user.id === userID);
-
     console.log(user!.name);
 
     console.log(
