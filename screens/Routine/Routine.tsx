@@ -31,19 +31,15 @@ export type RootStackParam = {
   MakeRoutine: undefined;
 };
 
-
 import RoutineData from "../../DB/DB_Routine";
 // import AsyncStorage from '@react-native-async-storage/async-storage';
-import {userID} from "../../DB/userID";
+import { userID } from "../../DB/userID";
 const Routine = () => {
-
-  const MyRoutineList = RoutineData.filter(item => item.user_id === userID);
-
+  const MyRoutineList = RoutineData.filter((item) => item.user_id === userID);
 
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
 
   const ShowRoutineList = () => {
-
     return (
       <View
         style={{
@@ -53,7 +49,6 @@ const Routine = () => {
         }}
       >
         {MyRoutineList.map((item, index) => (
-
           <TouchableOpacity
             style={styles.box}
             key={item.id}
@@ -64,7 +59,12 @@ const Routine = () => {
           >
             <View>
               <Text style={styles.name}>{item.name}</Text>
-              <View style={{ flexDirection: "row", justifyContent:"space-between" }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
                 <Text style={styles.part}>{item.part}</Text>
                 <Text style={styles.date}>{item.date}</Text>
               </View>
@@ -110,26 +110,21 @@ const Routine = () => {
     );
   };
 
-
-
   return (
     <View style={styles.container}>
-      <View style={{ flex: 1, width:"100%", alignContent:"center"}}>
+      <View style={{ flex: 1, width: "100%", alignContent: "center" }}>
         <Text style={styles.title}>내가 만든 루틴 리스트</Text>
         <View style={styles.separator}></View>
-        <GPTButton/>
+        <GPTButton />
       </View>
       <View style={{ flex: 3 }}>
         <RoutineList />
-        <MakeRoutineButton/>
+        <MakeRoutineButton />
       </View>
     </View>
   );
 };
 // const windowWidth = Dimensions.get("window").width;
-
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -144,7 +139,7 @@ const styles = StyleSheet.create({
     backgroundColor: "skyblue",
     // borderColor: "blue",
     // borderWidth: 1,
-    width:"90%",
+    width: "90%",
     borderRadius: 10,
     padding: 20,
     alignItems: "center",
@@ -163,7 +158,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     alignItems: "center",
-    color:"white",
+    color: "white",
   },
   separator: {
     width: "100%", // 화면 너비의 100%
