@@ -19,31 +19,13 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import AboutGroup from "./AboutGroup";
+import { groupData as data } from "../../DB/DB_Group";
 
 export type RootStackParam = {
   Group: undefined;
   GroupSetting: undefined;
   AboutGroup: { groupId: number };
 };
-
-export const data = [
-  {
-    id: 0,
-    name: "운동을 하고 싶어서 만든 방",
-    headCount: "12/20명",
-    leader: "강현민",
-  },
-  { id: 1, name: "불나방", headCount: "10/20명", leader: "오소리" },
-  { id: 2, name: "불나방", headCount: "10/20명", leader: "오소리" },
-  { id: 3, name: "불나방", headCount: "10/20명", leader: "오소리" },
-  { id: 4, name: "불나방", headCount: "10/20명", leader: "오소리" },
-  { id: 5, name: "불나방", headCount: "10/20명", leader: "오소리" },
-  { id: 6, name: "불나방", headCount: "10/20명", leader: "오소리" },
-  { id: 7, name: "불나방", headCount: "10/20명", leader: "오소리" },
-  { id: 8, name: "불나방", headCount: "10/20명", leader: "오소리" },
-  { id: 9, name: "불나방", headCount: "10/20명", leader: "오소리" },
-];
 
 const GroupComponent = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
@@ -60,7 +42,7 @@ const GroupComponent = () => {
           <View style={styles.box} key={index}>
             <Text style={styles.name}>{item.name}</Text>
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.count}>{item.headCount}</Text>
+              <Text style={styles.count}>{item.headCount}명</Text>
               <Text style={styles.leader}>그룹장: {item.leader}</Text>
             </View>
           </View>

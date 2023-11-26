@@ -1,11 +1,20 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 const MakeRoutine = () => {
   const navigation = useNavigation();
   const [routineName, setRoutineName] = useState("");
-  const [exercises, setExercises] = useState([{ name: "", sets: "", reps: "" }]);
+  const [exercises, setExercises] = useState([
+    { name: "", sets: "", reps: "" },
+  ]);
 
 
 
@@ -22,8 +31,10 @@ const MakeRoutine = () => {
     setExercises([...exercises, { name: "", sets: "", reps: "" }]);
   };
 
-  const handleRemoveExercise = (indexToRemove:number) => {
-    const updatedExercises = exercises.filter((_, index) => index !== indexToRemove);
+  const handleRemoveExercise = (indexToRemove: number) => {
+    const updatedExercises = exercises.filter(
+      (_, index) => index !== indexToRemove
+    );
     setExercises(updatedExercises);
   };
 
@@ -97,13 +108,15 @@ const MakeRoutine = () => {
             </View>
           </View>
         ))}
-      <TouchableOpacity style={styles.addButton} onPress={handleAddExercise}>
-        <Text style={styles.addButtonText}>운동 종목 추가</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.addButton} onPress={handleAddExercise}>
+          <Text style={styles.addButtonText}>운동 종목 추가</Text>
+        </TouchableOpacity>
       </ScrollView>
 
-
-      <TouchableOpacity style={styles.createButton} onPress={handleCreateRoutine}>
+      <TouchableOpacity
+        style={styles.createButton}
+        onPress={handleCreateRoutine}
+      >
         <Text style={styles.createButtonText}>루틴 생성</Text>
       </TouchableOpacity>
     </View>

@@ -17,11 +17,11 @@ import {
 import { themeColor } from "../Home/Home";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { data } from "./Group";
+import { groupData } from "../../DB/DB_Group";
 
 const AboutGroup = ({ route }: any) => {
   const { groupId } = route.params;
-  const groupInfo = data.find((item) => item.id === groupId);
+  const groupInfo = groupData.find((item) => item.id === groupId);
 
   if (!groupInfo) {
     return (
