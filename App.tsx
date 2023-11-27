@@ -27,7 +27,7 @@ import GroupSetting from "./screens/Group/GroupSetting";
 /* 아이콘 import */
 import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons"; 
 import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
