@@ -43,7 +43,7 @@ const Diet = () => {
   };
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
 
-  const options = { month: "numeric", day: "numeric" };
+  const options = { month: "2-digit", day: "2-digit" };
 
   return (
     <View style={styles.container}>

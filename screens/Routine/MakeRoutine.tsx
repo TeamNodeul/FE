@@ -13,7 +13,7 @@ const MakeRoutine = () => {
   const navigation = useNavigation();
   const [routineName, setRoutineName] = useState("");
   const [exercises, setExercises] = useState([
-    { name: "", sets: "", reps: "" },
+    { name: "", sets: "", reps: "", weight: "" },
   ]);
 
 
@@ -28,7 +28,7 @@ const MakeRoutine = () => {
 
 
   const handleAddExercise = () => {
-    setExercises([...exercises, { name: "", sets: "", reps: "" }]);
+    setExercises([...exercises, { name: "", sets: "", reps: "", weight:"" }]);
   };
 
   const handleRemoveExercise = (indexToRemove: number) => {
@@ -81,6 +81,7 @@ const MakeRoutine = () => {
               <View style={styles.setsContainer}>
                 <Text style={styles.setsRepsLabel}>세트 수</Text>
                 <TextInput
+                keyboardType="numeric" // 숫자 키패드를 띄우기 위한 설정
                   style={styles.input}
                   value={exercise.sets}
                   onChangeText={(text) => {
@@ -95,6 +96,7 @@ const MakeRoutine = () => {
               <View style={styles.repsContainer}>
                 <Text style={styles.setsRepsLabel}>운동 횟수</Text>
                 <TextInput
+                keyboardType="numeric" // 숫자 키패드를 띄우기 위한 설정
                   style={styles.input}
                   value={exercise.reps}
                   onChangeText={(text) => {
@@ -103,6 +105,20 @@ const MakeRoutine = () => {
                     setExercises(updatedExercises);
                   }}
                   placeholder="운동 횟수를 입력하세요"
+                />
+              </View>
+              <View style={styles.repsContainer}>
+                <Text style={styles.setsRepsLabel}>weight</Text>
+                <TextInput
+                keyboardType="numeric" // 숫자 키패드를 띄우기 위한 설정
+                  style={styles.input}
+                  value={exercise.weight}
+                  onChangeText={(text) => {
+                    const updatedExercises = [...exercises];
+                    updatedExercises[index].weight = text;
+                    setExercises(updatedExercises);
+                  }}
+                  placeholder="weight를 입력하세요"
                 />
               </View>
             </View>
