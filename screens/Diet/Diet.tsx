@@ -66,11 +66,12 @@ const Diet = () => {
           </TouchableOpacity>
         </View>
         <Text style={styles.dayText}>
-          {initDate.toLocaleDateString()} ~ {lastDate.toLocaleDateString()}
+          {initDate.toLocaleDateString(undefined, options)} ~{" "}
+          {lastDate.toLocaleDateString(undefined, options)}
         </Text>
         {data.map((item, index) => (
           <View style={styles.dayContainer} key={index}>
-            {renderDay(index, item.day, item.dayOfWeek, [
+            {renderDay(index, item.day, [
               item.breakfast,
               item.lunch,
               item.dinner,
@@ -82,13 +83,11 @@ const Diet = () => {
   );
 };
 
-function renderDay(day: any, weekday: any, weekOfDay: any, meals: any) {
+function renderDay(day: any, weekday: any, meals: any) {
   return (
     <View style={styles.dayCard} key={day}>
       <View style={[styles.dayHeader, { backgroundColor: getDayColor(day) }]}>
-        <Text style={styles.dayHeaderText}>
-          {weekday} {weekOfDay}
-        </Text>
+        <Text style={styles.dayHeaderText}>{weekday}</Text>
       </View>
       <View style={styles.mealContainer}>
         {meals.map((meal: any, index: any) => (
@@ -102,26 +101,6 @@ function renderDay(day: any, weekday: any, weekOfDay: any, meals: any) {
 }
 
 function getDayColor(day: any) {
-  // 여기에서 각 요일에 따라 배경색을 설정할 수 있습니다.
-  // 예: 월요일 - '#10b981', 화요일 - '#f97316', ...
-  /*switch (day) {
-    case 0:
-      return "#10b981";
-    case "화요일":
-      return "#f97316";
-    case "수요일":
-      return "#3b82f6";
-    case "목요일":
-      return "#6d28d9";
-    case "금요일":
-      return "#f43f5e";
-    case "토요일":
-      return "#ef4444";
-    case "일요일":
-      return "#6366f1";
-    default:
-      return "#ccc";
-  }*/
   return themeColor;
 }
 
