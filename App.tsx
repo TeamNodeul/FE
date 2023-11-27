@@ -5,8 +5,6 @@ import BleManager from "react-native-ble-manager";
 import { NavigationContainer, getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
-
 /* Home 관련 페이지 */
 import Home from "./screens/Home/Home";
 import BeforeCount from "./screens/Home/BeforeCount";
