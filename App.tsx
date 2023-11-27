@@ -5,6 +5,7 @@ import BleManager from "react-native-ble-manager";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
 /* Home 관련 페이지 */
 import Home from "./screens/Home/Home";
@@ -27,7 +28,7 @@ import GroupSetting from "./screens/Group/GroupSetting";
 /* 아이콘 import */
 import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons"; 
+import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
@@ -102,29 +103,52 @@ const App = () => {
         <Tab.Screen
           name="식단"
           component={DietStack}
-          options={{
+          options={({ route }) => ({
             tabBarIcon: () => (
               <MaterialIcons name="local-dining" size={28} color="black" />
             ),
-          }}
+            tabBarStyle: ((route) => {
+              const routeName = getFocusedRouteNameFromRoute(route) ?? "";
+              if (routeName == "DietByGPT") {
+                return { display: "none" };
+              }
+              return;
+            })(route),
+          })}
         />
         <Tab.Screen
           name="루틴"
           component={RoutineStack}
-          options={{
+          options={({ route }) => ({
             tabBarIcon: () => (
               <MaterialCommunityIcons name="dumbbell" size={28} color="black" />
             ),
-          }}
+            tabBarHideOnKeyboard: true,
+            tabBarStyle: ((route) => {
+              const routeName = getFocusedRouteNameFromRoute(route) ?? "";
+              console.log(routeName);
+              if (routeName !== "Routine") {
+                return { display: "none" };
+              }
+              return;
+            })(route),
+          })}
         />
         <Tab.Screen
           name="그룹"
           component={GroupStack}
-          options={{
+          options={({ route }) => ({
             tabBarIcon: () => (
               <MaterialIcons name="group" size={28} color="black" />
             ),
-          }}
+            tabBarStyle: ((route) => {
+              const routeName = getFocusedRouteNameFromRoute(route) ?? "";
+              if (routeName === "GroupSetting") {
+                return { display: "none" };
+              }
+              return;
+            })(route),
+          })}
         />
         <Tab.Screen
           name="마이페이지"

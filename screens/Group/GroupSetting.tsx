@@ -10,6 +10,7 @@ import {
   TextInput,
   Alert,
 } from "react-native";
+import axios from "axios";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -19,11 +20,12 @@ import { themeColor } from "../Home/Home";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { getter, setter } from "../../DB/DB_Group";
+import { addGroup } from "../../DB/DB_Group";
 
-import DB_Group, { groupData } from "../../DB/DB_Group";
+import { groupData } from "../../DB/DB_Group";
 import { userID } from "../../DB/userID";
 import UserData from "../../DB/DB_User";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export type RootStackParam = {
   Group: undefined;
@@ -62,6 +64,21 @@ const GroupSetting = () => {
       number,
       inputDescription
     );
+
+    const newGroup = {
+      id: groupData.length,
+      name: inputName,
+      headCount: "0/" + number,
+      leader: user!.name,
+    };
+
+    addGroup(newGroup);
+
+    setCategory("");
+    setNumber("");
+    setInputName("");
+    setInputDescription("");
+    //setter(inputName, number, user!.name);
   };
 
   return (
@@ -154,15 +171,15 @@ const GroupSetting = () => {
             onValueChange={(itemValue, itemIndex) => setNumber(itemValue)}
           >
             <Picker.Item label="모집인원 선택" value="" />
-            <Picker.Item label="2명" value="two" />
-            <Picker.Item label="3명" value="three" />
-            <Picker.Item label="4명" value="four" />
-            <Picker.Item label="5명" value="five" />
-            <Picker.Item label="6명" value="six" />
-            <Picker.Item label="7명" value="seven" />
-            <Picker.Item label="8명" value="eight" />
-            <Picker.Item label="9명" value="nine" />
-            <Picker.Item label="10명" value="ten" />
+            <Picker.Item label="2명" value="2" />
+            <Picker.Item label="3명" value="3" />
+            <Picker.Item label="4명" value="4" />
+            <Picker.Item label="5명" value="5" />
+            <Picker.Item label="6명" value="6" />
+            <Picker.Item label="7명" value="7" />
+            <Picker.Item label="8명" value="8" />
+            <Picker.Item label="9명" value="9" />
+            <Picker.Item label="10명" value="10" />
           </Picker>
         </View>
         <View style={{ marginTop: hp(5) }}>
