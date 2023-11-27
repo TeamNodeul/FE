@@ -16,6 +16,17 @@ const MakeRoutine = () => {
     { name: "", sets: "", reps: "" },
   ]);
 
+
+
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      tabBarVisible: false,
+    });
+  }, [navigation]);
+
+
+
   const handleAddExercise = () => {
     setExercises([...exercises, { name: "", sets: "", reps: "" }]);
   };
@@ -177,11 +188,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   createButton: {
-    backgroundColor: "blue",
-    padding: 12,
-    borderRadius: 8,
-    marginTop: 20,
+    // width: wp(35),
+    marginTop: "4%",
+    // marginBottom: "3%",
+    backgroundColor: "skyblue",
+    // borderColor: "blue",
+    // borderWidth: 1,
+    // width:"100%",
+    borderRadius: 10,
+    padding: 20,
     alignItems: "center",
+    // alignSelf: "center",
   },
   createButtonText: {
     color: "white",

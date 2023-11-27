@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Touchable,
   Dimensions,
-  ProgressBarAndroidComponent, //iOS는 ProgrssViewIOS 사용
+  ProgressBarAndroidComponent, //iOS는 ProgrssViewIOS 사용 /**https://github.com/oblador/react-native-progress */
   BackHandler,
   Alert,
 } from "react-native";
