@@ -2,7 +2,7 @@ import * as React from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import AppNavigator from "./screens/AppNavigator";
 import BleManager from "react-native-ble-manager";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -111,11 +111,20 @@ const App = () => {
         <Tab.Screen
           name="루틴"
           component={RoutineStack}
-          options={{
+          options={({ route }) => ({
             tabBarIcon: () => (
               <MaterialCommunityIcons name="dumbbell" size={28} color="black" />
             ),
-          }}
+            tabBarHideOnKeyboard: true,
+            tabBarStyle: ((route) => {
+              const routeName = getFocusedRouteNameFromRoute(route) ?? "";
+              // console.log(routeName);
+              if (routeName !== "Routine") {
+                return { display: "none" };
+              }
+              return;
+            })(route),
+          })}
         />
         <Tab.Screen
           name="그룹"

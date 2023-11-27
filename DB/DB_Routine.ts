@@ -123,4 +123,22 @@ export const data = [
   ];
 
 
-  export default data;
+  // interface newRoutine{
+  //   id : number,
+  //   user_id : number,
+  //   name : string,
+  //   date : Date,
+  //   exercises : [{
+  //     id:number,
+  //     name:string,
+  //     sets:number,
+  //     reps:number,
+  //     weight:number,
+  //   }]
+  // }
+export const addRoutine = (newRoutine : any) => {
+  
+  data.push(newRoutine);
+}
+
+export default data;

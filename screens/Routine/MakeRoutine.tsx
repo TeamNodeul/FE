@@ -8,9 +8,13 @@ import {
   StyleSheet,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import {addRoutine, data} from "../../DB/DB_Routine"
+import { userID } from "../../DB/userID";
 
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {RootStackParam} from "./Routine"
 const MakeRoutine = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   const [routineName, setRoutineName] = useState("");
   const [exercises, setExercises] = useState([
     { name: "", sets: "", reps: "", weight: "" },
@@ -19,11 +23,11 @@ const MakeRoutine = () => {
 
 
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      tabBarVisible: false,
-    });
-  }, [navigation]);
+  // React.useLayoutEffect(() => {
+  //   navigation.setOptions({
+  //     tabBarVisible: false,
+  //   });
+  // }, [navigation]);
 
 
 
@@ -43,6 +47,35 @@ const MakeRoutine = () => {
     // 현재는 콘솔에 출력하는 예시 코드만 작성했습니다.
     console.log("Routine Name:", routineName);
     console.log("Exercises:", exercises);
+    const d = new Date();
+
+    const newRoutine = {
+      id : 1 + data[data.length-1].id,
+      user_id : userID,
+      name : routineName,
+      date : "" + d.getFullYear() + (d.getMonth()+1) + d.getDate(),
+      exercises : [] as {}[]
+    }
+    exercises.map((item)=> {
+      const addExercise = {
+        id: -1,
+        name : item.name,
+        sets : Number(item.sets),
+        reps : Number(item.reps),
+        weight : Number(item.weight)
+      };
+
+      newRoutine.exercises.push(addExercise);
+    });
+    
+    addRoutine(newRoutine);
+    // console.log(data[data.length-1]);
+    data.map((item)=>{console.log(item)});
+
+    navigation.pop();
+
+
+
   };
 
   return (
@@ -52,30 +85,36 @@ const MakeRoutine = () => {
         style={styles.input}
         value={routineName}
         onChangeText={(text) => setRoutineName(text)}
-        placeholder="루틴 이름을 입력하세요"
+        placeholder="루틴 이름"
       />
 
-      <Text style={styles.label}>운동 종목</Text>
+      {/* <Text style={styles.label}>운동 종목</Text> */}
       <ScrollView>
         {exercises.map((exercise, index) => (
           <View key={index} style={styles.exerciseContainer}>
+            <View style={styles.separater}></View>
             <View style={styles.exerciseHeader}>
               <Text style={styles.exerciseLabel}>운동 종목 이름</Text>
-              <TouchableOpacity onPress={() => handleRemoveExercise(index)}>
-                <Text style={styles.removeButtonText}>삭제</Text>
-              </TouchableOpacity>
+
             </View>
 
-            <TextInput
-              style={styles.input}
-              value={exercise.name}
-              onChangeText={(text) => {
-                const updatedExercises = [...exercises];
-                updatedExercises[index].name = text;
-                setExercises(updatedExercises);
-              }}
-              placeholder="운동 종목 이름을 입력하세요"
-            />
+            <View style={{flexDirection:"row", width:"100%"}}>
+              <TextInput
+                style={ styles.exerciseInput }
+                value={exercise.name}
+                onChangeText={(text) => {
+                  const updatedExercises = [...exercises];
+                  updatedExercises[index].name = text;
+                  setExercises(updatedExercises);
+                }}
+                placeholder="운동 종목 이름"
+              />
+                <TouchableOpacity style={styles.removeButton} onPress={() => handleRemoveExercise(index)}>
+                  <Text style={styles.removeButtonText}>삭제</Text>
+                </TouchableOpacity>
+              
+            </View>
+
 
             <View style={styles.setsRepsContainer}>
               <View style={styles.setsContainer}>
@@ -83,13 +122,13 @@ const MakeRoutine = () => {
                 <TextInput
                 keyboardType="numeric" // 숫자 키패드를 띄우기 위한 설정
                   style={styles.input}
-                  value={exercise.sets}
+                  value={exercise.sets.toString()}
                   onChangeText={(text) => {
                     const updatedExercises = [...exercises];
                     updatedExercises[index].sets = text;
                     setExercises(updatedExercises);
                   }}
-                  placeholder="세트 수를 입력하세요"
+                  placeholder="세트 수"
                 />
               </View>
 
@@ -98,13 +137,13 @@ const MakeRoutine = () => {
                 <TextInput
                 keyboardType="numeric" // 숫자 키패드를 띄우기 위한 설정
                   style={styles.input}
-                  value={exercise.reps}
+                  value={exercise.reps.toString()}
                   onChangeText={(text) => {
                     const updatedExercises = [...exercises];
                     updatedExercises[index].reps = text;
                     setExercises(updatedExercises);
                   }}
-                  placeholder="운동 횟수를 입력하세요"
+                  placeholder="운동 횟수"
                 />
               </View>
               <View style={styles.repsContainer}>
@@ -112,18 +151,19 @@ const MakeRoutine = () => {
                 <TextInput
                 keyboardType="numeric" // 숫자 키패드를 띄우기 위한 설정
                   style={styles.input}
-                  value={exercise.weight}
+                  value={exercise.weight.toString()}
                   onChangeText={(text) => {
                     const updatedExercises = [...exercises];
                     updatedExercises[index].weight = text;
                     setExercises(updatedExercises);
                   }}
-                  placeholder="weight를 입력하세요"
+                  placeholder="weight"
                 />
               </View>
             </View>
           </View>
         ))}
+
         <TouchableOpacity style={styles.addButton} onPress={handleAddExercise}>
           <Text style={styles.addButtonText}>운동 종목 추가</Text>
         </TouchableOpacity>
@@ -155,6 +195,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 12,
     padding: 8,
+    borderRadius: 10,
+  },
+  exerciseInput: {
+    flex:7.5,
+    width:"85%",
+    height: 40,
+    borderColor: "gray",
+    borderWidth: 1,
+    marginBottom: 12,
+    padding: 8,
+    borderRadius: 10,
   },
   exerciseContainer: {
     marginBottom: 20,
@@ -185,27 +236,39 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 12,
   },
+  removeButton: {
+    flex:1,
+    backgroundColor: "gray",
+    padding: 10,
+    height: 50,
+    borderRadius: 100,
+    // marginTop: 0,
+    marginHorizontal:"1%",
+    alignItems: "center",
+    justifyContent:"center",
+  },
   removeButtonText: {
     color: "red",
     fontSize: 16,
     fontWeight: "bold",
-    marginTop: 12,
+    // marginTop: 5,
   },
   addButton: {
-    backgroundColor: "green",
+    backgroundColor: "gray",
     padding: 10,
     borderRadius: 8,
     marginTop: 20,
     alignItems: "center",
   },
   addButtonText: {
-    color: "white",
+    color: "skyblue",
     fontSize: 16,
     fontWeight: "bold",
   },
+
   createButton: {
     // width: wp(35),
-    marginTop: "4%",
+    // marginTop: "4%",
     // marginBottom: "3%",
     backgroundColor: "skyblue",
     // borderColor: "blue",
@@ -220,6 +283,13 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 18,
     fontWeight: "bold",
+  },
+
+  separater: {
+    // marginTop: 20,
+    // width: "90%",
+    height: 0.5,
+    backgroundColor: "black",
   },
 });
 

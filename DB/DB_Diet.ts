@@ -1,25 +1,35 @@
-export const options = { month: "numeric", day: "numeric" };
+import React, { useState } from "react";
+
+export const options = { weekday: "long" };
 export const initDate = new Date(); //월, 일이 0일부터 시작됨
-initDate.setFullYear(2023);
-initDate.setMonth(10);
-initDate.setDate(24);
-
-const initYear = initDate.getFullYear();
-export const initMonth = initDate.getMonth() + 1;
-export const initDay = initDate.getDate();
-
 export const lastDate = new Date(initDate);
-lastDate.setDate(initDate.getDate() + 7);
 
-const day = [
-  `${initMonth}월 ${initDay}일`,
-  `${initMonth}월 ${initDay + 1}일`,
-  `${initMonth}월 ${initDay + 2}일`,
-  `${initMonth}월 ${initDay + 3}일`,
-  `${initMonth}월 ${initDay + 4}일`,
-  `${initMonth}월 ${initDay + 5}일`,
-  `${initMonth}월 ${initDay + 6}일`,
+// initDate.setFullYear(2023);
+// initDate.setMonth(10);
+// initDate.setDate(27);
+export const initMonth = initDate.getMonth() + 1;
+export const initDat = initDate.getDate();
+
+const day = [];
+
+let arrDayStr = [
+  "일요일",
+  "월요일",
+  "화요일",
+  "수요일",
+  "목요일",
+  "금요일",
+  "토요일",
 ];
+
+for (let i = 0; i < 7; i++) {
+  if (i) lastDate.setDate(lastDate.getDate() + 1);
+  day.push(
+    `${lastDate.getMonth() + 1}월 ${lastDate.getDate()}일 ${
+      arrDayStr[lastDate.getDay()]
+    }`
+  );
+}
 
 export const dietData = [
   {
@@ -73,4 +83,27 @@ export const dietData = [
   },
 ];
 
-export default dietData;
+/* const DB_Diet = () => {
+  const [startDate, setStartDate] = useState("");
+  const [result, setResult] = useState<string[]>([]);
+
+  const getDaysOfWeek = () => {
+    const selectedDate = new Date(initDate);
+
+    for (let i = 0; i < 7; i++) {
+      const nextDate = new Date(selectedDate);
+      nextDate.setDate(selectedDate.getDate() + i);
+      const dayOfWeek = nextDate.toLocaleDateString(undefined, {
+        weekday: "long",
+      });
+      daysOfWeek.push(dayOfWeek);
+    }
+
+    setResult(daysOfWeek);
+  };
+
+  setStartDate(day[0]);
+  getDaysOfWeek();
+}; */
+
+//export default DB_Diet;
