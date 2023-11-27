@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import {
   ScrollView,
   Alert,
 } from "react-native";
+import axios from "axios";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -20,6 +21,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { AntDesign } from "@expo/vector-icons";
 
 import { dietData as data, initDate, lastDate } from "../../DB/DB_Diet";
+//import DB_Diet from "../../DB/DB_Diet";
 
 export type RootStackParam = {
   Diet: undefined;
@@ -27,6 +29,9 @@ export type RootStackParam = {
 };
 
 const Diet = () => {
+  const options = { month: "numeric", day: "numeric" };
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
+
   const handleCreateButtonPress = () => {
     Alert.alert("식단 추천", "GPT 식단 추천을 받으시겠습니까?", [
       {
@@ -41,9 +46,6 @@ const Diet = () => {
       },
     ]);
   };
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
-
-  const options = { month: "numeric", day: "numeric" };
 
   return (
     <View style={styles.container}>
@@ -64,12 +66,11 @@ const Diet = () => {
           </TouchableOpacity>
         </View>
         <Text style={styles.dayText}>
-          {initDate.toLocaleString(undefined, options)} ~
-          {lastDate.toLocaleString(undefined, options)}
+          {initDate.toLocaleDateString()} ~ {lastDate.toLocaleDateString()}
         </Text>
         {data.map((item, index) => (
           <View style={styles.dayContainer} key={index}>
-            {renderDay(index, item.day.toLocaleString(), [
+            {renderDay(index, item.day, item.dayOfWeek, [
               item.breakfast,
               item.lunch,
               item.dinner,
@@ -81,11 +82,13 @@ const Diet = () => {
   );
 };
 
-function renderDay(day: any, weekday: any, meals: any) {
+function renderDay(day: any, weekday: any, weekOfDay: any, meals: any) {
   return (
     <View style={styles.dayCard} key={day}>
       <View style={[styles.dayHeader, { backgroundColor: getDayColor(day) }]}>
-        <Text style={styles.dayHeaderText}>{weekday}</Text>
+        <Text style={styles.dayHeaderText}>
+          {weekday} {weekOfDay}
+        </Text>
       </View>
       <View style={styles.mealContainer}>
         {meals.map((meal: any, index: any) => (
