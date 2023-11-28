@@ -126,7 +126,6 @@ const App = () => {
             tabBarHideOnKeyboard: true,
             tabBarStyle: ((route) => {
               const routeName = getFocusedRouteNameFromRoute(route) ?? "";
-              console.log(routeName);
               if (routeName !== "Routine") {
                 return { display: "none" };
               }
