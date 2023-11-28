@@ -87,7 +87,7 @@ const RoutineByGPT = () => {
     React.useCallback(() => {
       const hardwareBackPress = () => handleBackPress();
       BackHandler.addEventListener("hardwareBackPress", hardwareBackPress);
-
+      if(progress== 0)  navigation.pop();
       return () => {
         BackHandler.removeEventListener("hardwareBackPress", hardwareBackPress);
       };
@@ -129,7 +129,9 @@ const RoutineByGPT = () => {
           selectedOptions.push(item.options[item.selectedOption]);
         }
       });
-        navigation.navigate("Post2GPT", { selectedOptions: selectedOptions });
+      navigation.navigate("Post2GPT", { selectedOptions: selectedOptions });
+      setProgress(0);
+      setCurrentQuestionIndex(0);
 
     };
   }

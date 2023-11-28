@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
   Dimensions,
   ScrollView,
   Animated,
+  
 } from "react-native";
 
 import {
@@ -17,7 +18,7 @@ import {
 } from "react-native-responsive-screen";
 
 import { themeColor } from "../Home/Home";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect} from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import RoutineByGPT from "./RoutineByGPT";
 import AboutRoutine from "./AboutRoutine";
@@ -35,6 +36,18 @@ import RoutineData from "../../DB/DB_Routine";
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import { userID } from "../../DB/userID";
 const Routine = () => {
+  const [,updateState] = useState([]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      updateState([]);
+    }, [])
+    
+    );
+
+
+
   const MyRoutineList = RoutineData.filter((item) => item.user_id === userID);
 
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();

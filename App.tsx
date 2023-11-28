@@ -2,11 +2,9 @@ import * as React from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import AppNavigator from "./screens/AppNavigator";
 import BleManager from "react-native-ble-manager";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
-
 /* Home 관련 페이지 */
 import Home from "./screens/Home/Home";
 import BeforeCount from "./screens/Home/BeforeCount";
@@ -126,6 +124,10 @@ const App = () => {
             tabBarHideOnKeyboard: true,
             tabBarStyle: ((route) => {
               const routeName = getFocusedRouteNameFromRoute(route) ?? "";
+<<<<<<< HEAD
+=======
+              // console.log(routeName);
+>>>>>>> 8339046019fc15d7e77585f1ff3fde8f5e5c567d
               if (routeName !== "Routine") {
                 return { display: "none" };
               }
