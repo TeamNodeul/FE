@@ -38,8 +38,8 @@ const windowHeight = Dimensions.get("window").height;
 const buttonWidth = windowWidth * 0.9;
 
 const DATA = [
-  { timestamp: Date.now(), text: "Sample Text" },
-  { timestamp: Date.now() + 1, text: "Sample Text 2" },
+  { timestamp: Date.now(), text: "하체 조지기" },
+  { timestamp: Date.now() + 1, text: "상체 조지기" },
 ];
 
 const BeforeCount = () => {
