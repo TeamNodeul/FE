@@ -16,9 +16,12 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import NfcManager, { NfcTech } from "react-native-nfc-manager";
+import { BleManager } from "react-native-ble-plx";
+//import useBLE from "../useBLE";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
+//const _BleManager = new BleManager();
 
 export type RootStackParam = {
   NFCScreen: undefined;
@@ -29,27 +32,35 @@ export type RootStackParam = {
 const NFCScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>(); //navigation
 
+  //const { requestPermissions } = useBLE();
+
   const handleBackPress = () => {
     navigation.pop();
 
     return true;
   };
 
+  // const openModal = async () => {
+  //   requestPermissions((isGranted: boolean) => {
+  //     alert("The Android Permission is granted? " + isGranted);
+  //   });
+  // };
+
   //NFC 파트
-  const [count, setCount] = useState(1);
-  async function readNdef() {
-    try {
-      await NfcManager.requestTechnology(NfcTech.Ndef);
-      const tag = await NfcManager.getTag();
-      setCount(count + 1);
-      console.warn("Tag found", tag);
-    } catch (ex) {
-      console.warn("Oops!", ex);
-    } finally {
-      NfcManager.cancelTechnologyRequest();
-    }
-  }
+  // async function readNdef() {
+  //   try {
+  //     await NfcManager.requestTechnology(NfcTech.Ndef);
+  //     const tag = await NfcManager.getTag();
+  //     setCount(count + 1);
+  //     console.warn("Tag found", tag);
+  //   } catch (ex) {
+  //     console.warn("Oops!", ex);
+  //   } finally {
+  //     NfcManager.cancelTechnologyRequest();
+  //   }
+  // }
   // 구현중
+  const [count, setCount] = useState(1);
   useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", handleBackPress);
 
@@ -88,6 +99,9 @@ const NFCScreen = () => {
       <Text style={styles.textStyle}>
         운동기구에 핸드폰을 태그하세요! NFC 카운트 횟수 : {count}
       </Text>
+      <TouchableOpacity style={{ width: "90%" }}>
+        <Text>연결</Text>
+      </TouchableOpacity>
     </View>
   );
 };

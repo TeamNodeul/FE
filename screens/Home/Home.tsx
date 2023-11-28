@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
-  Button,
   TouchableOpacity,
   StyleSheet,
   Touchable,
@@ -13,11 +12,13 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Card, Button } from "react-native-elements";
 
 //아이콘 임포트
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 
 export type RootStackParam = {
   Home: undefined;
@@ -30,6 +31,25 @@ const windowHeight = Dimensions.get("window").height;
 const buttonWidth = windowWidth * 0.5;
 
 export const themeColor = "#E88C7D"; //테마 색상 #E88C7D
+
+const CardFrame = () => {
+  return (
+    <View>
+      <Card containerStyle={styles.card}>
+        <View style={styles.cardHeader}>
+          <View style={styles.headerContent}>
+            <Text style={styles.cardTitle}>1</Text>
+            <View style={styles.badgeContainer}>
+              <Text style={styles.badge}>High</Text>
+            </View>
+          </View>
+        </View>
+        <Card.Divider />
+        <Button title="기록 보기" type="outline" />
+      </Card>
+    </View>
+  );
+};
 
 const Home = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
@@ -95,7 +115,14 @@ const Home = () => {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
-          <Text></Text>
+          <Text>운동 요약</Text>
+          <CardFrame />
+          <CardFrame />
+          <CardFrame />
+          <CardFrame />
+          <CardFrame />
+          <CardFrame />
+          <CardFrame />
         </ScrollView>
       </View>
       {/* <View style={styles.menuContainer}>
@@ -173,6 +200,39 @@ const styles = StyleSheet.create({
     width: "90%",
     height: 1,
     backgroundColor: "#dee2e6",
+  },
+  cardsContainer: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  cardHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  headerContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    spaceBetween: 2,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginRight: 5,
+  },
+  badgeContainer: {
+    backgroundColor: "#00b894",
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  badge: {
+    color: "white",
+  },
+  card: {
+    width: "100%",
   },
 });
 
