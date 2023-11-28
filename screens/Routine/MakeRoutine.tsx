@@ -12,6 +12,11 @@ import { useNavigation } from "@react-navigation/native";
 import {addRoutine, data} from "../../DB/DB_Routine"
 import { userID } from "../../DB/userID";
 
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Picker } from '@react-native-picker/picker';
 import {RootStackParam} from "./Routine"
@@ -19,33 +24,33 @@ const MakeRoutine = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   const [routineName, setRoutineName] = useState("");
   const [exercises, setExercises] = useState([
-    { name: "", sets: "", reps: "", weight: "" },
+    { id: "", name: "", sets: "", reps: "", weight: "" },
   ]);
 
 
   const exerciseItems = [
-    {label: "어이 운동을 선택해라.", value:""},
-    {label: "[하체] 스쿼트", value:"100"},
-    {label: "[하체] 레그프레스", value:"101"},
-    {label: "[하체] 레그컬", value:"102"},
-    {label: "[하체] 레그익스텐션", value:"103"},
+    {label: "어이 운동을 선택해라.", name: "", id:""},
+    {label: "[하체] 스쿼트", name: "스쿼트", id:"100"},
+    {label: "[하체] 레그프레스", name: "레그프레스", id:"101"},
+    {label: "[하체] 레그컬", name: "레그컬", id:"102"},
+    {label: "[하체] 레그익스텐션", name: "레그익스텐션", id:"103"},
     
-    {label: "[가슴] 벤치프레스", value:"200"},
-    {label: "[가슴] 덤벨컬", value:"201"},
-    {label: "[가슴] 숄더프레스", value:"202"},
-    {label: "[가슴] 체스트프레스", value:"203"},
+    {label: "[가슴] 벤치프레스", name: "벤치프레스", id:"200"},
+    {label: "[가슴] 덤벨컬", name: "덤벨컬", id:"201"},
+    {label: "[가슴] 숄더프레스", name: "숄더프레스", id:"202"},
+    {label: "[가슴] 체스트프레스", name: "체스트프레스", id:"203"},
 
-    {label: "[등] 데드리프트", value:"300"},
-    {label: "[등] 덤벨로우", value:"301"},
-    {label: "[등] 바벨로우", value:"302"},
-    {label: "[등] 시티드로우", value:"303"},
-    {label: "[등] 랫풀다운", value:"303"},
+    {label: "[등] 데드리프트", name: "데드리프트", id:"300"},
+    {label: "[등] 덤벨로우", name: "덤벨로우", id:"301"},
+    {label: "[등] 바벨로우", name: "바벨로우", id:"302"},
+    {label: "[등] 시티드로우", name: "시티드로우", id:"303"},
+    {label: "[등] 랫풀다운", name: "랫풀다운", id:"303"},
 
   ]
 
 
   const handleAddExercise = () => {
-    setExercises([...exercises, { name: "", sets: "", reps: "", weight:"" }]);
+    setExercises([...exercises, { id:"", name: "", sets: "", reps: "", weight:"" }]);
   };
 
   const handleRemoveExercise = (indexToRemove: number) => {
@@ -56,10 +61,8 @@ const MakeRoutine = () => {
   };
 
   const handleCreateRoutine = () => {
-    // 여기서 데이터베이스에 데이터를 전송하는 로직을 추가해야 합니다.
-    // 현재는 콘솔에 출력하는 예시 코드만 작성했습니다.
-    console.log("Routine Name:", routineName);
-    console.log("Exercises:", exercises);
+    // console.log("Routine Name:", routineName);
+    // console.log("Exercises:", exercises);
     const d = new Date();
 
     const newRoutine = {
@@ -71,7 +74,7 @@ const MakeRoutine = () => {
     }
     exercises.map((item)=> {
       const addExercise = {
-        id: 0,
+        id: item.id,
         name : item.name,
         sets : Number(item.sets),
         reps : Number(item.reps),
@@ -83,7 +86,7 @@ const MakeRoutine = () => {
     
     addRoutine(newRoutine);
     // console.log(data[data.length-1]);
-    data.map((item)=>{console.log(item)});
+    // data.map((item)=>{console.log(item)});
 
     navigation.pop();
 
@@ -91,9 +94,36 @@ const MakeRoutine = () => {
 
   };
 
+  interface Exercise {
+    id: string;
+    name: string;
+    sets: string;
+    reps: string;
+    weight: string;
+    [key: string]: string; // 인덱스 시그니처 추가
+  }
+//  const InputDataBox = ({value, onChangeText} : {value:string; onChangeText:(param:string)=>void}) =>{
+//     return(
+//       <View style={styles.inputContainer}>
+//         <Text style={styles.inputLabel}>세트 수</Text>
+//         <TextInput
+//         // autoFocus={true}
+//         keyboardType="numeric" // 숫자 키패드를 띄우기 위한 설정
+//           style={styles.input}
+//           value={value}
+//           onChangeText={onChangeText}
+//           placeholder="0"
+//         />
+//     </View>
+//     );
+//   };
+
+
+  
+
   return (
     <View style={styles.container}>
-      <View style={{flex:20}}>
+      <View style={{height:hp(95)}}>
       <View style={{marginHorizontal:"5%", marginTop:"10%"}}>
         <Text style={styles.label}>루틴 이름</Text>
         <TextInput
@@ -111,65 +141,58 @@ const MakeRoutine = () => {
       <ScrollView style={{padding:"5%"}}>
         {exercises.map((exercise, index) => (
           <View key={index} style={styles.exerciseContainer}>
-            {/* <View style={styles.separater}></View> */}
             <View style={styles.exerciseHeader}>
               <Text style={styles.exerciseLabel}>운동 종목 이름</Text>
-            </View>
 
-            <View style={{flexDirection:"row"}}>
+              <View style={{flexDirection:"row", marginHorizontal:5,}}>
               <View style={{width:"80%", borderWidth:1, borderRadius:10}}>
                 <Picker
                   style={styles.exerciseInput}
                   selectedValue={exercise.name}
-                  onValueChange={(itemValue : string) => {
+                  onValueChange={(itemValue) => {
                     const updatedExercises = [...exercises];
                     updatedExercises[index].name = itemValue;
                     setExercises(updatedExercises);
                   }}>
                     {exerciseItems.map((item)=>
-                      <Picker.Item key={item.value} label={item.label} value={item.value}/>
+                      <Picker.Item key={item.id} label={item.label} value={item.id}/>
                     )}
                 </Picker>
 
               </View>
-              {/* <TextInput
-                style={ styles.exerciseInput }
-                value={exercise.name}
-                onChangeText={(text) => {
-                  const updatedExercises = [...exercises];
-                  updatedExercises[index].name = text;
-                  setExercises(updatedExercises);
-                }}
-                placeholder="운동 종목 이름"
-              /> */}
               <View style={{flex:1}}>
                 <TouchableOpacity style={styles.removeButton} onPress={() => handleRemoveExercise(index)}>
-                  <Text style={styles.removeButtonText}>삭제</Text>
+                  <Text style={styles.removeButtonText}>X</Text>
                 </TouchableOpacity>
 
               </View>
               
             </View>
+            </View>
 
 
-            <View style={styles.setsRepsContainer}>
-              <View style={styles.setsContainer}>
-                <Text style={styles.setsRepsLabel}>세트 수</Text>
+
+            <View style={styles.setsRepsVolumeContainer}>
+
+              <View style={styles.inputContainer}>
+                <Text style={styles.inputLabel}>세트 수</Text>
                 <TextInput
                 keyboardType="numeric" // 숫자 키패드를 띄우기 위한 설정
-                  style={styles.input}
+                returnKeyType="next"  
+                style={styles.input}
                   value={exercise.sets.toString()}
                   onChangeText={(text) => {
                     const updatedExercises = [...exercises];
                     updatedExercises[index].sets = text;
                     setExercises(updatedExercises);
                   }}
-                  placeholder="세트 수"
+                  // onSubmitEditing={()=>{nextInput.current.focus()}}
+                  placeholder="0세트"
                 />
               </View>
 
-              <View style={styles.repsContainer}>
-                <Text style={styles.setsRepsLabel}>운동 횟수</Text>
+              <View style={styles.inputContainer}>
+                <Text style={styles.inputLabel}>회</Text>
                 <TextInput
                 keyboardType="numeric" // 숫자 키패드를 띄우기 위한 설정
                   style={styles.input}
@@ -179,11 +202,12 @@ const MakeRoutine = () => {
                     updatedExercises[index].reps = text;
                     setExercises(updatedExercises);
                   }}
-                  placeholder="운동 횟수"
+                  placeholder="0"
                 />
               </View>
-              <View style={styles.repsContainer}>
-                <Text style={styles.setsRepsLabel}>weight</Text>
+
+              <View style={styles.inputContainer}>
+                <Text style={styles.inputLabel}>kg</Text>
                 <TextInput
                 keyboardType="numeric" // 숫자 키패드를 띄우기 위한 설정
                   style={styles.input}
@@ -193,28 +217,37 @@ const MakeRoutine = () => {
                     updatedExercises[index].weight = text;
                     setExercises(updatedExercises);
                   }}
-                  placeholder="weight"
+                  placeholder="0"
                 />
               </View>
+
             </View>
-            <View style={styles.separater}></View>
+            {/* <View style={styles.separater}></View> */}
           </View>
           
-        ))}
+        )
 
-        <TouchableOpacity style={styles.addButton} onPress={handleAddExercise}>
+        )}
+
+        <TouchableOpacity 
+          style={styles.addButton} 
+          onPress={handleAddExercise}>
           <Text style={styles.addButtonText}>운동 종목 추가</Text>
         </TouchableOpacity>
       </ScrollView>
       </View>
       
 
-      <TouchableOpacity
-        style={styles.createButton}
-        onPress={handleCreateRoutine}
-      >
-        <Text style={styles.createButtonText}>루틴 생성</Text>
-      </TouchableOpacity>
+
+      <View style={{ flex:1 }}>
+        <TouchableOpacity
+          style={styles.createButton}
+          onPress={handleCreateRoutine}
+        >
+          <Text style={styles.createButtonText}>루틴 생성</Text>
+        </TouchableOpacity>
+
+      </View>
     </View>
   );
 };
@@ -239,6 +272,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     padding: 8,
     borderRadius: 10,
+    textAlign:"center",
   },
   exerciseInput: {
     flex:7.5,
@@ -252,9 +286,16 @@ const styles = StyleSheet.create({
   },
   exerciseContainer: {
     marginBottom: 20,
+    // backgroundColor:"gray",
+    backgroundColor: "#dee2e6",
+    padding: 10,
+    // marginBottom: hp(2),
+    borderRadius: 20,
+    // width: wp(90),
   },
   exerciseHeader: {
-    flexDirection: "row",
+    // flexDirection: "row",
+    marginHorizontal:5,
     justifyContent: "space-between",
   },
   exerciseLabel: {
@@ -262,39 +303,36 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 12,
   },
-  setsRepsContainer: {
+  setsRepsVolumeContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    // justifyContent: "sp",
+    // wi
+    // padding:10
   },
-  setsContainer: {
+  inputContainer:{
     flex: 1,
-    marginRight: 5,
+    marginHorizontal:10
   },
-  repsContainer: {
-    flex: 1,
-    marginLeft: 5,
-  },
-  setsRepsLabel: {
+  inputLabel: {
     fontSize: 16,
     fontWeight: "bold",
     marginTop: 12,
+    alignSelf:"center",
   },
   removeButton: {
-    // flex:1,
-    backgroundColor: "gray",
-    padding: 10,
+    backgroundColor:"gray",
+    // padding: 20,
     height: 50,
     width:50,
     borderRadius: 100,
-    // marginTop: 0,
-    marginHorizontal:"1%",
     alignSelf:"center",
     alignItems: "center",
     justifyContent:"center",
   },
   removeButtonText: {
-    color: "red",
-    fontSize: 16,
+    // color: "red",
+    color:"skyblue",
+    fontSize: 30,
     fontWeight: "bold",
     // marginTop: 5,
   },
@@ -315,12 +353,7 @@ const styles = StyleSheet.create({
 
   createButton: {
     flex:1,
-    // width: wp(35),
-    // marginTop: "4%",
-    // marginBottom: "3%",
     backgroundColor: "skyblue",
-    // borderColor: "blue",
-    // borderWidth: 1,
     width:"90%",
     alignSelf:"center",
     justifyContent:"center",

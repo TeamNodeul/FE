@@ -57,9 +57,6 @@ const AboutRoutine = ({ route }: any) => {
   };
 
   return (
-    // <View style={styles.container}>
-
-    // </View>
     <View style={styles.container}>
       <View style={{flex : 2, justifyContent:"flex-end", marginBottom:wp(5) }}>
         <Text>현재 선택한 루틴 : {routineId}번 루틴 정보</Text>
@@ -84,9 +81,6 @@ const AboutRoutine = ({ route }: any) => {
     </View>
   );
 };
-const windowWidth = Dimensions.get("window").width;
-// const windowHeight = Dimensions.get("window").height;
-// const buttonWidth = windowWidth * 0.5;
 
 const styles = StyleSheet.create({
   container: {
@@ -97,7 +91,7 @@ const styles = StyleSheet.create({
   },
 
   box: {
-    backgroundColor: "#d0ebff",
+    backgroundColor: "#87CEEB",
     padding: 16,
     marginBottom: hp(2),
     borderRadius: 20,
