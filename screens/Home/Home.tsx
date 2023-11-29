@@ -113,11 +113,14 @@ const Home = () => {
           {/* 하루 누적 운동시간 넣어야 함 */}
         </View>
       </View>
-      <View style={styles.customButton}>
-        <TouchableOpacity onPress={() => navigation.navigate("BeforeCount")}>
+      <TouchableOpacity
+        style={styles.customButton}
+        onPress={() => navigation.navigate("BeforeCount")}
+      >
+        <View>
           <Text style={styles.ButtonText}>오늘의 운동 시작하기</Text>
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
       <View style={styles.line}></View>
       <View style={styles.scrollContainer}>
         <ScrollView
