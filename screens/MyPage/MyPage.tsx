@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect} from "react";
 import {
   View,
   Text,
@@ -14,7 +14,7 @@ import {
   // AsyncStorage,
 } from "react-native";
 import { themeColor } from "../Home/Home";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import { Feather } from "@expo/vector-icons";
@@ -26,7 +26,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // export let userEmail = "";
 
 //현재 로그인 된 유저 id 저장
-import { userID } from "../../DB/userID";
+import { userID, Login } from "../../DB/userID";
 
 import UserData from "../../DB/DB_User";
 
@@ -40,6 +40,17 @@ const MyPage = () => {
   const user = UserData.find((user) => user.id === userID);
   const [userName, setUserName] = useState(user!.name);
   const [userEmail, setUserEmail] = useState(user!.email);
+
+  /**화면 focus될시 강제 렌더링 */
+  const [, updateState] = useState([]);
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log("마에페이지 포커스")
+      // Do something when the screen is focused
+      updateState([]);
+    }, [])
+  );
+
 
   useEffect(() => {
     // 핫 리로드를 위해, userID가 바뀌었으면 마이페이지 정보도 갱신해줌
@@ -107,6 +118,11 @@ const MyPage = () => {
     setUserName(inputText);
     closeModal();
   };
+  const tryLogin = ()=>{
+    Login(Number(inputText));
+    closeModal();
+  }
+  
 
   const NameModifier = () => {
     return (
@@ -119,9 +135,9 @@ const MyPage = () => {
         }}
       >
         <View style={styles.modalView}>
-          <Text>변경할 프로필 이름을 입력하세요: </Text>
+          <Text>로그인할 id 입력: </Text>
           <TextInput
-            placeholder="변경할 이름 입력"
+            placeholder="로그인할 id 입력"
             onChangeText={setInputText}
             style={{
               backgroundColor: "lightgrey",
@@ -132,7 +148,8 @@ const MyPage = () => {
           />
           <View style={styles.modalButtonStyle}>
             <View style={{ marginHorizontal: "5%" }}>
-              <Button title="저장" onPress={saveText} />
+              {/* <Button title="로그인" onPress={saveText} /> */}
+              <Button title="로그인" onPress={tryLogin} />
             </View>
             <View style={{ marginHorizontal: "5%" }}>
               <Button title="닫기" onPress={closeModal} />
@@ -176,7 +193,7 @@ const MyPage = () => {
           <TouchableOpacity>
             <AntDesign
               style={{ marginLeft: 5 }}
-              name="edit"
+              name="login"
               size={24}
               color="black"
               onPress={() => setModalVisible(true)}

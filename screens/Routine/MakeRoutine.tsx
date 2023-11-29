@@ -242,12 +242,11 @@ const MakeRoutine = () => {
       <View style={{ flex:1 }}>
         <TouchableOpacity
           style={styles.createButton}
-          onPress={handleCreateRoutine}
-        >
+          onPress={handleCreateRoutine}>
           <Text style={styles.createButtonText}>루틴 생성</Text>
         </TouchableOpacity>
-
       </View>
+
     </View>
   );
 };
