@@ -30,8 +30,8 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const buttonWidth = windowWidth * 0.5;
 
-export const themeColor = "#E88C7D"; //테마 색상 #E88C7D
-
+export const themeColor = "skyblue"; //테마 색상 #E88C7D
+// export const themeColor = "skyblue";
 const CardFrame = () => {
   return (
     <View>

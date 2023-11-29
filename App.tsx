@@ -31,6 +31,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -70,18 +71,7 @@ function HomeStack() {
   );
 }
 
-// function RoutineStack() {
-//   return (
-//     <Stack.Navigator
-//       initialRouteName="Routine"
-//       screenOptions={{ headerShown: false }}
-//     >
-//       <Stack.Screen name="Routine" component={Routine} />
-//       <Stack.Screen name="RoutineByGPT" component={RoutineByGPT} />
-//       <Stack.Screen name="AboutRoutine" component={AboutRoutine} />
-//     </Stack.Navigator>
-//   );
-// }
+
 const App = () => {
   return (
     <NavigationContainer>
@@ -117,6 +107,7 @@ const App = () => {
             })(route),
           })}
         />
+        
         <Tab.Screen
           name="루틴"
           component={RoutineStack}
@@ -126,15 +117,16 @@ const App = () => {
             ),
             tabBarHideOnKeyboard: true,
             tabBarStyle: ((route) => {
+              const targets = ["AboutRoutine", "MakeRoutine", "Post2GPT", "RoutineByGPT"];
               const routeName = getFocusedRouteNameFromRoute(route) ?? "";
-              // console.log(routeName);
-              if (routeName !== "Routine") {
+              if (targets.includes(routeName)) {
                 return { display: "none" };
               }
               return;
             })(route),
           })}
         />
+
         <Tab.Screen
           name="그룹"
           component={GroupStack}
