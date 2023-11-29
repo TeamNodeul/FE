@@ -35,7 +35,7 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const buttonWidth = windowWidth * 0.5;
 
-export const themeColor = "#skyblue"; //테마 색상 #E88C7D
+export const themeColor = "skyblue"; //테마 색상 #E88C7D
 
 const CardFrame = (props: any) => {
   const { day, achievement } = props;
