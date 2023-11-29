@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect} from "react";
+import React, { useState, useRef, useEffect, LegacyRef} from "react";
 import {
   View,
   Text,
@@ -38,8 +38,10 @@ import {
 const MyPage = () => {
   // 현재 로그인된 유저 객체를 가져옴
   const user = UserData.find((user) => user.id === userID);
-  const [userName, setUserName] = useState(user!.name);
-  const [userEmail, setUserEmail] = useState(user!.email);
+  // const [userName, setUserName] = useState(user!.name);
+  // const [userEmail, setUserEmail] = useState(user!.email);
+  const userName = user?.name;
+  const userEmail  = user?.email;
 
   /**화면 focus될시 강제 렌더링 */
   const [, updateState] = useState([]);
@@ -52,54 +54,19 @@ const MyPage = () => {
   );
 
 
-  useEffect(() => {
-    // 핫 리로드를 위해, userID가 바뀌었으면 마이페이지 정보도 갱신해줌
-    setUserName(user!.name);
-    setUserEmail(user!.email);
-  }, [userID]);
+  // useEffect(() => {
+  //   // 핫 리로드를 위해, userID가 바뀌었으면 마이페이지 정보도 갱신해줌
+  //   setUserName(user!.name);
+  //   setUserEmail(user!.email);
+  // }, [userID]);
 
-  // const Login = ()=>{
 
-  //   const handleLogin = async ()=>{
-  //     const user = UserData.find((user)=>user.id === userID);
-
-  //     if(user){
-  //       const token:number = user.id;
-
-  //       try{
-  //         await AsyncStorage.setItem('token', token.toString());
-  //         // navigation
-  //         // setUserId(user.id.toString());
-  //         // userId = user.id;
-  //         setUserName(user.name);
-  //         setUserEmail(user.email);
-
-  //       } catch(error){
-  //         console.error('Error saving token:', error);
-  //       }
-  //     }
-  //     // User.find()
-  //   }
-
-  //   return (
-  // <View style={[styles.container, {flexDirection: 'row',width:100}]}>
-  //   <TextInput
-  //     style={styles.input}
-  //     placeholder="id"
-  //     // value={userId.toString()}
-
-  //     // onChangeText={(text)=>{userId = parseInt(text)}}
-  //     keyboardType="numeric"
-  //   />
-  //   <Button title="Login" onPress={handleLogin}/>
-
-  // </View>
-
-  //   )
-  // }
-
+    
   const [modalVisible, setModalVisible] = useState(false);
-  const [inputText, setInputText] = useState("");
+  // const [inputText, setInputText] = useState("");
+    let inputText:string = "";
+
+    const inputRef = useRef<any>();
 
   const openModal = () => {
     setModalVisible(true);
@@ -110,14 +77,15 @@ const MyPage = () => {
   };
 
   const handleTextChange = (text: any) => {
-    setInputText(text);
+    // setInputText(text);
+    inputText = text;
   };
 
-  const saveText = () => {
-    //userName = inputText;
-    setUserName(inputText);
-    closeModal();
-  };
+  // const saveText = () => {
+  //   //userName = inputText;
+  //   setUserName(inputText);
+  //   closeModal();
+  // };
   const tryLogin = ()=>{
     Login(Number(inputText));
     closeModal();
@@ -125,9 +93,16 @@ const MyPage = () => {
   
 
   const NameModifier = () => {
+    useEffect(()=>{
+      if(modalVisible && inputRef.current){
+        inputRef.current.focus();
+      }
+
+    }, [modalVisible])
+
     return (
       <Modal
-        animationType="fade"
+        // animationType="fade"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
@@ -137,8 +112,12 @@ const MyPage = () => {
         <View style={styles.modalView}>
           <Text>로그인할 id 입력: </Text>
           <TextInput
+          ref={inputRef}
+          keyboardType="numeric"
             placeholder="로그인할 id 입력"
-            onChangeText={setInputText}
+            onChangeText={handleTextChange}
+            onSubmitEditing={tryLogin}
+            // value={inputText}
             style={{
               backgroundColor: "lightgrey",
               borderRadius: 10,
@@ -189,7 +168,9 @@ const MyPage = () => {
           <Text style={[styles.profileText, { fontWeight: "bold" }]}>
             {userName} 님
           </Text>
+
           <NameModifier />
+          
           <TouchableOpacity>
             <AntDesign
               style={{ marginLeft: 5 }}

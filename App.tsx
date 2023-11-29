@@ -76,8 +76,10 @@ const App = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
+      
         initialRouteName="홈"
         screenOptions={{
+          tabBarHideOnKeyboard: true,
           headerShown: false,
           tabBarShowLabel: true, // 탭 레이블 숨기기 (선택사항)
         }}

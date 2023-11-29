@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 
 type Post2GPTProps = {
   route: {
@@ -17,6 +17,10 @@ const Post2GPT = ({route} : any) => {
   // const {selectedOptions} = route.params.selectedOptions;
   return (
     <View style={styles.container}>
+        <Image source={require("../../assets/loading.gif")} />
+      <View style={{backgroundColor:"skyblue", borderRadius:100}}>
+
+      </View>
       <Text style={styles.text}>GPT에게 보낼 선택 정보들: </Text>
       <View>
         {
@@ -35,6 +39,7 @@ const Post2GPT = ({route} : any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:"white",
     justifyContent: 'center',
     alignItems: 'center',
     // marginLeft: "30%",
