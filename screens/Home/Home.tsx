@@ -13,6 +13,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Card, Button } from "react-native-elements";
+import BottomSheet from "../BottomSheet";
 
 //아이콘 임포트
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -40,6 +41,11 @@ export const themeColor = "#E88C7D"; //테마 색상 #E88C7D
 const CardFrame = (props: any) => {
   const { day, achievement } = props;
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const pressButton = () => {
+    setModalVisible(true);
+  };
+
   return (
     <View>
       <Card containerStyle={styles.card}>
@@ -52,13 +58,17 @@ const CardFrame = (props: any) => {
           </View>
         </View>
         <Card.Divider />
-        <TouchableOpacity>
-          <View style={styles.cardButton}>
+        <View style={styles.cardButton}>
+          <TouchableOpacity onPressOut={pressButton}>
             <Text style={{ marginLeft: wp(15), marginTop: hp(1.2) }}>
               운동 기록 보기
             </Text>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+          <BottomSheet
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+          />
+        </View>
       </Card>
     </View>
   );
@@ -113,11 +123,14 @@ const Home = () => {
           {/* 하루 누적 운동시간 넣어야 함 */}
         </View>
       </View>
-      <View style={styles.customButton}>
-        <TouchableOpacity onPress={() => navigation.navigate("BeforeCount")}>
+      <TouchableOpacity
+        style={styles.customButton}
+        onPress={() => navigation.navigate("BeforeCount")}
+      >
+        <View>
           <Text style={styles.ButtonText}>오늘의 운동 시작하기</Text>
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
       <View style={styles.line}></View>
       <View style={styles.scrollContainer}>
         <ScrollView
@@ -255,6 +268,11 @@ const styles = StyleSheet.create({
     borderRadius: wp(10),
     borderWidth: wp(0.35),
     borderColor: themeColor,
+  },
+  rootContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
