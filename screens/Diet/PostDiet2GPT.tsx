@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
+//import Loading from "../../assets/image/loading.gif";
 
 type Post2GPTProps = {
   route: {
@@ -17,14 +18,16 @@ const PostDiet2GPT = ({ route }: any) => {
   // const {selectedOptions} = route.params.selectedOptions;
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>GPT에게 보낼 선택 정보들: </Text>
-      <View>
+      <Image source={require("../../assets/loading.gif")} />
+      <Text style={styles.text}>맞춤형 식단을 짜는 중이에요.</Text>
+      <Text style={styles.text}>잠시만 기다려주세요!</Text>
+      {/* <View>
         {selectedOptions.map((item: string, index: number) => (
           <Text key={index} style={{ fontSize: 18 }}>
             {index + ". " + item}
           </Text>
         ))}
-      </View>
+      </View> */}
 
       {/* <Text style={styles.text}>{selectedOptions[1]}</Text> */}
     </View>

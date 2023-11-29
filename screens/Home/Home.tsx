@@ -20,6 +20,11 @@ import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+
 export type RootStackParam = {
   Home: undefined;
   BeforeCount: undefined;
@@ -30,22 +35,30 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const buttonWidth = windowWidth * 0.5;
 
-export const themeColor = "skyblue"; //테마 색상 #E88C7D
-// export const themeColor = "skyblue";
-const CardFrame = () => {
+export const themeColor = "#skyblue"; //테마 색상 #E88C7D
+
+const CardFrame = (props: any) => {
+  const { day, achievement } = props;
+
   return (
     <View>
       <Card containerStyle={styles.card}>
         <View style={styles.cardHeader}>
           <View style={styles.headerContent}>
-            <Text style={styles.cardTitle}>1</Text>
+            <Text style={styles.cardTitle}>{day}</Text>
             <View style={styles.badgeContainer}>
-              <Text style={styles.badge}>High</Text>
+              <Text style={styles.badge}>{achievement}</Text>
             </View>
           </View>
         </View>
         <Card.Divider />
-        <Button title="기록 보기" type="outline" />
+        <TouchableOpacity>
+          <View style={styles.cardButton}>
+            <Text style={{ marginLeft: wp(15), marginTop: hp(1.2) }}>
+              운동 기록 보기
+            </Text>
+          </View>
+        </TouchableOpacity>
       </Card>
     </View>
   );
@@ -100,11 +113,8 @@ const Home = () => {
           {/* 하루 누적 운동시간 넣어야 함 */}
         </View>
       </View>
-      <View>
-        <TouchableOpacity
-          style={styles.customButton}
-          onPress={() => navigation.navigate("BeforeCount")}
-        >
+      <View style={styles.customButton}>
+        <TouchableOpacity onPress={() => navigation.navigate("BeforeCount")}>
           <Text style={styles.ButtonText}>오늘의 운동 시작하기</Text>
         </TouchableOpacity>
       </View>
@@ -115,14 +125,15 @@ const Home = () => {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
-          <Text>운동 요약</Text>
-          <CardFrame />
-          <CardFrame />
-          <CardFrame />
-          <CardFrame />
-          <CardFrame />
-          <CardFrame />
-          <CardFrame />
+          <View>
+            <CardFrame day="2023-11-23" achievement="상" />
+            <CardFrame day="2023-11-24" achievement="중" />
+            <CardFrame day="2023-11-25" achievement="상" />
+            <CardFrame day="2023-11-26" achievement="하" />
+            <CardFrame day="2023-11-27" achievement="중" />
+            <CardFrame day="2023-11-28" achievement="상" />
+            <CardFrame day="2023-11-29" achievement="상" />
+          </View>
         </ScrollView>
       </View>
       {/* <View style={styles.menuContainer}>
@@ -143,7 +154,7 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-start",
+    //justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "#f8f9fa",
   },
@@ -152,21 +163,22 @@ const styles = StyleSheet.create({
     backgroundColor: themeColor, //약간 진한 오렌지
     width: "100%",
   },
-  emptyContainer: {
-    flex: 1,
-  },
   scrollContainer: {
     flex: 3,
+    //flexDirection: "row",
+    flexWrap: "wrap",
   },
   scrollPage: {},
   customButton: {
-    width: windowWidth * 0.8,
+    width: wp(80),
     marginTop: 20,
     backgroundColor: "white",
     borderColor: themeColor,
     borderWidth: 1.5,
     borderRadius: 20,
     padding: 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
   dateText: {
     flex: 1,
@@ -205,6 +217,7 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
+    flexWrap: "wrap",
   },
   cardHeader: {
     flexDirection: "row",
@@ -220,7 +233,7 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    marginRight: 5,
+    marginRight: wp(3),
   },
   badgeContainer: {
     backgroundColor: "#00b894",
@@ -232,7 +245,16 @@ const styles = StyleSheet.create({
     color: "white",
   },
   card: {
-    width: "100%",
+    width: wp(70),
+    borderRadius: wp(5),
+  },
+  cardButton: {
+    width: wp(50),
+    height: hp(5),
+    marginLeft: wp(6),
+    borderRadius: wp(10),
+    borderWidth: wp(0.35),
+    borderColor: themeColor,
   },
 });
 
