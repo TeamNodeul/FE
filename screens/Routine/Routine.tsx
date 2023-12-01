@@ -35,8 +35,8 @@ import RoutineData from "../../DB/DB_Routine";
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import { userID } from "../../DB/userID";
 const Routine = () => {
+  /**화면 focus될시 강제 렌더링 */
   const [, updateState] = useState([]);
-
   useFocusEffect(
     React.useCallback(() => {
       // Do something when the screen is focused
@@ -44,8 +44,8 @@ const Routine = () => {
     }, [])
   );
 
-  const MyRoutineList = RoutineData.filter((item) => item.user_id === userID);
 
+  const MyRoutineList = RoutineData.filter((item) => item.user_id === userID);
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
 
   const ShowRoutineList = () => {
@@ -92,6 +92,7 @@ const Routine = () => {
     );
   };
 
+
   const GPTButton = () => {
     /* navigation은 같은 함수내에 존재해야함*/
     return (
@@ -133,7 +134,6 @@ const Routine = () => {
     </View>
   );
 };
-// const windowWidth = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
   container: {
@@ -142,27 +142,14 @@ const styles = StyleSheet.create({
   },
 
   gptButtonContainer: {
-    // width: wp(35),
     marginTop: "4%",
-    // marginBottom: "3%",
     backgroundColor: "skyblue",
-    // borderColor: "blue",
-    // borderWidth: 1,
     width: "90%",
     borderRadius: 10,
     padding: 20,
     alignItems: "center",
     alignSelf: "center",
   },
-  // gptButton: {
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  //   //backgroundColor: themeColor,
-  //   //width: 200,
-  //   //height: 50,
-  //   marginRight: 20, // 우측 상단에 여백 추가
-  //   marginTop: 50,
-  // },
   buttonText: {
     fontSize: 16,
     fontWeight: "bold",
@@ -174,8 +161,6 @@ const styles = StyleSheet.create({
     height: 1, // 가로선의 높이
     backgroundColor: "#dee2e6", // 가로선의 색상 (예: 회색)
     justifyContent: "center",
-    // marginTop: 0, // 가로선 위 여백
-    //marginBottom: 20, // 가로선 아래 여백
   },
 
   box: {
@@ -184,7 +169,6 @@ const styles = StyleSheet.create({
     marginBottom: hp(2),
     borderRadius: 20,
     width: wp(90),
-    // marginTop: hp(1),
   },
   name: {
     fontSize: wp(4),
@@ -198,18 +182,17 @@ const styles = StyleSheet.create({
   },
   date: {
     fontSize: wp(3.5),
-    // marginLeft: wp(10),
     color: "#495057",
   },
 
   makeButton: {
     position: "absolute",
-    bottom: "5%",
-    right: "5%",
+    // bottom: "5%",
+    // right: "5%",
+    bottom:20,
+    right:20,
     backgroundColor: "white",
     borderRadius: 100,
-    // padding: 1,
-    // elevation: 5,
   },
   title: {
     fontSize: 24,
@@ -217,7 +200,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: hp(7),
     marginBottom: hp(0.3),
-    // marginLeft: wp(29),
     color: "#374151",
   },
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   View,
   Text,
@@ -15,26 +15,24 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { themeColor } from "../Home/Home";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import { groupData as data } from "../../DB/DB_Group";
+import { myGroupData } from "../../DB/DB_Group";
+// import { groupData as groupData } from "../../DB/DB_Group";
 
 export type RootStackParam = {
   Group: undefined;
+  SearchGroup: undefined;
   GroupSetting: undefined;
   AboutGroup: { groupId: number };
 };
 
-const GroupComponent = () => {
+const GroupButton = ({item, index} : {item:any, index:number})=>{
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
-
-  return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      {data.map((item, index) => (
-        <TouchableOpacity
-          key={index}
+  return(
+  <TouchableOpacity
           onPress={() => {
             navigation.navigate("AboutGroup", { groupId: item.id });
           }}
@@ -47,6 +45,14 @@ const GroupComponent = () => {
             </View>
           </View>
         </TouchableOpacity>
+  )
+}
+const GroupComponent = () => {
+
+  return (
+    <ScrollView showsVerticalScrollIndicator={false}>
+      {myGroupData.map((item, index) => (
+        <GroupButton key={item.id} item={item} index={index}/>
       ))}
     </ScrollView>
   );
@@ -54,7 +60,16 @@ const GroupComponent = () => {
 
 const Group = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
-  //구현 예정
+  //강제 렌더링
+  const [, updateState] = useState([]);
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      updateState([]);
+    }, [])
+  );
+
+
   return (
     <View style={{ flex: 1 }}>
       <View
@@ -98,35 +113,20 @@ const Group = () => {
         }}
       >
         <GroupComponent />
-
+ 
         <TouchableOpacity
-          onPressOut={() => {
-            navigation.navigate("GroupSetting");
+        style={styles.searchButton}
+          onPress={() => {
+            navigation.navigate("SearchGroup");
           }}
         >
-          <View>
             <AntDesign
-              name="pluscircle"
-              size={wp(15)}
+              name= "pluscircle"
+              size={90}
               color={themeColor}
-              style={{
-                position: "absolute",
-                bottom: hp(2),
-                left: wp(30),
-                shadowColor: "black",
-                shadowOffset: {
-                  width: 10,
-                  height: 10,
-                },
-                shadowOpacity: 0.5,
-                shadowRadius: 3.84,
-                elevation: 20,
-              }}
             />
-          </View>
         </TouchableOpacity>
       </View>
-      <View></View>
     </View>
   );
 };
@@ -166,6 +166,16 @@ const styles = StyleSheet.create({
     fontSize: wp(3.5),
     marginLeft: wp(5),
     color: "#495057",
+  },
+  searchButton:{
+    position: "absolute",
+    bottom: 20,
+    right: 20,
+    shadowColor: "black",
+    shadowOffset: {
+      width: 10,
+      height: 10,
+    }
   },
 });
 

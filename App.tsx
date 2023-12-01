@@ -16,8 +16,9 @@ import ManualMeasure from "./screens/Home/ManualMeasure";
 import MyPage from "./screens/MyPage/MyPage";
 
 /* Group 관련 페이지 */
-import Group from "./screens/Group/Group";
-import AboutGroup from "./screens/Group/AboutGroup";
+// import Group from "./screens/Group/Group";
+// import AboutGroup from "./screens/Group/AboutGroup";
+import GroupStack from "./screens/Group/GroupStack";
 
 /* 루틴관련 화면들은 RoutineStack에서 관리 */
 import RoutineStack from "./screens/Routine/RoutineStack";
@@ -44,18 +45,18 @@ type SettingsStackParamList = {
   Settings: undefined;
 };
 
-function GroupStack() {
-  return (
-    <Stack.Navigator
-      initialRouteName="Group"
-      screenOptions={{ headerShown: false }}
-    >
-      <Stack.Screen name="Group" component={Group} />
-      <Stack.Screen name="GroupSetting" component={GroupSetting} />
-      <Stack.Screen name="AboutGroup" component={AboutGroup} />
-    </Stack.Navigator>
-  );
-}
+// function GroupStack() {
+//   return (
+//     <Stack.Navigator
+//       initialRouteName="Group"
+//       screenOptions={{ headerShown: false }}
+//     >
+//       <Stack.Screen name="Group" component={Group} />
+//       <Stack.Screen name="GroupSetting" component={GroupSetting} />
+//       <Stack.Screen name="AboutGroup" component={AboutGroup} />
+//     </Stack.Navigator>
+//   );
+// }
 
 function HomeStack() {
   return (
@@ -117,7 +118,7 @@ const App = () => {
             tabBarIcon: () => (
               <MaterialCommunityIcons name="dumbbell" size={28} color="black" />
             ),
-            tabBarHideOnKeyboard: true,
+            // tabBarHideOnKeyboard: true,
             tabBarStyle: ((route) => {
               const targets = ["AboutRoutine", "MakeRoutine", "Post2GPT", "RoutineByGPT"];
               const routeName = getFocusedRouteNameFromRoute(route) ?? "";
@@ -137,8 +138,9 @@ const App = () => {
               <MaterialIcons name="group" size={28} color="black" />
             ),
             tabBarStyle: ((route) => {
+              const targets = ["SearchGroup", "GroupSetting"];
               const routeName = getFocusedRouteNameFromRoute(route) ?? "";
-              if (routeName === "GroupSetting") {
+              if (targets.includes(routeName)) {
                 return { display: "none" };
               }
               return;
