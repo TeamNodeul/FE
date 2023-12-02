@@ -43,7 +43,7 @@ const MyPage = () => {
   // const [userName, setUserName] = useState(user!.name);
   // const [userEmail, setUserEmail] = useState(user!.email);
   useEffect(()=>{
-    axios.get(`http://3.36.228.245:8080/api/find/users/${userID}`)
+    axios.get(`http://3.36.228.245:8080/api/users/find/${userID}`)
     .then((res:any)=>{
       console.log(res.data);
       // user = res.data;
