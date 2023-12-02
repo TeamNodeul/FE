@@ -20,9 +20,8 @@ import { themeColor } from "../Home/Home";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { addGroup } from "../../DB/DB_Group";
-
-import { groupData } from "../../DB/DB_Group";
+// import { addGroup } from "../../DB/DB_Group";
+import { groupData, addGroup, myGroupData, addMyGroup } from "../../DB/DB_Group";
 import { userID } from "../../DB/userID";
 import UserData from "../../DB/DB_User";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -68,16 +67,20 @@ const GroupSetting = () => {
     const newGroup = {
       id: groupData.length,
       name: inputName,
-      headCount: "0/" + number,
+      headCount: "1/" + number,
       leader: user!.name,
     };
 
     addGroup(newGroup);
+    addMyGroup(newGroup);
 
     setCategory("");
     setNumber("");
     setInputName("");
     setInputDescription("");
+    navigation.goBack();
+    navigation.goBack();
+    // navigation.pop();
     //setter(inputName, number, user!.name);
   };
 
@@ -120,7 +123,7 @@ const GroupSetting = () => {
             value={inputName}
           />
         </View>
-        <View style={{ marginTop: hp(2) }}>
+        {/* <View style={{ marginTop: hp(2) }}>
           <TextInput
             style={{
               borderColor: "gray",
@@ -132,8 +135,8 @@ const GroupSetting = () => {
             onChangeText={handleDescriptionInputChange}
             value={inputDescription}
           />
-        </View>
-        <View
+        </View> */}
+        {/* <View
           style={{
             marginTop: hp(5),
             borderWidth: wp(0.2),
@@ -142,8 +145,7 @@ const GroupSetting = () => {
             overflow: "hidden",
           }}
         >
-          {/* Assuming you are using a picker library for the dropdown */}
-          {/* Replace this with the appropriate component */}
+          
           <Picker
             selectedValue={category}
             onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
@@ -154,7 +156,7 @@ const GroupSetting = () => {
             <Picker.Item label="런닝" value="running" />
             <Picker.Item label="근성장" value="muscleGrowth" />
           </Picker>
-        </View>
+        </View> */}
         <View
           style={{
             marginTop: hp(2),
@@ -190,7 +192,7 @@ const GroupSetting = () => {
               borderRadius: 8,
               alignItems: "center",
             }}
-            onPressOut={handleDoneButtonPress}
+            onPress={handleDoneButtonPress}
           >
             <Text style={{ color: "white" }}>완료</Text>
           </TouchableOpacity>

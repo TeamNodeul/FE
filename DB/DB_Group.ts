@@ -5,7 +5,7 @@ export const groupData = [
   {
     id: 0,
     name: "운동을 하고 싶어서 만든 방",
-    headCount: "12/20명",
+    headCount: "12/20",
     leader: "강현민",
   },
   { id: 1, name: "불나방", headCount: "10/20", leader: "오소리" },
@@ -19,8 +19,22 @@ export const groupData = [
   { id: 9, name: "DRX", headCount: "5/20", leader: "Deft" },
 ];
 //getter, setter
-export const addGroup = (newGroup) => {
+export const addGroup = (newGroup:any) => {
   groupData.push(newGroup);
 };
+
+
+export const myGroupData = [{
+  id: 0,
+  name: "운동을 하고 싶어서 만든 방",
+  headCount: "12/20",
+  leader: "강현민",
+},
+];
+export const addMyGroup = (newGroup:any) => {
+  myGroupData.push(newGroup);
+};
+
+
 
 export const getter = () => {};

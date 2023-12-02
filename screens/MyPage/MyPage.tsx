@@ -13,6 +13,7 @@ import {
   TextInput,
   // AsyncStorage,
 } from "react-native";
+import axios from 'axios';
 import { themeColor } from "../Home/Home";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -38,16 +39,27 @@ import {
 const MyPage = () => {
   // 현재 로그인된 유저 객체를 가져옴
   const user = UserData.find((user) => user.id === userID);
+  
   // const [userName, setUserName] = useState(user!.name);
   // const [userEmail, setUserEmail] = useState(user!.email);
-  const userName = user?.name;
-  const userEmail  = user?.email;
+  useEffect(()=>{
+    axios.get(`http://3.36.228.245:8080/api/find/users/${userID}`)
+    .then((res:any)=>{
+      console.log(res.data);
+      // user = res.data;
+    })
+    .catch((err)=>{
+      console.error("Error:", err)
+    });
 
+  }, [userID]);
+  const userName = user?.name;
+  const userEmail  = user?.email ?? "";
   /**화면 focus될시 강제 렌더링 */
   const [, updateState] = useState([]);
   useFocusEffect(
     React.useCallback(() => {
-      console.log("마에페이지 포커스")
+      // console.log("마에페이지 포커스")
       // Do something when the screen is focused
       updateState([]);
     }, [])
