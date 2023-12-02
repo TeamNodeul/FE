@@ -14,6 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Card, Button } from "react-native-elements";
 import BottomSheet from "../BottomSheet";
+import data from "../../DB/DB_ExerciseList";
 
 //아이콘 임포트
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -38,12 +39,17 @@ const buttonWidth = windowWidth * 0.5;
 
 export const themeColor = "skyblue"; //"#E88C7D"; //테마 색상 #E88C7D
 
-const day = [];
+const date: string[] = [];
 const initDate = new Date();
 const lastDate = new Date(initDate);
 
+for (let i = 0; i < 7; i++) {
+  if (i) lastDate.setDate(lastDate.getDate() - 1);
+  date.push(`${lastDate.getMonth() + 1}월 ${lastDate.getDate()}일`);
+}
+
 const CardFrame = (props: any) => {
-  const { day, achievement } = props;
+  const { day, achievement, id } = props;
 
   const [modalVisible, setModalVisible] = useState(false);
   const pressButton = () => {
@@ -71,6 +77,7 @@ const CardFrame = (props: any) => {
           <BottomSheet
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
+            id={id}
           />
         </View>
       </Card>
@@ -143,13 +150,13 @@ const Home = () => {
           showsVerticalScrollIndicator={false}
         >
           <View>
-            <CardFrame day="2023-11-23" achievement="상" />
-            <CardFrame day="2023-11-24" achievement="중" />
-            <CardFrame day="2023-11-25" achievement="상" />
-            <CardFrame day="2023-11-26" achievement="하" />
-            <CardFrame day="2023-11-27" achievement="중" />
-            <CardFrame day="2023-11-28" achievement="상" />
-            <CardFrame day="2023-11-29" achievement="상" />
+            <CardFrame day={date[6]} achievement="상" id={1} />
+            <CardFrame day={date[5]} achievement="중" id={2} />
+            <CardFrame day={date[4]} achievement="상" id={3} />
+            <CardFrame day={date[3]} achievement="하" id={4} />
+            <CardFrame day={date[2]} achievement="중" id={5} />
+            <CardFrame day={date[1]} achievement="상" id={6} />
+            <CardFrame day={date[0]} achievement="상" id={7} />
           </View>
         </ScrollView>
       </View>

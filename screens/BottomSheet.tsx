@@ -8,8 +8,11 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   PanResponder,
+  FlatList,
+  ScrollView,
 } from "react-native";
 import { Icon } from "react-native-elements";
+import data from "../DB/DB_ExerciseList";
 
 import {
   widthPercentageToDP as wp,
@@ -19,7 +22,8 @@ import {
 import { Fontisto } from "@expo/vector-icons";
 
 const BottomSheet = (props: any) => {
-  const { modalVisible, setModalVisible } = props;
+  const { modalVisible, setModalVisible, id } = props;
+  const exerciseData = data.find((entry) => entry.id === id);
   const screenHeight = Dimensions.get("screen").height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
   const translateY = panY.interpolate({
@@ -68,6 +72,16 @@ const BottomSheet = (props: any) => {
     });
   };
 
+  if (!exerciseData) {
+    return (
+      <View>
+        <Text>{id}에 해당하는 데이터가 없습니다.</Text>
+      </View>
+    );
+  }
+
+  const exercises = exerciseData.exercises;
+
   return (
     <Modal
       visible={modalVisible}
@@ -91,12 +105,34 @@ const BottomSheet = (props: any) => {
           </View>
           <View
             style={{
-              marginTop: hp(10),
+              marginTop: hp(2),
               alignItems: "center",
               justifyContent: "center",
             }}
+            key={id}
           >
-            <Text>여기에 운동 기록 넣으면 됨</Text>
+            <Text
+              style={{
+                fontSize: wp(5),
+                fontWeight: "bold",
+                marginBottom: hp(5),
+              }}
+            >
+              이날의 운동 기록
+            </Text>
+            <FlatList
+              data={exercises}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item }) => (
+                <View>
+                  <Text style={styles.exerciseText}>
+                    {item.name} - {item.sets}세트, {item.reps}회, {item.weight}
+                    kg
+                  </Text>
+                  <View style={styles.line}></View>
+                </View>
+              )}
+            ></FlatList>
           </View>
         </Animated.View>
       </View>
@@ -120,6 +156,15 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderTopLeftRadius: wp(7),
     borderTopRightRadius: wp(7),
+  },
+  line: {
+    marginVertical: hp(2),
+    width: wp(90),
+    height: 1,
+    backgroundColor: "#dee2e6",
+  },
+  exerciseText: {
+    fontSize: wp(4),
   },
 });
 
