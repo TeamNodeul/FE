@@ -20,8 +20,9 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 // import {data} from "./Routine"
 import RoutineData from "../../DB/DB_Routine";
+import { HomeStack } from "../../App";
 
-const AboutRoutine = ({ route }: any) => {
+export const AboutRoutine = ({ route }: any) => {
   const { routineId } = route.params;
   const routineInfo = RoutineData.find((item) => item.id === routineId);
 
@@ -58,7 +59,9 @@ const AboutRoutine = ({ route }: any) => {
 
   return (
     <View style={styles.container}>
-      <View style={{flex : 2, justifyContent:"flex-end", marginBottom:wp(5) }}>
+      <View
+        style={{ flex: 2, justifyContent: "flex-end", marginBottom: wp(5) }}
+      >
         <Text>현재 선택한 루틴 : {routineId}번 루틴 정보</Text>
         <Text>루틴이름 : {routineInfo.name}</Text>
         <Text>운동부위 : {routineInfo.part}</Text>
@@ -108,7 +111,7 @@ const styles = StyleSheet.create({
   startButton: {
     // flex: 1,
     // alignContent:"center",
-    alignItems:"center",
+    alignItems: "center",
     width: "90%",
     marginTop: 10,
     marginBottom: 10,

@@ -9,6 +9,14 @@ import {
   Dimensions,
   PanResponder,
 } from "react-native";
+import { Icon } from "react-native-elements";
+
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+
+import { Fontisto } from "@expo/vector-icons";
 
 const BottomSheet = (props: any) => {
   const { modalVisible, setModalVisible } = props;
@@ -78,7 +86,18 @@ const BottomSheet = (props: any) => {
           }}
           {...panResponders.panHandlers}
         >
-          <Text>This is BottomSheet</Text>
+          <View style={{ alignItems: "center", justifyContent: "center" }}>
+            <Fontisto name="minus-a" size={wp(10)} color="grey" style={{}} />
+          </View>
+          <View
+            style={{
+              marginTop: hp(10),
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Text>여기에 운동 기록 넣으면 됨</Text>
+          </View>
         </Animated.View>
       </View>
     </Modal>
@@ -95,12 +114,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   bottomSheetContainer: {
-    height: 300,
-    justifyContent: "center",
-    alignItems: "center",
+    height: hp(60),
+    //justifyContent: "center",
+    //alignItems: "center",
     backgroundColor: "white",
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    borderTopLeftRadius: wp(7),
+    borderTopRightRadius: wp(7),
   },
 });
 

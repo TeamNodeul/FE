@@ -31,7 +31,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+import { ReloadInstructions } from "react-native/Libraries/NewAppScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -57,7 +57,7 @@ function GroupStack() {
   );
 }
 
-function HomeStack() {
+export function HomeStack() {
   return (
     <Stack.Navigator
       initialRouteName="Home"
@@ -71,15 +71,24 @@ function HomeStack() {
   );
 }
 
-
+// function RoutineStack() {
+//   return (
+//     <Stack.Navigator
+//       initialRouteName="Routine"
+//       screenOptions={{ headerShown: false }}
+//     >
+//       <Stack.Screen name="Routine" component={Routine} />
+//       <Stack.Screen name="RoutineByGPT" component={RoutineByGPT} />
+//       <Stack.Screen name="AboutRoutine" component={AboutRoutine} />
+//     </Stack.Navigator>
+//   );
+// }
 const App = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
-      
         initialRouteName="홈"
         screenOptions={{
-          tabBarHideOnKeyboard: true,
           headerShown: false,
           tabBarShowLabel: true, // 탭 레이블 숨기기 (선택사항)
         }}
@@ -109,7 +118,6 @@ const App = () => {
             })(route),
           })}
         />
-        
         <Tab.Screen
           name="루틴"
           component={RoutineStack}
@@ -119,16 +127,15 @@ const App = () => {
             ),
             tabBarHideOnKeyboard: true,
             tabBarStyle: ((route) => {
-              const targets = ["AboutRoutine", "MakeRoutine", "Post2GPT", "RoutineByGPT"];
               const routeName = getFocusedRouteNameFromRoute(route) ?? "";
-              if (targets.includes(routeName)) {
+              // console.log(routeName);
+              if (routeName !== "Routine") {
                 return { display: "none" };
               }
               return;
             })(route),
           })}
         />
-
         <Tab.Screen
           name="그룹"
           component={GroupStack}

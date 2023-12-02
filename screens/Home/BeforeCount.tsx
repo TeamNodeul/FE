@@ -13,7 +13,10 @@ import {
   Pressable,
 } from "react-native";
 
+import AboutRoutine from "../Routine/AboutRoutine";
+
 import { SwipeListView } from "react-native-swipe-list-view";
+import Routine from "../Routine/Routine";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -146,6 +149,10 @@ const BeforeCount = () => {
     );
   };
 
+  const handleGetRoutineButtonPress = () => {
+    console.log("루틴 불러오기");
+  };
+
   return (
     <View style={styles.container}>
       <View style={{ flex: 0.45 }}></View>
@@ -163,13 +170,13 @@ const BeforeCount = () => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[styles.buttonStyle, { width: buttonWidth }]}
-          onPress={() => alert("운동 루틴을 불러옵니다")} //구현 예정
+          onPress={handleGetRoutineButtonPress} //구현 예정
         >
           <Text style={styles.ButtonText}>운동 루틴 불러오기</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.infoContainer}>
-        <SwipeListView
+        {/* <SwipeListView
           data={data}
           renderItem={renderItem}
           renderHiddenItem={renderHiddenItem}
@@ -205,7 +212,7 @@ const BeforeCount = () => {
           >
             <Text>➕</Text>
           </Pressable>
-        </View>
+        </View> */}
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
