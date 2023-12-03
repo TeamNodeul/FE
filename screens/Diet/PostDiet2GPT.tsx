@@ -1,5 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
+import axios from "axios";
+import { userID } from "../../DB/userID";
 //import Loading from "../../assets/image/loading.gif";
 
 type Post2GPTProps = {
@@ -12,10 +14,10 @@ type Post2GPTProps = {
 };
 
 const PostDiet2GPT = ({ route }: any) => {
-  // const {userId} = route.params.userId;
+  //const { userId } = route.params.userId;
   const { selectedOptions } = route.params;
 
-  // const {selectedOptions} = route.params.selectedOptions;
+  //const { selectedOptions } = route.params.selectedOptions;
   return (
     <View style={styles.container}>
       <Image source={require("../../assets/loading.gif")} />

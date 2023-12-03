@@ -176,6 +176,7 @@ const BeforeCount = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.infoContainer}>
+        <Text></Text>
         {/* <SwipeListView
           data={data}
           renderItem={renderItem}

@@ -44,7 +44,6 @@ const Routine = () => {
     }, [])
   );
 
-
   const MyRoutineList = RoutineData.filter((item) => item.user_id === userID);
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
 
@@ -62,7 +61,7 @@ const Routine = () => {
             style={styles.box}
             key={item.id}
             onPress={() => {
-              // showExerciseInfo();
+              //showExerciseInfo();
               navigation.navigate("AboutRoutine", { routineId: item.id });
             }}
           >
@@ -91,7 +90,6 @@ const Routine = () => {
       </ScrollView>
     );
   };
-
 
   const GPTButton = () => {
     /* navigation은 같은 함수내에 존재해야함*/
@@ -189,8 +187,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     // bottom: "5%",
     // right: "5%",
-    bottom:20,
-    right:20,
+    bottom: 20,
+    right: 20,
     backgroundColor: "white",
     borderRadius: 100,
   },

@@ -3,6 +3,7 @@ import Diet from "./Diet";
 import DietByGPT from "./DietByGPT";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import PostDiet2GPT from "./PostDiet2GPT";
+import CreateDietManual from "./CreateDietManual";
 const Stack = createNativeStackNavigator();
 
 export const DietStack = () => {
@@ -14,6 +15,7 @@ export const DietStack = () => {
       <Stack.Screen name="Diet" component={Diet} />
       <Stack.Screen name="DietByGPT" component={DietByGPT} />
       <Stack.Screen name="PostDiet2GPT" component={PostDiet2GPT} />
+      <Stack.Screen name="CreateDietManual" component={CreateDietManual} />
     </Stack.Navigator>
   );
 };

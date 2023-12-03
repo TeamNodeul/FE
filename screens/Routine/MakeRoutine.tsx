@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -19,6 +19,7 @@ import {
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Picker } from "@react-native-picker/picker";
 import { RootStackParam } from "./Routine";
+import axios from "axios";
 const MakeRoutine = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   const [routineName, setRoutineName] = useState("");
@@ -59,6 +60,18 @@ const MakeRoutine = () => {
     setExercises(updatedExercises);
   };
 
+  const postData = async (newRoutine: any) => {
+    try {
+      const response = await axios.post(
+        `http://3.36.228.245:8080/api/sportRoutines/create/${userID}/user-routine`,
+        newRoutine
+      );
+      console.log("POST request successful: ", response.data);
+    } catch (error) {
+      console.error("Error posting data: ", error);
+    }
+  };
+
   const handleCreateRoutine = () => {
     // console.log("Routine Name:", routineName);
     // console.log("Exercises:", exercises);
@@ -81,7 +94,10 @@ const MakeRoutine = () => {
       };
 
       newRoutine.exercises.push(addExercise);
+      postData(addExercise);
     });
+
+    //postData(newRoutine);
 
     addRoutine(newRoutine);
     // console.log(data[data.length-1]);

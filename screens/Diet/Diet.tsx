@@ -26,12 +26,27 @@ import { dietData as data, initDate, lastDate } from "../../DB/DB_Diet";
 export type RootStackParam = {
   Diet: undefined;
   DietByGPT: undefined;
+  CreateDietManual: undefined;
 };
 
 const Diet = () => {
   const options = { month: "numeric", day: "numeric" };
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
 
+  const handleManualCreateButtonPress = () => {
+    Alert.alert("식단 설정", "식단을 직접 설정하시겠습니까?", [
+      {
+        text: "취소",
+        style: "cancel",
+      },
+      {
+        text: "확인",
+        onPress: () => {
+          navigation.navigate("CreateDietManual");
+        },
+      },
+    ]);
+  };
   const handleCreateButtonPress = () => {
     Alert.alert("식단 추천", "GPT 식단 추천을 받으시겠습니까?", [
       {
@@ -56,7 +71,15 @@ const Diet = () => {
       >
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.title}>주간 식단 계획</Text>
-          <TouchableOpacity onPressOut={handleCreateButtonPress}>
+          <TouchableOpacity onPressOut={handleManualCreateButtonPress}>
+            <AntDesign
+              name="pluscircleo"
+              size={wp(6)}
+              color={themeColor}
+              style={{ marginTop: hp(0.5), marginLeft: -wp(60) }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleCreateButtonPress}>
             <AntDesign
               name="edit"
               size={wp(6)}

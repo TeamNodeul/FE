@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, LegacyRef} from "react";
+import React, { useState, useRef, useEffect, LegacyRef } from "react";
 import {
   View,
   Text,
@@ -13,7 +13,7 @@ import {
   TextInput,
   // AsyncStorage,
 } from "react-native";
-import axios from 'axios';
+import axios from "axios";
 import { themeColor } from "../Home/Home";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -39,22 +39,22 @@ import {
 const MyPage = () => {
   // 현재 로그인된 유저 객체를 가져옴
   const user = UserData.find((user) => user.id === userID);
-  
+
   // const [userName, setUserName] = useState(user!.name);
   // const [userEmail, setUserEmail] = useState(user!.email);
-  useEffect(()=>{
-    axios.get(`http://3.36.228.245:8080/api/find/users/${userID}`)
-    .then((res:any)=>{
-      console.log(res.data);
-      // user = res.data;
-    })
-    .catch((err)=>{
-      console.error("Error:", err)
-    });
-
+  useEffect(() => {
+    axios
+      .get(`http://3.36.228.245:8080/api/find/users/${userID}`)
+      .then((res: any) => {
+        console.log(res.data);
+        // user = res.data;
+      })
+      .catch((err) => {
+        console.error("Error:", err);
+      });
   }, [userID]);
   const userName = user?.name;
-  const userEmail  = user?.email ?? "";
+  const userEmail = user?.email ?? "";
   /**화면 focus될시 강제 렌더링 */
   const [, updateState] = useState([]);
   useFocusEffect(
@@ -65,20 +65,17 @@ const MyPage = () => {
     }, [])
   );
 
-
   // useEffect(() => {
   //   // 핫 리로드를 위해, userID가 바뀌었으면 마이페이지 정보도 갱신해줌
   //   setUserName(user!.name);
   //   setUserEmail(user!.email);
   // }, [userID]);
 
-
-    
   const [modalVisible, setModalVisible] = useState(false);
   // const [inputText, setInputText] = useState("");
-    let inputText:string = "";
+  let inputText: string = "";
 
-    const inputRef = useRef<any>();
+  const inputRef = useRef<any>();
 
   const openModal = () => {
     setModalVisible(true);
@@ -98,19 +95,17 @@ const MyPage = () => {
   //   setUserName(inputText);
   //   closeModal();
   // };
-  const tryLogin = ()=>{
+  const tryLogin = () => {
     Login(Number(inputText));
     closeModal();
-  }
-  
+  };
 
   const NameModifier = () => {
-    useEffect(()=>{
-      if(modalVisible && inputRef.current){
+    useEffect(() => {
+      if (modalVisible && inputRef.current) {
         inputRef.current.focus();
       }
-
-    }, [modalVisible])
+    }, [modalVisible]);
 
     return (
       <Modal
@@ -124,8 +119,8 @@ const MyPage = () => {
         <View style={styles.modalView}>
           <Text>로그인할 id 입력: </Text>
           <TextInput
-          ref={inputRef}
-          keyboardType="numeric"
+            ref={inputRef}
+            keyboardType="numeric"
             placeholder="로그인할 id 입력"
             onChangeText={handleTextChange}
             onSubmitEditing={tryLogin}
@@ -182,7 +177,7 @@ const MyPage = () => {
           </Text>
 
           <NameModifier />
-          
+
           <TouchableOpacity>
             <AntDesign
               style={{ marginLeft: 5 }}
