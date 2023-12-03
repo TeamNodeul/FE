@@ -1,4 +1,5 @@
 const User = [
+    { id: 0, email: 'test10@example.com', nickname: 'user10', gender: 'female', height: 150, weight: 25, workout_time: '2023-01-10 16:25:00', profile: '', name: 'Sophia Martinez' },
     { id: 1, email: 'ryu_eclipse@naver.com', nickname: '류지류지', gender: 'male', height: 170, weight: 60, workout_time: '2023-01-01 10:00:00', profile: '', name: '류지원' },
     { id: 2, email: 'maxkang0328@naver.com', nickname: '강현민', gender: 'male', height: 190, weight: 100, workout_time: '2023-01-02 12:30:00', profile: '', name: '강현민' },
     { id: 3, email: 'mycindy0710@naver.com', nickname: '오소리', gender: 'female', height: 150, weight: 25, workout_time: '2023-01-03 15:45:00', profile: '', name: '오소리' },

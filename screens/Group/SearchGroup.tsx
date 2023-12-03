@@ -22,7 +22,8 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import {groupData, myGroupData, addMyGroup } from "../../DB/DB_Group";
-
+import { userID } from "../../DB/userID";
+import User from "../../DB/DB_User";
 export type RootStackParam = {
   Group: undefined;
   SearchGroup: undefined;
@@ -47,7 +48,6 @@ const Group = () => {
         animationType="fade"
         transparent={true}
         onRequestClose={closeModal}
-        // style={}
       >
         <TouchableWithoutFeedback onPressIn={closeModal}>
           <View style={styles.overlay} />
@@ -105,7 +105,7 @@ const Group = () => {
       return false;
       }}
       >
-        <View style={styles.box}>
+        <View style={[styles.box, item.leader===User[userID].name ? {borderWidth:3} : null]}>
           <Text style={styles.name}>{item.name}</Text>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.count}>{item.headCount}명</Text>
@@ -208,6 +208,7 @@ const styles = StyleSheet.create({
     marginBottom: hp(2),
     borderRadius: 20,
     width: wp(90),
+    borderColor:"skyblue"
   },
   name: {
     fontSize: wp(4),

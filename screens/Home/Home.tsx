@@ -69,7 +69,7 @@ const CardFrame = (props: any) => {
         </View>
         <Card.Divider />
         <View style={styles.cardButton}>
-          <TouchableOpacity onPressOut={pressButton}>
+          <TouchableOpacity onPress={pressButton}>
             <Text style={{ marginLeft: wp(15), marginTop: hp(1.2) }}>
               운동 기록 보기
             </Text>

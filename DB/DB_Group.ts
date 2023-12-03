@@ -18,6 +18,7 @@ export const groupData = [
   { id: 8, name: "Cloud9", headCount: "17/20", leader: "C9" },
   { id: 9, name: "DRX", headCount: "5/20", leader: "Deft" },
 ];
+
 //getter, setter
 export const addGroup = (newGroup:any) => {
   groupData.push(newGroup);

@@ -128,9 +128,9 @@ const App = () => {
             ),
             // tabBarHideOnKeyboard: true,
             tabBarStyle: ((route) => {
+              const targets = ["AboutRoutine", "MakeRoutine", "Post2GPT", "RoutineByGPT"];
               const routeName = getFocusedRouteNameFromRoute(route) ?? "";
-              // console.log(routeName);
-              if (routeName !== "Routine") {
+              if (targets.includes(routeName)) {
                 return { display: "none" };
               }
               return;

@@ -22,7 +22,12 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import RoutineData from "../../DB/DB_Routine";
 import { HomeStack } from "../../App";
 
+export type RootStackParam = {
+  BeforeCount : undefined,
+};
+
 export const AboutRoutine = ({ route }: any) => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   const { routineId } = route.params;
   const routineInfo = RoutineData.find((item) => item.id === routineId);
 
@@ -35,22 +40,24 @@ export const AboutRoutine = ({ route }: any) => {
   }
 
   const ExerciseList = () => {
+    
+
     return (
       <ScrollView
+      showsVerticalScrollIndicator={false}
         style={{
-          flex: 8,
-          // justifyContent: "flex-start",
-          // alignItems: "flex-start",
+          // flex: 8,
+          // marginTop:50
         }}
       >
         {routineInfo.exercises.map((item, index) => (
           //map쓸려면 고유키를 설정해줘야 경고 안뜸
           <View style={styles.box} key={index}>
-            <Text style={styles.name}>{item.name}</Text>
-            <Text>
+            <Text style={styles.nameText}>{item.name}</Text>
+            <Text style={styles.contentText}>
               {item.reps}회 / {item.sets}세트 / {item.weight}kg
             </Text>
-            <Text>총 무게 : {item.reps * item.sets * item.weight}kg</Text>
+            <Text style={styles.contentText}>총 무게 : {item.reps * item.sets * item.weight}kg</Text>
           </View>
         ))}
       </ScrollView>
@@ -60,13 +67,15 @@ export const AboutRoutine = ({ route }: any) => {
   return (
     <View style={styles.container}>
       <View
-        style={{ flex: 2, justifyContent: "flex-end", marginBottom: wp(5) }}
+        style={{ flex: 3, justifyContent: "flex-end", marginBottom: wp(5) }}
       >
         <Text>현재 선택한 루틴 : {routineId}번 루틴 정보</Text>
+        <View style={styles.separator}></View>
         <Text>루틴이름 : {routineInfo.name}</Text>
         <Text>운동부위 : {routineInfo.part}</Text>
         <Text>날짜 : {routineInfo.date}</Text>
       </View>
+      <View style={styles.separator}></View>
       <View style={{ flex: 7 }}>
         <ExerciseList />
       </View>
@@ -75,8 +84,8 @@ export const AboutRoutine = ({ route }: any) => {
         style={styles.startButton}
         // style={styles.makeButton}
         onPress={() => {
-          // 여기에 '+' 버튼을 눌렀을 때의 동작 추가
-          // 예를 들어 새로운 루틴을 생성하는 화면으로 이동하도록 할 수 있습니다.
+          // navigation.goBack();
+          navigation.navigate("BeforeCount", )
         }}
       >
         <Text style={styles.startButtonText}>운동 시작하기</Text>
@@ -92,20 +101,33 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "f8f9fa",
   },
-
+  separator: {
+    width: "100%", // 화면 너비의 100%
+    height: 1, // 가로선의 높이
+    backgroundColor: "black", // 가로선의 색상 (예: 회색)
+    justifyContent: "center",
+  },
   box: {
-    backgroundColor: "#87CEEB",
+    // backgroundColor: "#dee2e6",
     padding: 16,
-    marginBottom: hp(2),
+    marginVertical: hp(1),
     borderRadius: 20,
     width: wp(90),
+    borderColor:"skyblue",
+    borderWidth:2,
   },
 
-  name: {
+  nameText: {
     fontSize: wp(5),
     fontWeight: "bold",
+    // marginBottom: wp(1),
+    // color: "grey",
+  },
+  contentText: {
+    // fontSize: wp(5),
+    // fontWeight: "bold",
     marginBottom: wp(1),
-    color: "#343a40",
+    // color: "grey",
   },
 
   startButton: {
@@ -113,7 +135,7 @@ const styles = StyleSheet.create({
     // alignContent:"center",
     alignItems: "center",
     width: "90%",
-    marginTop: 10,
+    // marginTop: 10,
     marginBottom: 10,
     backgroundColor: "skyblue",
     // borderColor: "blue",

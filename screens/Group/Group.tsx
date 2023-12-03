@@ -21,7 +21,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { myGroupData } from "../../DB/DB_Group";
 // import { groupData as groupData } from "../../DB/DB_Group";
-
+import { userID } from "../../DB/userID";
+import User from "../../DB/DB_User";
+// User[0].
 export type RootStackParam = {
   Group: undefined;
   SearchGroup: undefined;
@@ -31,13 +33,15 @@ export type RootStackParam = {
 
 const GroupButton = ({item, index} : {item:any, index:number})=>{
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
+  // console.log(User[userID]);
   return(
   <TouchableOpacity
           onPress={() => {
             navigation.navigate("AboutGroup", { groupId: item.id });
           }}
         >
-          <View style={styles.box} key={index}>
+          {/* 내가 생성한 그룹들은 하늘색 경계선이 생김 */}
+          <View style={[styles.box, item.leader===User[userID].name ? {borderWidth:3} : null]} key={index}>
             <Text style={styles.name}>{item.name}</Text>
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.count}>{item.headCount}명</Text>
@@ -151,6 +155,8 @@ const styles = StyleSheet.create({
     marginBottom: hp(2),
     borderRadius: 20,
     width: wp(90),
+    borderColor:"skyblue",
+    // borderWidth:1,
   },
   name: {
     fontSize: wp(4),
