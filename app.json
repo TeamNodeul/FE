@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -25,6 +27,13 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins:": ["react-native-ble-plx"]
+    "plugins:": [
+      "react-native-ble-plx"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "fd9b94c4-7cab-4bbd-a3fd-31c8884a6734"
+      }
+    }
   }
 }

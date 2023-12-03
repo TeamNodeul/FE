@@ -42,10 +42,9 @@ const MyPage = () => {
 
   // const [userName, setUserName] = useState(user!.name);
   // const [userEmail, setUserEmail] = useState(user!.email);
-<<<<<<< HEAD
   useEffect(() => {
     axios
-      .get(`http://3.36.228.245:8080/api/find/users/${userID}`)
+      .get(`http://3.36.228.245:8080/api/users/find/${userID}`)
       .then((res: any) => {
         console.log(res.data);
         // user = res.data;
@@ -53,18 +52,6 @@ const MyPage = () => {
       .catch((err) => {
         console.error("Error:", err);
       });
-=======
-  useEffect(()=>{
-    axios.get(`http://3.36.228.245:8080/api/users/find/${userID}`)
-    .then((res:any)=>{
-      console.log(res.data);
-      // user = res.data;
-    })
-    .catch((err)=>{
-      console.error("Error:", err)
-    });
-
->>>>>>> ea2f925c0f839d0b8cef305b309f43f0f5eb4aae
   }, [userID]);
   const userName = user?.name;
   const userEmail = user?.email ?? "";
