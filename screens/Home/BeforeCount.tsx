@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import {
   View,
   Text,
@@ -29,6 +30,7 @@ import { themeColor } from "./Home";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
+import RoutineBottomSheet from "./RoutineBottomSheet";
 
 export type RootStackParam = {
   NFCScreen: undefined;
@@ -50,6 +52,11 @@ const BeforeCount = () => {
 
   const [text, setText] = React.useState("");
   const [data, setData] = React.useState(DATA);
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const pressButton = () => {
+    setModalVisible(true);
+  };
 
   const handleDelete = (timestamp) => {
     const res = data.filter((item) => item.timestamp !== timestamp);
@@ -149,10 +156,6 @@ const BeforeCount = () => {
     );
   };
 
-  const handleGetRoutineButtonPress = () => {
-    console.log("루틴 불러오기");
-  };
-
   return (
     <View style={styles.container}>
       <View style={{ flex: 0.45 }}></View>
@@ -170,10 +173,33 @@ const BeforeCount = () => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[styles.buttonStyle, { width: buttonWidth }]}
-          onPress={handleGetRoutineButtonPress} //구현 예정
+          onPress={pressButton} //구현 예정
         >
-          <Text style={styles.ButtonText}>운동 루틴 불러오기</Text>
+          <Text style={{ color: "white", fontSize: wp(5), marginLeft: wp(2) }}>
+            나만의 루틴
+          </Text>
+          <AntDesign
+            name="right"
+            size={wp(6)}
+            color="white"
+            style={{ marginLeft: wp(75), marginTop: -hp(1) }}
+          />
+          <Text
+            style={{
+              color: "white",
+              fontSize: wp(3),
+              marginTop: hp(0),
+              marginLeft: wp(2),
+              marginBottom: hp(1),
+            }}
+          >
+            루틴을 선택해주세요.
+          </Text>
         </TouchableOpacity>
+        <RoutineBottomSheet
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+        />
       </View>
       <View style={styles.infoContainer}>
         <Text></Text>

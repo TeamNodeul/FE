@@ -34,6 +34,7 @@ export type RootStackParam = {
 import RoutineData from "../../DB/DB_Routine";
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import { userID } from "../../DB/userID";
+
 const Routine = () => {
   /**화면 focus될시 강제 렌더링 */
   const [, updateState] = useState([]);

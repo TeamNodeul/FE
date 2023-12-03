@@ -62,9 +62,9 @@ const CardFrame = (props: any) => {
         <View style={styles.cardHeader}>
           <View style={styles.headerContent}>
             <Text style={styles.cardTitle}>{day}</Text>
-            <View style={styles.badgeContainer}>
+            {/* <View style={styles.badgeContainer}>
               <Text style={styles.badge}>{achievement}</Text>
-            </View>
+            </View> */}
           </View>
         </View>
         <Card.Divider />
