@@ -12,9 +12,10 @@ import {
   ScrollView,
   TextInput,
   Pressable,
+  FlatList,
 } from "react-native";
 
-import AboutRoutine from "../Routine/AboutRoutine";
+import { data } from "../../DB/DB_Routine";
 
 import { SwipeListView } from "react-native-swipe-list-view";
 import Routine from "../Routine/Routine";
@@ -24,7 +25,7 @@ import {
 } from "react-native-responsive-screen";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { themeColor } from "./Home";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -42,100 +43,27 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const buttonWidth = windowWidth * 0.9;
 
-const DATA = [
-  { timestamp: Date.now(), text: "하체 조지기" },
-  { timestamp: Date.now() + 1, text: "상체 조지기" },
-];
-
 const BeforeCount = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
 
-  const [text, setText] = React.useState("");
-  const [data, setData] = React.useState(DATA);
+  const [, updateState] = useState([]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      updateState([]);
+    }, [])
+  );
 
   const [modalVisible, setModalVisible] = useState(false);
   const pressButton = () => {
     setModalVisible(true);
   };
 
-  const handleDelete = (timestamp) => {
-    const res = data.filter((item) => item.timestamp !== timestamp);
-    setData([...res]);
-  };
+  const [routineNumber, setRoutineNumber] = useState();
 
-  const handleAdd = () => {
-    if (text === "") {
-      alert("텍스트를 입력하세요!");
-    } else {
-      const res = { timestamp: Date.now(), text: text };
-      setData([...data, res]);
-      setText("");
-    }
-  };
-
-  const handleModify = () => {
-    if (text === "") {
-      alert("수정할 텍스트를 박스 안에 입력하세요");
-    }
-  };
-
-  const renderItem = ({ item, index }) => {
-    return (
-      <View
-        style={{
-          width: wp(90),
-          height: wp(90) / 4,
-          backgroundColor: "#FFF",
-          marginHorizontal: wp(5),
-          marginBottom: hp(2),
-          borderRadius: 10,
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-      >
-        <View
-          style={{
-            width: hp(4),
-            height: hp(4),
-            backgroundColor: themeColor,
-            borderRadius: 4,
-            marginHorizontal: wp(5),
-            opacity: 0.4,
-          }}
-        />
-        <Text style={{ width: wp(57) }}>{item.text}</Text>
-        <View
-          style={{
-            width: hp(2),
-            height: hp(2),
-            backgroundColor: themeColor,
-            borderRadius: 100,
-            marginHorizontal: wp(3),
-          }}
-        />
-      </View>
-    );
-  };
-
-  const renderHiddenItem = ({ item, index }) => {
-    return (
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          paddingHorizontal: wp(5),
-          paddingVertical: hp(2),
-        }}
-      >
-        <Pressable onPress={() => handleModify()}>
-          <Text style={{ fontSize: hp(3) }}>✒️</Text>
-        </Pressable>
-        <Pressable onPress={() => handleDelete(item.timestamp)}>
-          <Text style={{ fontSize: hp(3) }}>🗑️</Text>
-        </Pressable>
-      </View>
-    );
-  };
+  const routineData = data.find((entry) => entry.id === routineNumber);
+  const routines = routineData?.exercises;
 
   const handleManualButtonPress = () => {
     Alert.alert(
@@ -202,44 +130,20 @@ const BeforeCount = () => {
         />
       </View>
       <View style={styles.infoContainer}>
-        <Text></Text>
-        {/* <SwipeListView
-          data={data}
-          renderItem={renderItem}
-          renderHiddenItem={renderHiddenItem}
-          leftOpenValue={wp(10)}
-          rightOpenValue={-wp(10)}
-        />
-        <View style={{ width: wp(100), height: hp(10), flexDirection: "row" }}>
-          <TextInput
-            placeholder="please write the text."
-            value={text}
-            placeholderTextColor="#aaa"
-            onChangeText={(item) => setText(item)}
-            style={{
-              width: wp(60),
-              marginLeft: wp(13),
-              backgroundColor: "#FFF",
-              height: hp(5),
-              paddingLeft: wp(3),
-              borderRadius: 10,
-            }}
-          />
-          <Pressable
-            style={{
-              width: hp(5),
-              height: hp(5),
-              marginLeft: wp(3),
-              backgroundColor: "#fff",
-              justifyContent: "center",
-              alignItems: "center",
-              borderRadius: 100,
-            }}
-            onPress={handleAdd}
-          >
-            <Text>➕</Text>
-          </Pressable>
-        </View> */}
+        <View style={{ marginTop: hp(5) }}>
+          <FlatList
+            data={routines}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+              <View>
+                <Text>
+                  {item.name} - {item.sets}세트, {item.reps}회, {item.weight}
+                  kg
+                </Text>
+              </View>
+            )}
+          ></FlatList>
+        </View>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity

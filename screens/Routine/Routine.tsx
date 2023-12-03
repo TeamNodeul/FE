@@ -38,6 +38,7 @@ import { userID } from "../../DB/userID";
 const Routine = () => {
   /**화면 focus될시 강제 렌더링 */
   const [, updateState] = useState([]);
+
   useFocusEffect(
     React.useCallback(() => {
       // Do something when the screen is focused

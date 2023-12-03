@@ -10,9 +10,11 @@ import {
   PanResponder,
   FlatList,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import { Icon } from "react-native-elements";
-import data from "../../DB/DB_ExerciseList";
+import RoutineData from "../../DB/DB_Routine";
+import { userID } from "../../DB/userID";
 
 import {
   widthPercentageToDP as wp,
@@ -59,6 +61,13 @@ const RoutineBottomSheet = (props: any) => {
     })
   ).current;
 
+  const MyRoutineList = RoutineData.filter((item) => item.user_id === userID);
+
+  const handleRoutineClick = (id: number) => {
+    console.log(id);
+    setModalVisible(false);
+  };
+
   useEffect(() => {
     if (props.modalVisible) {
       resetBottomSheet.start();
@@ -94,7 +103,7 @@ const RoutineBottomSheet = (props: any) => {
           </View>
           <View
             style={{
-              marginTop: hp(2),
+              marginTop: hp(3),
               alignItems: "center",
               justifyContent: "center",
             }}
@@ -103,11 +112,37 @@ const RoutineBottomSheet = (props: any) => {
               style={{
                 fontSize: wp(5),
                 fontWeight: "bold",
-                marginBottom: hp(5),
+                marginBottom: hp(3),
               }}
             >
               루틴 선택
             </Text>
+            <View>
+              <ScrollView>
+                {MyRoutineList.map((item, index) => (
+                  <TouchableOpacity
+                    key={item.id}
+                    style={styles.box}
+                    onPress={() => {
+                      handleRoutineClick(item.id);
+                    }}
+                  >
+                    <View>
+                      <Text style={styles.name}>{item.name}</Text>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Text>{item.part}</Text>
+                        <Text>{item.date}</Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            </View>
           </View>
         </Animated.View>
       </View>
@@ -140,6 +175,18 @@ const styles = StyleSheet.create({
   },
   exerciseText: {
     fontSize: wp(4),
+  },
+  box: {
+    backgroundColor: "#dee2e6",
+    padding: 22,
+    marginBottom: hp(2),
+    borderRadius: 20,
+    width: wp(90),
+  },
+  name: {
+    fontSize: wp(4),
+    fontWeight: "bold",
+    color: "#343a40",
   },
 });
 
