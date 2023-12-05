@@ -62,7 +62,7 @@ export const AboutRoutine = ({ route }: any) => {
                 <Text>
                   {item.reps}회 | {item.sets}세트 | {item.weight}kg
                 </Text>
-                <Text style={{}}>
+                <Text style={{ position: "absolute", right: wp(1) }}>
                   총 무게 : {item.reps * item.sets * item.weight}kg
                 </Text>
               </View>
@@ -86,7 +86,9 @@ export const AboutRoutine = ({ route }: any) => {
         <Text style={styles.routineInfo}>운동부위 : {routineInfo.part}</Text>
         <Text style={styles.routineInfo}>생성날짜 : {routineInfo.date}</Text>
       </View>
-      <View style={styles.separator}></View>
+      <View style={{ alignItems: "center", justifyContent: "center" }}>
+        <View style={styles.separator}></View>
+      </View>
       <View style={{ flex: 10 }}>
         <ExerciseList />
       </View>

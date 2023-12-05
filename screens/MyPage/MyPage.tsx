@@ -18,9 +18,10 @@ import { themeColor } from "../Home/Home";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-import { Feather } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // export let userName = "";
@@ -28,6 +29,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //현재 로그인 된 유저 id 저장
 import { userID, Login } from "../../DB/userID";
+import User from "../../DB/DB_User";
 
 import UserData from "../../DB/DB_User";
 
@@ -39,6 +41,7 @@ import {
 const MyPage = () => {
   // 현재 로그인된 유저 객체를 가져옴
   const user = UserData.find((user) => user.id === userID);
+  const [userProfile, setUserProfile] = useState({});
 
   // const [userName, setUserName] = useState(user!.name);
   // const [userEmail, setUserEmail] = useState(user!.email);
@@ -47,6 +50,11 @@ const MyPage = () => {
       .get(`http://3.36.228.245:8080/api/users/find/${userID}`)
       .then((res: any) => {
         console.log(res.data);
+
+        setUserProfile({
+          height: res.data.data.height,
+          weight: res.data.data.weight,
+        });
         // user = res.data;
       })
       .catch((err) => {
@@ -152,9 +160,14 @@ const MyPage = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={styles.dataTypeText}>신체 데이터</Text>
           <View style={styles.physicalData}>
-            <ScrollView>
-              <Text></Text>
-            </ScrollView>
+            <FontAwesome5 name="weight" size={24} color="black" />
+            <MaterialCommunityIcons
+              name="human-male-height"
+              size={24}
+              color="black"
+            />
+            <Text>몸무게 : {userProfile.weight} kg</Text>
+            <Text>키 : {userProfile.height} cm</Text>
           </View>
           <Text style={styles.dataTypeText}>운동 리포트</Text>
           <View style={styles.reportData}></View>
@@ -268,12 +281,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(2.5),
     paddingVertical: hp(1),
     width: wp(90),
-    height: hp(30),
+    height: hp(10),
     marginTop: hp(1),
     marginBottom: hp(5),
     borderColor: themeColor,
     borderWidth: wp(0.5),
     borderRadius: 20,
+    flexDirection: "row",
   },
   reportData: {
     width: wp(90),
