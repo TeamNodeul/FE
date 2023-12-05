@@ -23,6 +23,8 @@ import {
 
 import { Fontisto } from "@expo/vector-icons";
 
+export let exerciseId = -1;
+
 const RoutineBottomSheet = (props: any) => {
   const { modalVisible, setModalVisible } = props;
   const screenHeight = Dimensions.get("screen").height;
@@ -65,6 +67,7 @@ const RoutineBottomSheet = (props: any) => {
 
   const handleRoutineClick = (id: number) => {
     console.log(id);
+    exerciseId = id;
     setModalVisible(false);
   };
 

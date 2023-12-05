@@ -1,4 +1,10 @@
-import React, { Component, useState, useEffect, useRef } from "react";
+import React, {
+  Component,
+  useState,
+  useEffect,
+  useRef,
+  useReducer,
+} from "react";
 import {
   View,
   Text,
@@ -15,6 +21,15 @@ import { themeColor } from "./Home";
 import { Feather } from "@expo/vector-icons";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { exerciseId } from "./RoutineBottomSheet"; //선택한 루틴의 id
+import data from "../../DB/DB_Routine";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -27,6 +42,14 @@ export type RootStackParam = {
 
 const ManualMeasure = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>(); //네비게이션
+
+  //const routines = routineData?.exercises;
+
+  const routineData = data.find((entry) => entry.id === exerciseId);
+  const [setCount, setSetCount] = useState<number[]>(() => {
+    const exerciseLen = routineData?.exercises.length;
+    return Array.from({ length: exerciseLen }, () => 0);
+  });
 
   const [isIconVisible, setIsIconVisible] = useState(true);
 
@@ -84,6 +107,20 @@ const ManualMeasure = () => {
     return true;
   };
 
+  const handleSetDonePress = (index: number) => {
+    if (setCount[index] === routineData?.exercises[index].sets) {
+      Alert.alert(
+        "체력이 좋으시군요!",
+        "이미 목표 세트 수를 채웠습니다.",
+        [{ text: "확인", onPress: () => console.log("확인 버튼 눌림") }],
+        { cancelable: false }
+      );
+    } else {
+      setCount[index]++;
+    }
+    console.log(setCount[index]);
+  };
+
   useEffect(() => {
     //스탑워치 부분
     let interval: any;
@@ -110,11 +147,7 @@ const ManualMeasure = () => {
   return (
     <View style={styles.container}>
       <View style={styles.timeContainer}>
-        <View style={{ flex: 0.5, marginTop: "10%", marginLeft: "5%" }}>
-          <TouchableOpacity>
-            <Feather name="menu" size={24} color="white" />
-          </TouchableOpacity>
-        </View>
+        <View style={{ flex: 0.5, marginTop: "10%", marginLeft: "5%" }}></View>
         <View
           style={{
             flex: 1,
@@ -151,17 +184,67 @@ const ManualMeasure = () => {
       </View>
       <View></View>
       <View style={styles.recordContainer}>
-        <View style={{ flex: 0.6 }}>
-          <Text style={{ marginLeft: "3%", marginTop: "2%" }}>불나방</Text>
+        <View>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {routineData?.exercises.map((item, index) => (
+              <View
+                key={index}
+                style={{
+                  width: wp(90),
+                  borderColor: "lightgrey",
+                  borderWidth: 2,
+                  borderRadius: wp(3),
+                  marginLeft: wp(5),
+                  marginBottom: hp(2),
+                }}
+              >
+                <View style={{ flexDirection: "row" }}>
+                  <MaterialCommunityIcons
+                    name="dumbbell"
+                    size={wp(8)}
+                    color="black"
+                    style={{ marginTop: wp(3.5), marginLeft: wp(3.5) }}
+                  />
+                  <Text style={styles.exerciseName}>{item.name}</Text>
+                  <Text
+                    style={{
+                      fontSize: wp(3.5),
+                      position: "absolute",
+                      right: wp(20),
+                      top: hp(2.3),
+                    }}
+                  >
+                    {setCount[index]} 세트 완료
+                  </Text>
+                  <TouchableOpacity
+                    hitSlop={{ top: 60, bottom: 60, left: 60, right: 60 }}
+                    style={{ position: "absolute", right: wp(6), top: hp(2) }}
+                    onPress={() => handleSetDonePress(index)}
+                  >
+                    <AntDesign name="checkcircle" size={wp(6)} color="black" />
+                  </TouchableOpacity>
+                </View>
+                <View
+                  style={{ alignItems: "center", justifyContent: "center" }}
+                >
+                  <View style={styles.line}></View>
+                </View>
+                <View style={{ flexDirection: "row", marginBottom: hp(1) }}>
+                  <Text style={{ marginLeft: wp(3), fontSize: wp(3.5) }}>
+                    {item.reps}회
+                  </Text>
+                  <Text style={{ marginLeft: wp(5), fontSize: wp(3.5) }}>
+                    {item.sets}세트
+                  </Text>
+                  <Text style={{ marginLeft: wp(5), fontSize: wp(3.5) }}>
+                    {item.weight}kg
+                  </Text>
+                </View>
+              </View>
+            ))}
+          </ScrollView>
         </View>
-        <View style={{ flex: 0.6 }}>
-          <Text style={{ marginLeft: "3%", marginTop: "2%" }}>
-            현재 n명 운동중
-          </Text>
-        </View>
-        <View style={{ flex: 7 }}></View>
       </View>
-      <View style={styles.menuContainer}></View>
     </View>
   );
 };
@@ -182,6 +265,7 @@ const styles = StyleSheet.create({
     flex: 6,
     width: "100%",
     backgroundColor: "#f8f9fa",
+    marginTop: hp(2),
   },
   menuContainer: {
     flex: 1,
@@ -189,8 +273,9 @@ const styles = StyleSheet.create({
   },
   line: {
     height: 1,
-    width: "100%",
+    width: "90%",
     backgroundColor: "#dee2e6",
+    marginVertical: hp(1.5),
   },
   time: {
     color: "white",
@@ -218,6 +303,11 @@ const styles = StyleSheet.create({
     height: windowHeight,
     justifyContent: "center",
     alignItems: "center",
+  },
+  exerciseName: {
+    fontSize: wp(5),
+    marginTop: hp(2),
+    marginLeft: wp(3),
   },
 });
 

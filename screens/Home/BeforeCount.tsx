@@ -32,6 +32,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import RoutineBottomSheet from "./RoutineBottomSheet";
+import { exerciseId } from "./RoutineBottomSheet"; //선택한 루틴의 id
+import RoutineData from "../../DB/DB_Routine";
 
 export type RootStackParam = {
   NFCScreen: undefined;
@@ -62,7 +64,7 @@ const BeforeCount = () => {
 
   const [routineNumber, setRoutineNumber] = useState();
 
-  const routineData = data.find((entry) => entry.id === routineNumber);
+  const routineData = data.find((entry) => entry.id === exerciseId);
   const routines = routineData?.exercises;
 
   const handleManualButtonPress = () => {
@@ -81,6 +83,21 @@ const BeforeCount = () => {
           },
         },
       ]
+    );
+  };
+
+  const RoutineList = () => {
+    return (
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {routineData?.exercises.map((item, index) => (
+          <View key={index} style={styles.box}>
+            <Text style={styles.itemName}>{item.name}</Text>
+            <Text>
+              {item.reps}회 | {item.sets}세트 | {item.weight}kg
+            </Text>
+          </View>
+        ))}
+      </ScrollView>
     );
   };
 
@@ -131,18 +148,7 @@ const BeforeCount = () => {
       </View>
       <View style={styles.infoContainer}>
         <View style={{ marginTop: hp(5) }}>
-          <FlatList
-            data={routines}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) => (
-              <View>
-                <Text>
-                  {item.name} - {item.sets}세트, {item.reps}회, {item.weight}
-                  kg
-                </Text>
-              </View>
-            )}
-          ></FlatList>
+          <RoutineList />
         </View>
       </View>
       <View style={styles.buttonContainer}>
@@ -158,7 +164,10 @@ const BeforeCount = () => {
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={[styles.buttonStyle, { width: buttonWidth }]}>
-          <Text style={styles.ButtonText} onPress={handleManualButtonPress}>
+          <Text
+            style={styles.ButtonText}
+            onPress={() => handleManualButtonPress()}
+          >
             바로 운동 시작하기
           </Text>
         </TouchableOpacity>
@@ -208,6 +217,21 @@ const styles = StyleSheet.create({
     right: 15,
     width: 40,
     height: 40,
+  },
+  box: {
+    //backgroundColor: "#dee2e6",
+    padding: 16,
+    marginVertical: hp(1),
+    borderRadius: wp(5),
+    width: wp(90),
+    marginLeft: wp(5),
+    borderColor: "skyblue",
+    borderWidth: 2,
+  },
+  itemName: {
+    fontSize: wp(4.3),
+    fontWeight: "600",
+    marginBottom: hp(0.5),
   },
 });
 

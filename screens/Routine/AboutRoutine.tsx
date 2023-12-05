@@ -23,7 +23,7 @@ import RoutineData from "../../DB/DB_Routine";
 import { HomeStack } from "../../App";
 
 export type RootStackParam = {
-  BeforeCount : undefined,
+  BeforeCount: undefined;
 };
 
 export const AboutRoutine = ({ route }: any) => {
@@ -40,56 +40,69 @@ export const AboutRoutine = ({ route }: any) => {
   }
 
   const ExerciseList = () => {
-    
-
     return (
       <ScrollView
-      showsVerticalScrollIndicator={false}
-        style={{
-          // flex: 8,
-          // marginTop:50
-        }}
+        showsVerticalScrollIndicator={false}
+        style={
+          {
+            // flex: 8,
+            // marginTop:50
+          }
+        }
       >
         {routineInfo.exercises.map((item, index) => (
           //map쓸려면 고유키를 설정해줘야 경고 안뜸
-          <View style={styles.box} key={index}>
-            <Text style={styles.nameText}>{item.name}</Text>
-            <Text style={styles.contentText}>
-              {item.reps}회 / {item.sets}세트 / {item.weight}kg
-            </Text>
-            <Text style={styles.contentText}>총 무게 : {item.reps * item.sets * item.weight}kg</Text>
+          <View
+            key={index}
+            style={{ alignItems: "center", justifyContent: "center" }}
+          >
+            <View style={styles.box}>
+              <Text style={styles.nameText}>{item.name}</Text>
+              <View style={{ flexDirection: "row" }}>
+                <Text>
+                  {item.reps}회 | {item.sets}세트 | {item.weight}kg
+                </Text>
+                <Text style={{}}>
+                  총 무게 : {item.reps * item.sets * item.weight}kg
+                </Text>
+              </View>
+            </View>
           </View>
         ))}
       </ScrollView>
     );
   };
 
+  const PrintRoutineId = () => {
+    console.log(routineId);
+    return null;
+  };
+
   return (
     <View style={styles.container}>
-      <View
-        style={{ flex: 3, justifyContent: "flex-end", marginBottom: wp(5) }}
-      >
-        <Text>현재 선택한 루틴 : {routineId}번 루틴 정보</Text>
-        <View style={styles.separator}></View>
-        <Text>루틴이름 : {routineInfo.name}</Text>
-        <Text>운동부위 : {routineInfo.part}</Text>
-        <Text>날짜 : {routineInfo.date}</Text>
+      <View style={{ flex: 3, marginBottom: wp(5) }}>
+        <PrintRoutineId />
+        <Text style={styles.routineName}>{routineInfo.name}</Text>
+        <Text style={styles.routineInfo}>운동부위 : {routineInfo.part}</Text>
+        <Text style={styles.routineInfo}>생성날짜 : {routineInfo.date}</Text>
       </View>
       <View style={styles.separator}></View>
-      <View style={{ flex: 7 }}>
+      <View style={{ flex: 10 }}>
         <ExerciseList />
       </View>
 
-      <TouchableOpacity
-        style={styles.startButton}
-        // style={styles.makeButton}
-        onPress={() => {
-          // navigation.goBack();
-          navigation.navigate("BeforeCount", )
-        }}
-      >
-        <Text style={styles.startButtonText}>운동 시작하기</Text>
-      </TouchableOpacity>
+      <View style={{ alignItems: "center", justifyContent: "center" }}>
+        <TouchableOpacity
+          style={styles.startButton}
+          // style={styles.makeButton}
+          onPress={() => {
+            // navigation.goBack();
+            navigation.navigate("BeforeCount");
+          }}
+        >
+          <Text style={styles.startButtonText}>운동 시작하기</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -97,15 +110,16 @@ export const AboutRoutine = ({ route }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 10,
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignItems: "center",
     backgroundColor: "f8f9fa",
   },
   separator: {
-    width: "100%", // 화면 너비의 100%
+    width: "90%", // 화면 너비의 100%
     height: 1, // 가로선의 높이
-    backgroundColor: "black", // 가로선의 색상 (예: 회색)
+    backgroundColor: "#dee2e6", // 가로선의 색상 (예: 회색)
     justifyContent: "center",
+    marginVertical: hp(1),
   },
   box: {
     // backgroundColor: "#dee2e6",
@@ -113,27 +127,20 @@ const styles = StyleSheet.create({
     marginVertical: hp(1),
     borderRadius: 20,
     width: wp(90),
-    borderColor:"skyblue",
-    borderWidth:2,
+    borderColor: "skyblue",
+    borderWidth: 2,
   },
 
   nameText: {
-    fontSize: wp(5),
-    fontWeight: "bold",
+    fontSize: wp(4.3),
+    fontWeight: "600",
+    marginBottom: hp(0.5),
+
     // marginBottom: wp(1),
     // color: "grey",
   },
-  contentText: {
-    // fontSize: wp(5),
-    // fontWeight: "bold",
-    marginBottom: wp(1),
-    // color: "grey",
-  },
-
   startButton: {
     // flex: 1,
-    // alignContent:"center",
-    alignItems: "center",
     width: "90%",
     // marginTop: 10,
     marginBottom: 10,
@@ -141,7 +148,7 @@ const styles = StyleSheet.create({
     // borderColor: "blue",
     // color: "red",
     // borderWidth: 1.5,
-    borderRadius: 5,
+    borderRadius: wp(20),
     padding: 15,
   },
   startButtonText: {
@@ -151,7 +158,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: wp(1),
     color: "white",
+    alignSelf: "center",
     // color: "#343a40",
+  },
+  routineName: {
+    fontSize: wp(7),
+    marginTop: hp(8),
+    marginBottom: hp(2),
+    marginLeft: wp(6),
+  },
+  routineInfo: {
+    marginLeft: wp(6),
+    fontSize: wp(4),
+    marginVertical: hp(0.5),
   },
 });
 

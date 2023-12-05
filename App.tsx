@@ -72,18 +72,6 @@ export function HomeStack() {
   );
 }
 
-// function RoutineStack() {
-//   return (
-//     <Stack.Navigator
-//       initialRouteName="Routine"
-//       screenOptions={{ headerShown: false }}
-//     >
-//       <Stack.Screen name="Routine" component={Routine} />
-//       <Stack.Screen name="RoutineByGPT" component={RoutineByGPT} />
-//       <Stack.Screen name="AboutRoutine" component={AboutRoutine} />
-//     </Stack.Navigator>
-//   );
-// }
 const App = () => {
   return (
     <NavigationContainer>
@@ -128,7 +116,12 @@ const App = () => {
             ),
             // tabBarHideOnKeyboard: true,
             tabBarStyle: ((route) => {
-              const targets = ["AboutRoutine", "MakeRoutine", "Post2GPT", "RoutineByGPT"];
+              const targets = [
+                "AboutRoutine",
+                "MakeRoutine",
+                "Post2GPT",
+                "RoutineByGPT",
+              ];
               const routeName = getFocusedRouteNameFromRoute(route) ?? "";
               if (targets.includes(routeName)) {
                 return { display: "none" };

@@ -43,9 +43,15 @@ const date: string[] = [];
 const initDate = new Date();
 const lastDate = new Date(initDate);
 
+let arrDayStr = ["(일)", "(월)", "(화)", "(수)", "(목)", "(금)", "(토)"];
+
 for (let i = 0; i < 7; i++) {
   if (i) lastDate.setDate(lastDate.getDate() - 1);
-  date.push(`${lastDate.getMonth() + 1}월 ${lastDate.getDate()}일`);
+  date.push(
+    `${lastDate.getMonth() + 1}월 ${lastDate.getDate()}일 ${
+      arrDayStr[lastDate.getDay()]
+    }`
+  );
 }
 
 const CardFrame = (props: any) => {
@@ -70,7 +76,7 @@ const CardFrame = (props: any) => {
         <Card.Divider />
         <View style={styles.cardButton}>
           <TouchableOpacity onPress={pressButton}>
-            <Text style={{ marginLeft: wp(15), marginTop: hp(1.2) }}>
+            <Text style={{ marginLeft: wp(14.5), marginTop: hp(1.2) }}>
               운동 기록 보기
             </Text>
           </TouchableOpacity>
@@ -257,7 +263,7 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    marginRight: wp(3),
+    alignItems: "center",
   },
   badgeContainer: {
     backgroundColor: "#00b894",
@@ -271,6 +277,7 @@ const styles = StyleSheet.create({
   card: {
     width: wp(70),
     borderRadius: wp(5),
+    marginVertical: hp(2),
   },
   cardButton: {
     width: wp(50),
