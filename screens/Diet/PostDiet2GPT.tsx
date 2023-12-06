@@ -28,6 +28,7 @@ export type RootStackParam = {};
 const PostDiet2GPT = ({ route }: any) => {
   //const { userId } = route.params.userId;
   const { selectedOptions } = route.params;
+  
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
 
   const handleBackPress = () => {
@@ -74,7 +75,6 @@ const PostDiet2GPT = ({ route }: any) => {
       BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
     };
   }, []);
-  //const { selectedOptions } = route.params.selectedOptions;
 
   return (
     <View style={styles.container}>
