@@ -20,10 +20,10 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { myGroupData } from "../../DB/DB_Group";
-// import { groupData as groupData } from "../../DB/DB_Group";
 import { userID } from "../../DB/userID";
 import User from "../../DB/DB_User";
-// User[0].
+import axios from "axios";
+//
 export type RootStackParam = {
   Group: undefined;
   SearchGroup: undefined;
@@ -31,48 +31,65 @@ export type RootStackParam = {
   AboutGroup: { groupId: number };
 };
 
-const GroupButton = ({ item, index }: { item: any; index: number }) => {
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
-  // console.log(User[userID]);
-  return (
-    <TouchableOpacity
-      onPress={() => {
-        navigation.navigate("AboutGroup", { groupId: item.id });
-      }}
-    >
-      {/* 내가 생성한 그룹들은 하늘색 경계선이 생김 */}
-      <View
-        style={[
-          styles.box,
-          item.leader === User[userID].name ? { borderWidth: 3 } : null,
-        ]}
-        key={index}
-      >
-        <Text style={styles.name}>{item.name}</Text>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.count}>{item.headCount}명</Text>
-          <Text style={styles.leader}>그룹장: {item.leader}</Text>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
-};
-const GroupComponent = () => {
-  return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      {myGroupData.map((item, index) => (
-        <GroupButton key={item.id} item={item} index={index} />
-      ))}
-    </ScrollView>
-  );
-};
+
 
 const Group = () => {
+  const [groupList, setGroupList] = useState([] as {name:string, presentMemberNum:number, memberNum:number, head:number}[]);
+
+  const GroupButton = ({ item, index }: { item: {name:string, presentMemberNum:number, memberNum:number, head:number}; index: number }) => {
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
+    // console.log(User[userID]);
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("AboutGroup", { groupId: item.head });
+        }}
+      >
+        {/* 내가 생성한 그룹들은 하늘색 경계선이 생김 */}
+        <View
+          style={[
+            styles.box,
+            item.head === userID ? { borderWidth: 3 } : null,
+          ]}
+          key={index}
+        >
+          <Text style={styles.name}>{item.name}</Text>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.count}>{item.presentMemberNum}/{item.memberNum}명</Text>
+            <Text style={styles.leader}>그룹장: {item.head}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const GroupComponent = () => {
+    return (
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {groupList.map((item, index) => (
+          <GroupButton key={index} item={item} index={index} />
+        ))}
+      </ScrollView>
+    );
+  };
+
+
+
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   //강제 렌더링
   const [, updateState] = useState([]);
   useFocusEffect(
     React.useCallback(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`http://3.36.228.245:8080/api/teams/find-all/${userID}`);
+          // console.log(response.data.data);
+          setGroupList(response.data.data);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+      fetchData();    
       // Do something when the screen is focused
       updateState([]);
     }, [])

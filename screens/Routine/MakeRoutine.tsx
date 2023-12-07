@@ -24,7 +24,7 @@ const MakeRoutine = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   const [routineName, setRoutineName] = useState("");
   const [exercises, setExercises] = useState([
-    { id: "", name: "", sets: "", reps: "", weight: "" },
+    { id: "", name: "", sets: "", reps: "", volume: "" },
   ]);
 
   const exerciseItems = [
@@ -49,7 +49,7 @@ const MakeRoutine = () => {
   const handleAddExercise = () => {
     setExercises([
       ...exercises,
-      { id: "", name: "", sets: "", reps: "", weight: "" },
+      { id: "", name: "", sets: "", reps: "", volume: "" },
     ]);
   };
 
@@ -73,37 +73,25 @@ const MakeRoutine = () => {
   };
 
   const handleCreateRoutine = () => {
-    // console.log("Routine Name:", routineName);
-    // console.log("Exercises:", exercises);
-    const d = new Date();
 
     const newRoutine = {
-      id: 1 + data[data.length - 1].id,
-      user_id: userID,
-      name: routineName,
-      date: "" + d.getFullYear() + (d.getMonth() + 1) + d.getDate(),
-      exercises: [] as {}[], //object타입의 리스트
+      details:[] as {}[],
+      name : routineName,
     };
     exercises.map((item) => {
       const addExercise = {
-        id: item.id,
-        name: item.name,
-        sets: Number(item.sets),
+        id: Number(item.id), //운동종목 콬드
         reps: Number(item.reps),
-        weight: Number(item.weight),
+        sets: Number(item.sets),
+        volume: Number(item.volume),
       };
 
-      newRoutine.exercises.push(addExercise);
-      postData(addExercise);
+      newRoutine.details.push(addExercise);
+      // postData(addExercise);
     });
+    // console.log(newRoutine);
+    postData(newRoutine).then(()=>navigation.pop());
 
-    //postData(newRoutine);
-
-    addRoutine(newRoutine);
-    // console.log(data[data.length-1]);
-    // data.map((item)=>{console.log(item)});
-
-    navigation.pop();
   };
 
   interface Exercise {
@@ -111,7 +99,7 @@ const MakeRoutine = () => {
     name: string;
     sets: string;
     reps: string;
-    weight: string;
+    volume: string;
     [key: string]: string; // 인덱스 시그니처 추가
   }
   //  const InputDataBox = ({value, onChangeText} : {value:string; onChangeText:(param:string)=>void}) =>{
@@ -157,10 +145,10 @@ const MakeRoutine = () => {
                   >
                     <Picker
                       style={styles.exerciseInput}
-                      selectedValue={exercise.name}
+                      selectedValue={exercise.id}
                       onValueChange={(itemValue) => {
                         const updatedExercises = [...exercises];
-                        updatedExercises[index].name = itemValue;
+                        updatedExercises[index].id = itemValue;
                         setExercises(updatedExercises);
                       }}
                     >
@@ -222,10 +210,10 @@ const MakeRoutine = () => {
                   <TextInput
                     keyboardType="numeric" // 숫자 키패드를 띄우기 위한 설정
                     style={styles.input}
-                    value={exercise.weight.toString()}
+                    value={exercise.volume.toString()}
                     onChangeText={(text) => {
                       const updatedExercises = [...exercises];
-                      updatedExercises[index].weight = text;
+                      updatedExercises[index].volume = text;
                       setExercises(updatedExercises);
                     }}
                     placeholder="0"

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -22,14 +22,43 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import RoutineData from "../../DB/DB_Routine";
 import { HomeStack } from "../../App";
 
+import axios from "axios";
+
+
 export type RootStackParam = {
   BeforeCount: undefined;
 };
 
+const formattedDate = (timestamp:Date)=>{
+  const date = new Date(timestamp);
+  return (`${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`);
+}
+
 export const AboutRoutine = ({ route }: any) => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   const { routineId } = route.params;
-  const routineInfo = RoutineData.find((item) => item.id === routineId);
+  const [ routineInfo, setRoutineInfo] = useState([] as {id:number, routineName:string, setCount:number, sportCount:number, sportName:string, volume:number, date:Date, totalWeight:number}[])
+  const [routineName, setRoutineName] = useState("");
+  const [part, setPart] = useState("");
+  const [date, setDate] = useState("");
+
+  useEffect(()=>{
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://3.36.228.245:8080/api/sportRoutines/find-all/routine-list/${routineId}`);
+        await setRoutineInfo(response.data);
+        setRoutineName(response.data[0].routineName);
+        setDate(formattedDate(response.data[0].date));
+        // console.log(routineId);
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  },[]);
+  // const routineInfo = RoutineData.find((item) => item.id === routineId);
 
   if (!routineInfo) {
     return (
@@ -50,20 +79,20 @@ export const AboutRoutine = ({ route }: any) => {
           }
         }
       >
-        {routineInfo.exercises.map((item, index) => (
+        {routineInfo.map((item, index) => (
           //map쓸려면 고유키를 설정해줘야 경고 안뜸
           <View
             key={index}
             style={{ alignItems: "center", justifyContent: "center" }}
           >
             <View style={styles.box}>
-              <Text style={styles.nameText}>{item.name}</Text>
+              <Text style={styles.nameText}>{item.sportName}</Text>
               <View style={{ flexDirection: "row" }}>
                 <Text>
-                  {item.reps}회 | {item.sets}세트 | {item.weight}kg
+                  {item.sportCount}회 | {item.setCount}세트 | {item.volume}kg
                 </Text>
                 <Text style={{ position: "absolute", right: wp(1) }}>
-                  총 무게 : {item.reps * item.sets * item.weight}kg
+                  총 무게 : {item.sportCount * item.setCount * item.volume}kg
                 </Text>
               </View>
             </View>
@@ -82,9 +111,9 @@ export const AboutRoutine = ({ route }: any) => {
     <View style={styles.container}>
       <View style={{ flex: 3, marginBottom: wp(5) }}>
         <PrintRoutineId />
-        <Text style={styles.routineName}>{routineInfo.name}</Text>
-        <Text style={styles.routineInfo}>운동부위 : {routineInfo.part}</Text>
-        <Text style={styles.routineInfo}>생성날짜 : {routineInfo.date}</Text>
+        <Text style={styles.routineName}>{routineName}</Text>
+        {/* <Text style={styles.routineInfo}>운동부위 : {part}</Text> */}
+        <Text style={styles.routineInfo}>생성날짜 : {date}</Text>
       </View>
       <View style={{ alignItems: "center", justifyContent: "center" }}>
         <View style={styles.separator}></View>
@@ -164,13 +193,16 @@ const styles = StyleSheet.create({
     // color: "#343a40",
   },
   routineName: {
-    fontSize: wp(7),
+    alignSelf:"center",
+    fontWeight:"bold",
+    fontSize: wp(10),
     marginTop: hp(8),
     marginBottom: hp(2),
-    marginLeft: wp(6),
+    // marginLeft: wp(6),
   },
   routineInfo: {
-    marginLeft: wp(6),
+    alignSelf:"flex-end",
+    marginRight: wp(6),
     fontSize: wp(4),
     marginVertical: hp(0.5),
   },

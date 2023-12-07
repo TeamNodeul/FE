@@ -55,7 +55,7 @@ const MyPage = () => {
         const response = await axios.get(
           `http://3.36.228.245:8080/api/users/find/${userID}`
         );
-        console.log(response.data);
+        console.log(response.data.data);
         setUserProfile({
           height: response.data.data.height,
           weight: response.data.data.weight,

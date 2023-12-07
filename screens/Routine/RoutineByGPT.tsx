@@ -34,19 +34,13 @@ const questions = [
   {
     id: 2,
     question: "운동 경력이 어떻게 되시나요?",
-    options: ["완전 초보", "3개월~1년 이하", "3년 이하", "3년 이상"],
+    options: ["초보", "2년이상의 실력자"],
     selectedOption: 0,
   },
   {
     id: 3,
-    question: "어떤 운동을 선호하나요?",
-    options: ["맨몸 운동", "덤벨, 바벨같은 기구 운동"],
-    selectedOption: 0,
-  },
-  {
-    id: 4,
     question: "운동 강도는 어떤 편인가요?",
-    options: ["가볍게", "보통", "강도 높게"],
+    options: ["적당히", "강도 높게"],
     selectedOption: 0,
   },
   // 추가적인 질문들 추가
@@ -129,6 +123,7 @@ const RoutineByGPT = () => {
           selectedOptions.push(item.options[item.selectedOption]);
         }
       });
+
       navigation.navigate("Post2GPT", { selectedOptions: selectedOptions });
       setProgress(0);
       setCurrentQuestionIndex(0);
@@ -150,7 +145,7 @@ const RoutineByGPT = () => {
       </TouchableOpacity> */}
       <View style={{flex:2}}>
 
-        <Text style={styles.title}>루틴줄게 신상다오.GPT</Text>
+        <Text style={styles.title}>내 루틴을 받아랏.GPT</Text>
         <Progress.Bar progress={progress} width={wp(90)} height={hp(1)} color="skyblue" />
         <View style={styles.separator}></View>
       </View>

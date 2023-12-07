@@ -1,5 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
+import { userID } from '../../DB/userID';
+
+import { useNavigation } from "@react-navigation/native";
+
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import axios from 'axios';
+import { RootStackParam } from './Routine';
 
 type Post2GPTProps = {
   route: {
@@ -10,9 +17,39 @@ type Post2GPTProps = {
   // 나머지 스크린의 프로퍼티들...
 };
 
+
 const Post2GPT = ({route} : any) => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   // const {userId} = route.params.userId;
   const {selectedOptions} = route.params;
+  console.log(selectedOptions);
+
+  useEffect(()=>{
+    const fetchData = async () => {
+      try {
+        const userInfo = await axios.get(`http://3.36.228.245:8080/api/users/find/${userID}`);
+        const {gender, height, weight} = userInfo.data.data;
+        console.log(userInfo.data.data);
+
+        const response = await axios.post(`http://3.36.228.245:8080/api/sportRoutines/create/${userID}/random-routine`,
+          {
+            "userGender": gender ==="남성" ? true : false,
+            "userHeight": height,
+            "userLevel": selectedOptions[2] ==="적당히" ? 1 : 2,
+            "userWeight": weight
+          }
+          );
+          
+          // console.log(routineId);
+          console.log(response.data);
+          navigation.goBack();
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  },[])
 
   // const {selectedOptions} = route.params.selectedOptions;
   return (

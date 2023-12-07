@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   View,
   Text,
@@ -23,6 +23,8 @@ import RoutineByGPT from "./RoutineByGPT";
 import AboutRoutine from "./AboutRoutine";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import axios from "axios";
+
 
 export type RootStackParam = {
   Routine: undefined;
@@ -32,22 +34,44 @@ export type RootStackParam = {
 };
 
 import RoutineData from "../../DB/DB_Routine";
-// import AsyncStorage from '@react-native-async-storage/async-storage';
 import { userID } from "../../DB/userID";
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+const formattedDate = (timestamp:Date)=>{
+  const date = new Date(timestamp);
+  return (`${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`);
+}
+
+
 
 const Routine = () => {
+  // const MyRoutineList = RoutineData.filter((item) => item.user_id === userID);
+  const [MyRoutineList, setMyRoutineList] = useState([] as {routineId:number, sportRoutineName:string, parts:string[], date:Date}[]);
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   /**화면 focus될시 강제 렌더링 */
   const [, updateState] = useState([]);
 
+
   useFocusEffect(
     React.useCallback(() => {
-      // Do something when the screen is focused
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`http://3.36.228.245:8080/api/sportRoutines/find-all/${userID}/routine`);
+          // console.log(response.data);
+
+          setMyRoutineList(response.data);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+      fetchData();
+
       updateState([]);
     }, [])
   );
 
-  const MyRoutineList = RoutineData.filter((item) => item.user_id === userID);
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
+
 
   const ShowRoutineList = () => {
     return (
@@ -58,29 +82,31 @@ const Routine = () => {
           alignItems: "center",
         }}
       >
-        {MyRoutineList.map((item, index) => (
+        {MyRoutineList.map((item, index) => 
+        {
+          return(
           <TouchableOpacity
             style={styles.box}
-            key={item.id}
+            key={item.routineId}
             onPress={() => {
               //showExerciseInfo();
-              navigation.navigate("AboutRoutine", { routineId: item.id });
+              navigation.navigate("AboutRoutine", { routineId: item.routineId });
             }}
           >
             <View>
-              <Text style={styles.name}>{item.name}</Text>
+              <Text style={styles.name}>{item.sportRoutineName}</Text>
               <View
                 style={{
                   flexDirection: "row",
                   justifyContent: "space-between",
                 }}
               >
-                <Text style={styles.part}>{item.part}</Text>
-                <Text style={styles.date}>{item.date}</Text>
+                <Text style={styles.part}>{item.parts.join(', ')}</Text>
+                <Text style={styles.date}>{formattedDate(item.date)}</Text>
               </View>
             </View>
           </TouchableOpacity>
-        ))}
+        )})}
       </View>
     );
   };
@@ -195,6 +221,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   title: {
+    alignSelf:"center",
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
