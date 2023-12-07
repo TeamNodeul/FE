@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -17,6 +17,8 @@ import {
 import { themeColor } from "../Home/Home";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import axios from "axios";
+
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { myGroupData } from "../../DB/DB_Group";
@@ -30,6 +32,8 @@ export type RootStackParam = {
   GroupSetting: undefined;
   AboutGroup: { groupId: number };
 };
+
+let apiGroupData;
 
 const GroupButton = ({ item, index }: { item: any; index: number }) => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
@@ -57,7 +61,7 @@ const GroupButton = ({ item, index }: { item: any; index: number }) => {
     </TouchableOpacity>
   );
 };
-const GroupComponent = () => {
+const GroupComponent = ({ groupData }) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       {myGroupData.map((item, index) => (
@@ -77,6 +81,23 @@ const Group = () => {
       updateState([]);
     }, [])
   );
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://3.36.228.245:8080/api/teams/find-all/${userID}`
+        );
+        // console.log(response.data);
+        console.log(response.data);
+        apiGroupData = response.data;
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchData();
+  }, [userID]);
 
   return (
     <View style={{ flex: 1 }}>
@@ -120,7 +141,7 @@ const Group = () => {
           alignItems: "center",
         }}
       >
-        <GroupComponent />
+        <GroupComponent groupData={apiGroupData!} />
 
         <TouchableOpacity
           style={styles.searchButton}
