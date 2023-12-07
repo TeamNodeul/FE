@@ -33,6 +33,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { ReloadInstructions } from "react-native/Libraries/NewAppScreen";
+import AutoMeasure from "./screens/Home/AutoMeasure";
+import TakingBreak from "./screens/Home/TakingBreak";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -68,6 +70,8 @@ export function HomeStack() {
       <Stack.Screen name="BeforeCount" component={BeforeCount} />
       <Stack.Screen name="NFCScreen" component={NFCScreen} />
       <Stack.Screen name="ManualMeasure" component={ManualMeasure} />
+      <Stack.Screen name="AutoMeasure" component={AutoMeasure} />
+      <Stack.Screen name="TakingBreak" component={TakingBreak} />
     </Stack.Navigator>
   );
 }

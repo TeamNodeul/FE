@@ -1,33 +1,34 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   View,
   Text,
-  Button,
   TouchableOpacity,
   StyleSheet,
-  Dimensions,
   Image,
   BackHandler,
+  PermissionsAndroid,
+  Button,
 } from "react-native";
 import * as Font from "expo-font";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
-import NfcManager, { NfcTech } from "react-native-nfc-manager";
-import { BleManager } from "react-native-ble-plx";
-//import useBLE from "../useBLE";
-
-const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
-//const _BleManager = new BleManager();
+import {
+  BleError,
+  BleManager,
+  Characteristic,
+  Device,
+} from "react-native-ble-plx";
 
 export type RootStackParam = {
   NFCScreen: undefined;
 };
 
-//NfcManager.start();
+const SERVICE_UUID = "369f109d-f77e-48f4-8f36-8ec381c6abf2";
+const COUNT_UUID = "52923a50-8dcc-4452-a92b-d3245c7f6652";
+const PHASE_UUID = "921a82c4-02cc-4665-acc5-a979ace621f2";
 
 const NFCScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>(); //navigation

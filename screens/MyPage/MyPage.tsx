@@ -41,26 +41,59 @@ import {
 const MyPage = () => {
   // 현재 로그인된 유저 객체를 가져옴
   const user = UserData.find((user) => user.id === userID);
-  const [userProfile, setUserProfile] = useState({});
+  const [userProfile, setUserProfile] = useState({ weight: 0, height: 0 });
+  const [userReport, setUserReport] = useState({
+    totalTime: 0,
+    totalWeight: 0,
+  });
 
   // const [userName, setUserName] = useState(user!.name);
   // const [userEmail, setUserEmail] = useState(user!.email);
   useEffect(() => {
-    axios
-      .get(`http://3.36.228.245:8080/api/users/find/${userID}`)
-      .then((res: any) => {
-        console.log(res.data);
-
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://3.36.228.245:8080/api/users/find/${userID}`
+        );
+        console.log(response.data);
         setUserProfile({
-          height: res.data.data.height,
-          weight: res.data.data.weight,
+          height: response.data.data.height,
+          weight: response.data.data.weight,
         });
-        // user = res.data;
-      })
-      .catch((err) => {
-        console.error("Error:", err);
-      });
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchData();
   }, [userID]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://3.36.228.245:8080/api/histories/last-seven-days/${userID}`
+        );
+        let totalSumTime = 0;
+        let totalSumWeight = 0;
+
+        response.data.forEach((item: any) => {
+          totalSumTime += item.totalTime;
+          totalSumWeight += item.totalWeight;
+        });
+
+        setUserReport({
+          totalTime: totalSumTime,
+          totalWeight: totalSumWeight,
+        });
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchData();
+  }, [userID]);
+
   const userName = user?.name;
   const userEmail = user?.email ?? "";
   /**화면 focus될시 강제 렌더링 */
@@ -160,17 +193,29 @@ const MyPage = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={styles.dataTypeText}>신체 데이터</Text>
           <View style={styles.physicalData}>
-            <FontAwesome5 name="weight" size={24} color="black" />
+            <FontAwesome5 name="weight" size={wp(7)} color="black" />
+            <Text style={{ fontSize: wp(4), marginLeft: wp(2) }}>
+              몸무게 : {userProfile.weight} kg
+            </Text>
             <MaterialCommunityIcons
               name="human-male-height"
-              size={24}
+              size={wp(7)}
               color="black"
+              style={{ marginLeft: wp(5) }}
             />
-            <Text>몸무게 : {userProfile.weight} kg</Text>
-            <Text>키 : {userProfile.height} cm</Text>
+            <Text style={{ fontSize: wp(4), marginLeft: wp(2) }}>
+              키 : {userProfile.height} cm
+            </Text>
           </View>
           <Text style={styles.dataTypeText}>운동 리포트</Text>
-          <View style={styles.reportData}></View>
+          <View style={styles.reportData}>
+            <Text style={{ fontSize: wp(5) }}>
+              이번 주 총 운동 시간: {userReport.totalTime}분
+            </Text>
+            <Text style={{ fontSize: wp(5), marginTop: hp(2) }}>
+              이번 주 소화한 총 무게: {userReport.totalWeight}kg
+            </Text>
+          </View>
         </ScrollView>
       </View>
     );
@@ -279,7 +324,8 @@ const styles = StyleSheet.create({
   },
   physicalData: {
     paddingHorizontal: wp(2.5),
-    paddingVertical: hp(1),
+    paddingVertical: hp(3),
+    paddingLeft: wp(10),
     width: wp(90),
     height: hp(10),
     marginTop: hp(1),
@@ -291,11 +337,13 @@ const styles = StyleSheet.create({
   },
   reportData: {
     width: wp(90),
-    height: hp(30),
+    height: hp(14),
     marginVertical: hp(1),
+    paddingVertical: hp(2),
     borderColor: themeColor,
     borderWidth: wp(0.5),
     borderRadius: 20,
+    alignItems: "center",
   },
   dataTypeText: {
     fontSize: wp(5),

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -31,32 +31,37 @@ export type RootStackParam = {
   AboutGroup: { groupId: number };
 };
 
-const GroupButton = ({item, index} : {item:any, index:number})=>{
+const GroupButton = ({ item, index }: { item: any; index: number }) => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   // console.log(User[userID]);
-  return(
-  <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("AboutGroup", { groupId: item.id });
-          }}
-        >
-          {/* 내가 생성한 그룹들은 하늘색 경계선이 생김 */}
-          <View style={[styles.box, item.leader===User[userID].name ? {borderWidth:3} : null]} key={index}>
-            <Text style={styles.name}>{item.name}</Text>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={styles.count}>{item.headCount}명</Text>
-              <Text style={styles.leader}>그룹장: {item.leader}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-  )
-}
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate("AboutGroup", { groupId: item.id });
+      }}
+    >
+      {/* 내가 생성한 그룹들은 하늘색 경계선이 생김 */}
+      <View
+        style={[
+          styles.box,
+          item.leader === User[userID].name ? { borderWidth: 3 } : null,
+        ]}
+        key={index}
+      >
+        <Text style={styles.name}>{item.name}</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.count}>{item.headCount}명</Text>
+          <Text style={styles.leader}>그룹장: {item.leader}</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+};
 const GroupComponent = () => {
-
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       {myGroupData.map((item, index) => (
-        <GroupButton key={item.id} item={item} index={index}/>
+        <GroupButton key={item.id} item={item} index={index} />
       ))}
     </ScrollView>
   );
@@ -72,7 +77,6 @@ const Group = () => {
       updateState([]);
     }, [])
   );
-
 
   return (
     <View style={{ flex: 1 }}>
@@ -117,18 +121,14 @@ const Group = () => {
         }}
       >
         <GroupComponent />
- 
+
         <TouchableOpacity
-        style={styles.searchButton}
+          style={styles.searchButton}
           onPress={() => {
             navigation.navigate("SearchGroup");
           }}
         >
-            <AntDesign
-              name= "pluscircle"
-              size={90}
-              color={themeColor}
-            />
+          <AntDesign name="pluscircle" size={90} color={themeColor} />
         </TouchableOpacity>
       </View>
     </View>
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "f8f9fa",
+    backgroundColor: "#f8f9fa",
   },
   line: {
     width: "100%",
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     marginBottom: hp(2),
     borderRadius: 20,
     width: wp(90),
-    borderColor:"skyblue",
+    borderColor: "skyblue",
     // borderWidth:1,
   },
   name: {
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     marginLeft: wp(5),
     color: "#495057",
   },
-  searchButton:{
+  searchButton: {
     position: "absolute",
     bottom: 20,
     right: 20,
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     shadowOffset: {
       width: 10,
       height: 10,
-    }
+    },
   },
 });
 

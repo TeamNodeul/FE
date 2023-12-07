@@ -157,7 +157,7 @@ const BeforeCount = () => {
             styles.buttonStyle,
             { width: buttonWidth, marginVertical: "3%" },
           ]}
-          onPress={() => navigation.navigate("NFCScreen")}
+          onPress={() => navigation.navigate("AutoMeasure")}
         >
           <Text style={styles.ButtonText}>블루투스 연동해서 측정하기</Text>
         </TouchableOpacity>
