@@ -46,6 +46,8 @@ const Group = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+
+        console.log("모든그룹 불러오기")
         const allGroup = await axios.get(
           `http://3.36.228.245:8080/api/teams/find-all/team-list`
         );
@@ -95,8 +97,8 @@ const Group = () => {
           <View style={styles.modalContent}>
             <Text>그룹장 : {group.headName}</Text>
             <Text>멤버 수 : {group.presentMemberNum}/{group.memberNum} 명</Text>
-            {}<Text>평균 운동시간: {group.avgWorkoutTime}분</Text>
-            <Text>평균 무게량: {group.avgVolume}KG</Text>
+            <Text>평균 운동시간: {group.avgWorkoutTime ? group.avgWorkoutTime.toFixed(1) : group.avgWorkoutTime}분</Text>
+            <Text>평균 무게량: {group.avgVolume ? group.avgVolume.toFixed(1) : group.avgVolume}KG</Text>
           </View>
           
           <TouchableOpacity style={{width:wp(70), alignItems:"center", borderWidth:2, borderColor:"skyblue", borderRadius:20, padding:10}}
@@ -107,7 +109,8 @@ const Group = () => {
             else{
               const fetchData = async () => {
                 try {
-                  await axios.get(`http://3.36.228.245:8080/api/members/add/${group.teamId}/${userID}`);
+                  console.log(group.teamId, userID);
+                  await axios.post(`http://3.36.228.245:8080/api/members/add/${group.teamId}/${userID}`);
                   // console.log(response.data.data);
                 } catch (error) {
                   console.error('Error fetching data:', error);
@@ -115,7 +118,8 @@ const Group = () => {
               };
               
               fetchData()
-              .then(()=>navigation.goBack());
+              .then(()=>navigation.goBack())
+              .catch(err=>console.log(err));
               addMyGroup(groupList);
               console.log("그룹가입");
 

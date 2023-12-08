@@ -86,7 +86,7 @@ async function api() {
   console.warn("Dinner Menu:", dinnerArray);
 }
 
-api();
+// api();
 
 export const dietData = [
   {

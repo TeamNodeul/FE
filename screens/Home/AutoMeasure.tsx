@@ -21,6 +21,8 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
+import NfcManager, { NfcTech } from 'react-native-nfc-manager';
+
 import {
   BleError,
   BleManager,
@@ -44,10 +46,37 @@ const PHASE_UUID = "921a82c4-02cc-4665-acc5-a979ace621f2";
 const AutoMeasure = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
 
+
+  // async function readNdef() {
+  //   console.log("0");
+  //   try {
+  //     console.log("1");
+  //     await NfcManager.requestTechnology(NfcTech.Ndef);
+  //     const tag = await NfcManager.getTag();
+  //     console.log("2");
+  //     // setNfcCount(Nfccount + 1);
+  //     console.log("3");
+  //     // console.log(Nfccount);
+  //     console.log('Tag found', tag);
+
+  //     // 이 부분에서 블루투스 연결 함수 호출
+  //     await connectToDevice(device!);
+  //     console.log("4")
+  //   } catch (ex) {
+  //     console.warn('Oops!', ex);
+  //   } finally {
+  //     // NfcManager.cancelTechnologyRequest();
+  //   }
+  // }
+
+
+
+
   const [count, setCount] = useState(0);
   const [manager, setManager] = useState<BleManager | null>(null);
   const [devices, setDevices] = useState<Device[]>([]);
   const [realDevice, setRealDevice] = useState<Device>();
+  const [state, setState] = useState("연결 안됨");
 
   const devices2: Device[] = [];
 
@@ -131,6 +160,7 @@ const AutoMeasure = () => {
       const deviceConnection = await manager.connectToDevice(device.id);
       console.log(0);
       await deviceConnection.discoverAllServicesAndCharacteristics();
+      setState("연결 성공!!");
       manager.stopDeviceScan();
       console.log(1);
       deviceConnection.monitorCharacteristicForService(
@@ -256,6 +286,7 @@ const AutoMeasure = () => {
           title="디스Connect"
           onPress={() => disconnectToDevice(realDevice!)}
         /> */}
+        <Text style={{alignSelf:"center", fontSize:20, fontWeight:"bold"}}>{state}</Text>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={handleAreYouDone}>

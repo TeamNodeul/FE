@@ -25,7 +25,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // export let userName = "";
-// export let userEmail = "";
+// export let welcomeTo = "";
 
 //현재 로그인 된 유저 id 저장
 import { userID, Login } from "../../DB/userID";
@@ -40,7 +40,8 @@ import {
 
 const MyPage = () => {
   // 현재 로그인된 유저 객체를 가져옴
-  const user = UserData.find((user) => user.id === userID);
+  // const user = UserData.find((user) => user.id === userID);
+  const [user, setUser] = useState({} as {id:number, name:string, gender:string, height:number, weight:number});
   const [userProfile, setUserProfile] = useState({ weight: 0, height: 0 });
   const [userReport, setUserReport] = useState({
     totalTime: 0,
@@ -48,14 +49,16 @@ const MyPage = () => {
   });
 
   // const [userName, setUserName] = useState(user!.name);
-  // const [userEmail, setUserEmail] = useState(user!.email);
+  // const [welcomeTo, setUserEmail] = useState(user!.email);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
           `http://3.36.228.245:8080/api/users/find/${userID}`
         );
-        console.log(response.data.data);
+        setUser(response.data.data);
+        console.log("유저정보:",response.data.data);
+
         setUserProfile({
           height: response.data.data.height,
           weight: response.data.data.weight,
@@ -71,6 +74,7 @@ const MyPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if(!userID) return;
         const response = await axios.get(
           `http://3.36.228.245:8080/api/histories/last-seven-days/${userID}`
         );
@@ -95,7 +99,7 @@ const MyPage = () => {
   }, [userID]);
 
   const userName = user?.name;
-  const userEmail = user?.email ?? "";
+  const welcomeTo = "불나방 세계에 오신 것을 환영합니다.";
   /**화면 focus될시 강제 렌더링 */
   const [, updateState] = useState([]);
   useFocusEffect(
@@ -247,7 +251,7 @@ const MyPage = () => {
           </TouchableOpacity>
         </View>
         <View style={[styles.profileTextContainer, { flex: 1 }]}>
-          <Text>{userEmail}</Text>
+          <Text>{welcomeTo}</Text>
         </View>
       </View>
       {/* <Login/> */}

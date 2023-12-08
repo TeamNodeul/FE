@@ -155,7 +155,7 @@ const BeforeCount = () => {
         <TouchableOpacity
           style={[
             styles.buttonStyle,
-            { width: buttonWidth, marginVertical: "3%" },
+            { width: buttonWidth },
           ]}
           onPress={() => navigation.navigate("AutoMeasure")}
         >
