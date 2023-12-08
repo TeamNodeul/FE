@@ -153,10 +153,7 @@ const BeforeCount = () => {
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          style={[
-            styles.buttonStyle,
-            { width: buttonWidth, marginVertical: "3%" },
-          ]}
+          style={[styles.buttonStyle, { width: buttonWidth }]}
           onPress={() => navigation.navigate("AutoMeasure")}
         >
           <Text style={styles.ButtonText}>블루투스 연동해서 측정하기</Text>

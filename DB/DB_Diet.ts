@@ -37,56 +37,56 @@ let breakfastArray: string[] = [];
 let lunchArray: string[] = [];
 let dinnerArray: string[] = [];
 
-async function api() {
-  try {
-    const postResponse = await axios.post(
-      `http://3.36.228.245:8080/api/diets/create/3/gpt/diets`
-    );
-    console.log(postResponse.data);
-  } catch (error) {
-    console.log("Post Error..");
-    console.error("Error:", error);
-  }
+// async function api() {
+//   try {
+//     const postResponse = await axios.post(
+//       `http://3.36.228.245:8080/api/diets/create/3/gpt/diets`
+//     );
+//     console.log(postResponse.data);
+//   } catch (error) {
+//     console.log("Post Error..");
+//     console.error("Error:", error);
+//   }
 
-  try {
-    const getResponse = await axios.get(
-      `http://3.36.228.245:8080/api/diets/find-all/3/diets`
-    );
-    console.log(getResponse.data);
-    const jsonData = getResponse.data;
+//   try {
+//     const getResponse = await axios.get(
+//       `http://3.36.228.245:8080/api/diets/find-all/3/diets`
+//     );
+//     console.log(getResponse.data);
+//     const jsonData = getResponse.data;
 
-    const dietData = JSON.parse(jsonData[0].diet);
+//     const dietData = JSON.parse(jsonData[0].diet);
 
-    Object.values(dietData).forEach((dayData: any) => {
-      dayData.forEach((mealData: any) => {
-        const { mealTime, menu } = mealData;
+//     Object.values(dietData).forEach((dayData: any) => {
+//       dayData.forEach((mealData: any) => {
+//         const { mealTime, menu } = mealData;
 
-        switch (mealTime) {
-          case "breakfast":
-            breakfastArray.push(menu);
-            break;
-          case "lunch":
-            lunchArray.push(menu);
-            break;
-          case "dinner":
-            dinnerArray.push(menu);
-            break;
-          default:
-            break;
-        }
-      });
-    });
-  } catch (error) {
-    console.log("Get Error");
-    console.error("Error:", error);
-  }
+//         switch (mealTime) {
+//           case "breakfast":
+//             breakfastArray.push(menu);
+//             break;
+//           case "lunch":
+//             lunchArray.push(menu);
+//             break;
+//           case "dinner":
+//             dinnerArray.push(menu);
+//             break;
+//           default:
+//             break;
+//         }
+//       });
+//     });
+//   } catch (error) {
+//     console.log("Get Error");
+//     console.error("Error:", error);
+//   }
 
-  console.warn("Breakfast Menu:", breakfastArray);
-  console.warn("Lunch Menu:", lunchArray);
-  console.warn("Dinner Menu:", dinnerArray);
-}
+//   // console.warn("Breakfast Menu:", breakfastArray);
+//   // console.warn("Lunch Menu:", lunchArray);
+//   // console.warn("Dinner Menu:", dinnerArray);
+// }
 
-api();
+// api();
 
 export const dietData = [
   {

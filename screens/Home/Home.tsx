@@ -10,11 +10,12 @@ import {
   BackHandler,
   Alert,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Card, Button } from "react-native-elements";
 import BottomSheet from "../BottomSheet";
 import data from "../../DB/DB_ExerciseList";
+import axios from "axios";
 
 //아이콘 임포트
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -26,6 +27,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+
+import { userID, Login } from "../../DB/userID";
 
 export type RootStackParam = {
   Home: undefined;
@@ -99,6 +102,18 @@ const Home = () => {
   const month = currentDate.getMonth() + 1;
   const day = currentDate.getDate();
 
+  const [state, updateState] = useState(0);
+  let totalTimeOfTargetDate;
+
+  const [, reloadState] = useState([]);
+  useFocusEffect(
+    React.useCallback(() => {
+      // console.log("마에페이지 포커스")
+      // Do something when the screen is focused
+      reloadState([]);
+    }, [])
+  );
+
   const handleBackPress = () => {
     Alert.alert(
       "종료하시겠습니까?",
@@ -128,6 +143,37 @@ const Home = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+      } catch (error) {
+        console.log("Post error...");
+        console.log(error);
+      }
+
+      try {
+        const timeResponse = await axios.get(
+          `http://3.36.228.245:8080/api/histories/last-seven-days/${userID}`
+        );
+        console.log(timeResponse.data);
+
+        const targetData = timeResponse.data.find(
+          (item) =>
+            item.date[0] === 2023 && item.date[1] === 12 && item.date[2] === 8
+        );
+
+        totalTimeOfTargetDate = targetData ? targetData.totalTime : 0;
+        console.log(totalTimeOfTargetDate);
+
+        updateState(totalTimeOfTargetDate);
+      } catch (error) {
+        console.log("Error:", error);
+      }
+    };
+
+    fetchData();
+  }, [userID]);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -136,7 +182,7 @@ const Home = () => {
           Today: {year}년 {month}월 {day}일
         </Text>
         <View style={{ flex: 2 }}>
-          <Text style={styles.timeText}>00:00:00</Text>
+          <Text style={styles.timeText}>오늘 운동시간 : {state}분</Text>
           {/* 하루 누적 운동시간 넣어야 함 */}
         </View>
       </View>
@@ -226,7 +272,7 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
     fontWeight: "bold",
-    fontSize: 42,
+    fontSize: wp(7),
     letterSpacing: 5,
   },
   menuContainer: {
