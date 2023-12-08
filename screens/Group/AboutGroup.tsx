@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -17,39 +17,48 @@ import User from "../../DB/DB_User";
 import { userID } from "../../DB/userID";
 import { themeColor } from "../Home/Home";
 import { groupData } from "../../DB/DB_Group";
+import axios from "axios";
 
 const AboutGroup = ({ route }: any) => {
   const { groupId } = route.params;
-  const groupInfo = groupData.find((item) => item.id === groupId);
-
-  if (!groupInfo) {
+  // const groupInfo = groupData.find((item) => item.id === groupId);
+  const [members, setMembers] = useState([] as {id:number, name:string, totalTime:number}[]);
+  const [groupInfo, setGroupInfo] = useState({} as {headName:string, teamName:string, memberNum:number, presentMemberNum:number})
+  if (!groupId) {
     return (
       <View>
         <Text>해당 그룹을 찾을 수 없음</Text>
       </View>
     );
   }
+  useEffect(()=>{
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://3.36.228.245:8080/api/teams/${groupId}/members-list`);
+        console.log(response.data.data);
+        const aboutTeam = await axios.get(`http://3.36.228.245:8080/api/teams/find/${groupId}`);
+        setGroupInfo(aboutTeam.data.data);
+        // setGroupList(response.data.data);
+        setMembers(response.data.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();    
 
+  },[userID])
   const TeamMembers = () => {
-    const members = [
-      { id: 1, name: "류지원" },
-      { id: 2, name: "강현민" },
-      { id: 3, name: "오소리" },
-      { id: 4, name: "멤버4" },
-      { id: 5, name: "멤버5" },
-      { id: 6, name: "멤버6" },
-      { id: 7, name: "멤버7" },
-      // 추가 팀원 데이터...
-    ];
-
+    
     return (
       <View style={styles.membersContainer}>
         {members.map((member) => (
           <View key={member.id} style={[styles.member, 
             member.name===User[userID].name ? {borderWidth:2, borderColor:"skyblue"} : null,
-            member.name===groupInfo.leader ? {borderWidth:2, borderBlockStartColor:"black"} : null,
+            member.name===groupInfo.headName? {borderWidth:2, borderBlockStartColor:"black"} : null,
           ]}>
-            <Text>{member.name}</Text>
+            <Text style={{fontWeight:"bold", marginBottom:30}}>{member.name}</Text>
+            <Text>이번주 총 운동 시간</Text>
+            <Text style={{fontWeight:"bold",fontSize:35}}>{member.totalTime}분</Text>
           </View>
         ))}
       </View>
@@ -74,13 +83,13 @@ const AboutGroup = ({ route }: any) => {
         <View style={{ margin: hp(0), borderWidth: 0 }}>
           <Text style={{ fontSize: wp(6), fontWeight: "bold" }}>
             {" "}
-            {groupInfo.name}{" "}
+            {groupInfo.teamName}{" "}
           </Text>
         </View>
         <View style={styles.line}></View>
         <View style={styles.headContent}>
-          <Text style={{ fontSize: 16 }}>그룹장 : {groupInfo.leader}</Text>
-          <Text style={{ fontSize: 16 }}>멤버 수 : {groupInfo.headCount} 명</Text>
+          <Text style={{ fontSize: 16 }}>그룹장 : {groupInfo.headName}</Text>
+          <Text style={{ fontSize: 16 }}>멤버 수 : {groupInfo.presentMemberNum}/{groupInfo.memberNum} 명</Text>
         </View>
       </View>
       {/* <View style={styles.line}></View> */}
@@ -151,11 +160,12 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     width: "100%",
+    height:"30%",
   },
   member: {
     // borderWidth:2,
     width: "48%", // 3명씩 표시하려면 전체 너비의 1/3 정도로 설정
-    height: "55%",
+    height: "100%",
     marginBottom: hp(2),
     padding: 10,
     backgroundColor: "white",

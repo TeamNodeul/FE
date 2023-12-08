@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -17,6 +17,7 @@ import {
 import { themeColor } from "../Home/Home";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { myGroupData } from "../../DB/DB_Group";
@@ -31,18 +32,20 @@ export type RootStackParam = {
   AboutGroup: { groupId: number };
 };
 
+let apiGroupData;
+
 
 
 const Group = () => {
-  const [groupList, setGroupList] = useState([] as {name:string, presentMemberNum:number, memberNum:number, head:number}[]);
+  const [groupList, setGroupList] = useState([] as {teamId:number, name:string, presentMemberNum:number, memberNum:number, head:number, headName:string}[]);
 
-  const GroupButton = ({ item, index }: { item: {name:string, presentMemberNum:number, memberNum:number, head:number}; index: number }) => {
+  const GroupButton = ({ item, index }: { item: {teamId:number, name:string, presentMemberNum:number, memberNum:number, head:number, headName:string}; index: number }) => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
     // console.log(User[userID]);
     return (
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("AboutGroup", { groupId: item.head });
+          navigation.navigate("AboutGroup", { groupId: item.teamId });
         }}
       >
         {/* 내가 생성한 그룹들은 하늘색 경계선이 생김 */}
@@ -56,7 +59,7 @@ const Group = () => {
           <Text style={styles.name}>{item.name}</Text>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.count}>{item.presentMemberNum}/{item.memberNum}명</Text>
-            <Text style={styles.leader}>그룹장: {item.head}</Text>
+            <Text style={styles.leader}>그룹장: {item.headName}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -94,6 +97,7 @@ const Group = () => {
       updateState([]);
     }, [])
   );
+
 
   return (
     <View style={{ flex: 1 }}>
@@ -137,7 +141,7 @@ const Group = () => {
           alignItems: "center",
         }}
       >
-        <GroupComponent />
+        <GroupComponent/>
 
         <TouchableOpacity
           style={styles.searchButton}

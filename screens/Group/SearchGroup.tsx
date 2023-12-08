@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
   View,
   Text,
@@ -24,6 +24,7 @@ import { AntDesign } from "@expo/vector-icons";
 import {groupData, myGroupData, addMyGroup } from "../../DB/DB_Group";
 import { userID } from "../../DB/userID";
 import User from "../../DB/DB_User";
+import axios from "axios";
 export type RootStackParam = {
   Group: undefined;
   SearchGroup: undefined;
@@ -35,13 +36,46 @@ const Group = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   //구현 예정
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [group, setGroup] = useState({"id":0, "name":"", "headCount":"", "leader":""});
+  // const [groupList, setGroupList] = useState({} as {teamId:number, teamName:string, memberNum:number, presentMemberNum:number, headName:string, "avgWorkoutTime":number, "avgVolume":number});
+  const [groupList, setGroupList] = useState([] as {teamId:number, teamName:string, memberNum:number, presentMemberNum:number, headName:string, "avgWorkoutTime":number, "avgVolume":number}[]);
+  //모든
+  
+  // const [myGroup, setMyGroup] = useState({} as {"headId": number, "headName": string, "memberNum": number, "presentMemberNum": number, "teamId": number, "teamName": string, "avgWorkoutTime":number, "avgVolume":number});
+  const [userTeamInfo, setUserTeamInfo] = useState([] as {teamId:number, teamName:string, memberNum:number, presentMemberNum:number, headName:string, "avgWorkoutTime":number, "avgVolume":number}[]); //내가 가입한 그룹 들
+  const [group, setGroup] = useState({} as {teamId:number, teamName:string, memberNum:number, presentMemberNum:number, headName:string, "avgWorkoutTime":number, "avgVolume":number}); //모달에서 보는 그룹
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const allGroup = await axios.get(
+          `http://3.36.228.245:8080/api/teams/find-all/team-list`
+        );
+        const userTeamInfo = await axios.get(`http://3.36.228.245:8080/api/teams/find-all/${userID}`);
+        setUserTeamInfo(userTeamInfo.data.data);
+        // const teamPower = await axios.get(`http://3.36.228.245:8080/api/teams/find/${groupList.teamId}`);
+          // console.log(teamPower.data.data);
+        // console.log(response.data);
+        // console.log(response.data.data);
+        // setGroupList({...response.data.data, avgWorkoutTime : teamPower.data.data.avgWorkoutTime, avgVolume : teamPower.data.data.avgVolume});
+        setGroupList(allGroup.data.data);
+        // setGroupList(response)
+        // apiGroupData = response.data.data;
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchData();
+  }, [userID]);
+
+  
+
   const closeModal = ()=>{
     setIsModalVisible(false);
   }
 
+  
   const GroupInfo = ()=>{
-    // console.log("zdasd");
+
     return(
       <Modal
         visible={isModalVisible}
@@ -55,30 +89,37 @@ const Group = () => {
 
         <View style={styles.modalContainer}>
           <View style={{margin:hp(1),  borderWidth:0}}>
-            <Text style={{fontSize:wp(6), fontWeight:"bold"}}> {group.name} </Text>
+            <Text style={{fontSize:wp(6), fontWeight:"bold"}}> {group.teamName} </Text>
           </View>
           <View style={styles.line}></View>
           <View style={styles.modalContent}>
-            <Text>그룹장 : {group.leader}</Text>
-            <Text>멤버 수 : {group.headCount} 명</Text>
-            <Text>Body 영역</Text>
+            <Text>그룹장 : {group.headName}</Text>
+            <Text>멤버 수 : {group.presentMemberNum}/{group.memberNum} 명</Text>
+            {}<Text>평균 운동시간: {group.avgWorkoutTime}분</Text>
+            <Text>평균 무게량: {group.avgVolume}KG</Text>
           </View>
           
           <TouchableOpacity style={{width:wp(70), alignItems:"center", borderWidth:2, borderColor:"skyblue", borderRadius:20, padding:10}}
           onPress={()=>{
-            // console.log(myGroupData);
-            // console.log(group.id);
-            // console.log(myGroupData.some(item=>item.id===group.id));
-            if(myGroupData.some(item=>item.id===group.id)){
+            if(userTeamInfo.some(item=>item.teamId === group.teamId)){
               Alert.alert("이미 가입했잖아!!!!!!!!");
             }
             else{
-              addMyGroup(group);
+              const fetchData = async () => {
+                try {
+                  await axios.get(`http://3.36.228.245:8080/api/members/add/${group.teamId}/${userID}`);
+                  // console.log(response.data.data);
+                } catch (error) {
+                  console.error('Error fetching data:', error);
+                }
+              };
+              
+              fetchData()
+              .then(()=>navigation.goBack());
+              addMyGroup(groupList);
               console.log("그룹가입");
 
             }
-
-            navigation.goBack();
           }}>
             <Text style={{fontSize:wp(5), fontWeight:"bold"}}>그룹 가입</Text>
           </TouchableOpacity>
@@ -88,28 +129,32 @@ const Group = () => {
     )
   }
   
-  const GroupButton = ({ item, index }: { item: any; index: number }) => {
+  const GroupButton = ({ item, index }: { item: {teamId:number, teamName:string, memberNum:number, presentMemberNum:number, headName:string, avgWorkoutTime:number, avgVolume:number}, index: number }) => {
     // console.log(item);
+
     return (
       <TouchableOpacity
       onPress={() => {
         setIsModalVisible(!isModalVisible);
         const selectedGroup = {
-          "id":item.id,
-          "name":item.name,
-          "headCount":item.headCount,
-          "leader":item.leader,
+          teamId:item.teamId, 
+          teamName:item.teamName, 
+          presentMemberNum:item.presentMemberNum, 
+          memberNum:item.memberNum, 
+          headName:item.headName,
+          avgWorkoutTime:item.avgWorkoutTime,
+          avgVolume:item.avgVolume
         }
+        console.log(item);
         setGroup(selectedGroup);
-      // navigation.navigate("AboutGroup", { groupId: item.id });
       return false;
       }}
       >
-        <View style={[styles.box, item.leader===User[userID].name ? {borderWidth:3} : null]}>
-          <Text style={styles.name}>{item.name}</Text>
+        <View style={[styles.box, item.headName == "xx" ? {borderWidth:3} : null]}>
+          <Text style={styles.name}>{item.teamName}</Text>
           <View style={{ flexDirection: "row" }}>
-            <Text style={styles.count}>{item.headCount}명</Text>
-            <Text style={styles.leader}>그룹장: {item.leader}</Text>
+            <Text style={styles.count}>{item.presentMemberNum}/{item.memberNum}명</Text>
+            <Text style={styles.leader}>그룹장: {item.headName}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -117,17 +162,19 @@ const Group = () => {
   };
 
   const GroupList = () => {
-    const navigation =
-      useNavigation<NativeStackNavigationProp<RootStackParam>>();
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
 
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
-        {groupData.map((item, index) => (
-          <GroupButton key={item.id} item={item} index={item.id} />
-        ))}
+        {groupList.map((item, index) => {
+          
+          return(
+          <GroupButton key={item.teamId} item={item} index={item.teamId} />
+        )})}
       </ScrollView>
     );
   };
+
 
   return (
     <View style={{ flex: 1 }}>

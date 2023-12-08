@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -34,6 +34,11 @@ export type RootStackParam = {
 let idNum = 9;
 
 const GroupSetting = () => {
+  // const [group, setGroup] = useState({} as {memberNum:number, teamName:string});
+
+
+
+
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParam>>();
   const [category, setCategory] = useState("카테고리"); //카테고리, 인원수
   const [number, setNumber] = useState("number");
@@ -78,8 +83,25 @@ const GroupSetting = () => {
     setNumber("");
     setInputName("");
     setInputDescription("");
-    navigation.goBack();
-    navigation.goBack();
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(`http://3.36.228.245:8080/api/teams/create/${userID}`,
+          {memberNum: number, teamName:inputName}
+        );
+        
+        // console.log(response.data.data);
+      
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData().then(()=>{
+      navigation.goBack();
+      navigation.goBack();
+    }) 
+
     // navigation.pop();
     //setter(inputName, number, user!.name);
   };
