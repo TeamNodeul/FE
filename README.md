@@ -1,6 +1,6 @@
 # Front-End
 ### 사용 언어
-- JavaScript
+- JavaScript(TypeScript)
 ### 기술스택
 - Node.js 20.9.0 (for npm)
 - TypeScript
