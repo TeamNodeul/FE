@@ -53,6 +53,7 @@ const MyPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if(!userID) return;
         const response = await axios.get(
           `http://3.36.228.245:8080/api/users/find/${userID}`
         );

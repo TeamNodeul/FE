@@ -30,6 +30,8 @@ import {
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import axios from "axios";
+import { userID, Login } from "../../DB/userID";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -98,16 +100,35 @@ const ManualMeasure = () => {
     return false;
   };
   const handleExerciseDone = () => {
-    navigation.pop();
     Alert.alert("운동 종료", formatTime(time) + " 기록되었습니다.", [
       {
         text: "확인",
       },
     ]);
+    navigation.pop();
     return true;
   };
 
   const handleSetDonePress = (index: number) => {
+    if (setCount[index] + 1 === routineData?.exercises[index].sets) {
+      const postData = {
+        setCount: routineData?.exercises[index].sets,
+        sportCount: routineData?.exercises[index].reps,
+        volume: routineData?.exercises[index].weight,
+        workOutTime: time,
+      };
+
+      try {
+        axios.post(
+          `http://3.36.228.245:8080/api/histories/create/${userID}/21/count-set`,
+          postData
+        );
+        console.log("routine post done");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     if (setCount[index] === routineData?.exercises[index].sets) {
       Alert.alert(
         "체력이 좋으시군요!",
