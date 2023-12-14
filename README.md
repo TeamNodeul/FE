@@ -1,4 +1,4 @@
-# ReadMe : FrontEnd
+# Front-End
 ### 사용 언어
 - JavaScript
 ### 기술스택
