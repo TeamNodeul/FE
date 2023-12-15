@@ -1,13 +1,14 @@
 # Front-End
-### 사용 언어
-- JavaScript(TypeScript)
+### 디자인 초안(Figma)
+- https://www.figma.com/file/ZlaG5Eh77d1hPy5TPWi0CP/Team_Nodeul?type=whiteboard&node-id=0-1
 ### 기술스택
+- ### TypeScript(JavaScript)
 - Node.js 20.9.0 (for npm)
-- TypeScript
+
 - React Native 0.72
-- react-native-ble-plx 3.1.2 (블루투스 Low Energy)
 - EXPO cli SDK 49
 - EAS(Expo Application Services)
+- react-native-ble-plx 3.1.2 (블루투스 Low Energy)
 - VisualStudioCode
 - Android Studio(for Build and Emulator)
 
