@@ -4,9 +4,9 @@
 ### 디자인 초안(Figma)
 - https://www.figma.com/file/ZlaG5Eh77d1hPy5TPWi0CP/Team_Nodeul?type=whiteboard&node-id=0-1
 
-# 최종 디자인
+# 최종 디자인(메뉴얼)
 ![image](https://github.com/TeamNodeul/FE/assets/69042677/ec1eaaa3-e000-4d47-b250-e6a095ce0e52)
-- 최종 메뉴얼(디자인 포함) : https://drive.google.com/file/d/1fRyR2btuEOqlDKptYxZFCw7XxOHC5JRX/view
+- ### 최종 디자인(메뉴얼 포함) LINK : https://drive.google.com/file/d/1fRyR2btuEOqlDKptYxZFCw7XxOHC5JRX/view
 
 ### 기술스택
 - ### TypeScript(JavaScript)
