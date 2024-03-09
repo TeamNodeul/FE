@@ -6,7 +6,9 @@
 
 # 최종 디자인(메뉴얼)
 ![image](https://github.com/TeamNodeul/FE/assets/69042677/ec1eaaa3-e000-4d47-b250-e6a095ce0e52)
-- ### 최종 디자인(메뉴얼 포함) LINK : https://drive.google.com/file/d/1fRyR2btuEOqlDKptYxZFCw7XxOHC5JRX/view
+- #### 최종 디자인(메뉴얼 포함) LINK : https://drive.google.com/file/d/1fRyR2btuEOqlDKptYxZFCw7XxOHC5JRX/view
+- #### 시연 영상(유튜브) LINK : https://www.youtube.com/shorts/e0YOsHZPv3o
+
 #
 ### 기술스택
 - ### TypeScript(JavaScript)
